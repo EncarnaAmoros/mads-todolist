@@ -11,4 +11,8 @@ public class Application extends Controller {
         return ok(index.render("Hola, tu nueva aplicación está lista."));
     }
 
+    public Result saludo(String nombre) {
+      return ok(saludo.render(nombre));
+    }
+
 }
