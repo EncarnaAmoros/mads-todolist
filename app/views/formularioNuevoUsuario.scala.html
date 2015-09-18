@@ -1,0 +1,30 @@
+
+@main("Nuevo Usuario") {
+  <head>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/formularioNuevoUsuario.css")">
+  </head>
+
+  <body>
+
+    <h1>Añadir usuario</h1>
+    <h2>Usuario (nuevo)</h2>
+
+    <form>
+      <p>Login</p>
+      <input type="text" name="login" value="">
+      <p>Nombre</p>
+      <input type="text" name="nombre" value="">
+      <p>Apellidos</p>
+      <input type="text" name="apellidos" value="">
+      <p>Correo electrónico</p>
+      <input type="text" name="correo" value="">
+      <p>Fecha de nacimiento (dd-mm-aaaa)</p>
+      <input type="text" name="text" value="">
+      <br>
+      <br>
+      <input type="submit" value="Guardar">
+      <button>Cancelar</button>
+    </form>
+  </body>
+
+}
