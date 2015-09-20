@@ -11,5 +11,8 @@ GET     /saludo                     controllers.Application.saludo(nombre: Strin
 # Pagina nuevo usuario
 GET     /usuarios/nuevo             controllers.Usuarios.formularioNuevoUsuario()
 
+# Pagina nuevo usuario a guardar
+POST    /usuarios/nuevo             controllers.Usuarios.grabaNuevoUsuario()
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
