@@ -27,9 +27,14 @@ public class Usuarios extends Controller {
      Usuario usuario = usuarioForm.get();
      usuario = UsuarioService.grabaUsuario(usuario);
      flash("grabaUsuario", "El usuario se ha grabado correctamente");
-     return ok("Lista usuarios no creada aún");
+     return redirect(controllers.routes.Usuarios.logTemporal());
      //return redirect(controllers.routes.Usuarios.listaUsuarios());
    }
 
+   //Devuelve una página temporal hasta tener la funcionalidad completa
+   public Result logTemporal() {
+     String mensaje = flash("grabaUsuario");
+     return ok(logTemporal.render(mensaje));
+   }
 
 }
