@@ -7,6 +7,7 @@
 @main("Nuevo Usuario") {
   <head>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/formularioNuevoUsuario.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
   </head>
 
   <body>
@@ -36,8 +37,8 @@
            <p class="datos_avisos" id="fechaNacimiento"> Formato (dd-mm-yyyy)</p>
 
            <div class="botones_inferiores">
-             <input type="submit" value="Guardar" >
-             <input type="button" value="Cancelar" onclick="window.open('nuevo')" style="float:right" />
+             <input type="submit" value="Guardar" class="btn btn-primary">
+             <input type="button" value="Cancelar" class="btn btn-primary" onclick="window.open('nuevo')" style="float:right" />
            </div>
          </fieldset>
        }
