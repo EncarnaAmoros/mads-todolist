@@ -1,13 +1,36 @@
-@(usuarioForm: Form[Usuario], mensaje: String)
-@if(mensaje != "") {
+@(usuarios: List[Usuario], mensaje: String)
+@scripts = {
   <script type="text/javascript">
-    alert("Hay errores en el formulario");
+       function del(urlBorrar) {
+         $.ajax({url: urlBorrar, type: 'DELETE',
+                 success: function(results) {
+                   //refresh the page
+                   location.reload();
+                 }
+         });
+       }
+  </script>
+}
+@if(mensaje != "") {
+      <p> @mensaje </p>
+}
+@main("Listado de usuarios", scripts) {
+
+}
+
+
+<!--@if(mensaje != "") {
+  <script type="text/javascript">
+    function mensajelog(men) {
+      alert(men);
+    }
+    mensajelog(mensaje);
   </script>
 }
 @main("Nuevo Usuario") {
   <head>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/formularioNuevoUsuario.css")">
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap/stylesheets/bootstrap.min.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
   </head>
 
   <body>
@@ -38,13 +61,12 @@
 
            <div class="botones_inferiores">
              <input type="submit" value="Guardar" class="btn btn-primary">
-             <a class="btn btn-primary" style="float:right" href="@routes.Usuarios.listaUsuarios()">Cancelar</a>
+             <input type="button" value="Cancelar" class="btn btn-primary" onclick="window.open('nuevo')" style="float:right" />
            </div>
          </fieldset>
        }
 
        @if(mensaje != "") {
-         <!--<script src="@routes.Assets.versioned("javascripts/erroresForm.js")">  </script>-->
          <script type="text/javascript">
             function coloreaRestriccion() {
              //Ponemos en rojo los cuadros con restricciones
@@ -58,4 +80,4 @@
         }
      </div>
   </body>
-}
+}-->

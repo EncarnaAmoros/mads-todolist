@@ -14,8 +14,8 @@ GET     /usuarios/nuevo             controllers.Usuarios.formularioNuevoUsuario(
 # Pagina nuevo usuario a guardar
 POST    /usuarios/nuevo             controllers.Usuarios.grabaNuevoUsuario()
 
-# Pagina temporal para log
-GET     /usuarios/log               controllers.Usuarios.logTemporal()
+# Pagina listar usuarios
+GET     /usuarios                   controllers.Usuarios.listaUsuarios()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

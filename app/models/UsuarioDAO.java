@@ -20,4 +20,8 @@ public class UsuarioDAO {
    return usuario;
  }
 
+ public static List<Usuario> findAllUsuarios() {
+   return (List<Usuario>) JPA.em().createQuery("select u from Usuario u ORDER BY id").getResultList();
+ }
+
 }

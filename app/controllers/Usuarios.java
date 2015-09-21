@@ -9,8 +9,20 @@ import play.mvc.*;
 import static play.libs.Json.*;
 import play.data.Form;
 import play.db.jpa.*;
+import java.util.List;
 
 public class Usuarios extends Controller {
+
+    @Transactional(readOnly = true)
+    // Devuelve una página con la lista de usuarios
+    public Result listaUsuarios() {
+      // Obtenemos el mensaje flash guardado en la petición
+      // por el controller grabaUsuario
+      String mensaje = flash("grabaUsuario");
+      List<Usuario> usuarios = UsuarioService.findAllUsuarios();
+      //return ok(formCreacionUsuario.render(Form.form(Usuario.class),""));
+      return ok(listaUsuarios.render(usuarios, mensaje));
+    }
 
     public Result formularioNuevoUsuario() {
       return ok(formCreacionUsuario.render(Form.form(Usuario.class),""));
@@ -27,14 +39,7 @@ public class Usuarios extends Controller {
      Usuario usuario = usuarioForm.get();
      usuario = UsuarioService.grabaUsuario(usuario);
      flash("grabaUsuario", "El usuario se ha grabado correctamente");
-     return redirect(controllers.routes.Usuarios.logTemporal());
-     //return redirect(controllers.routes.Usuarios.listaUsuarios());
-   }
-
-   //Devuelve una página temporal hasta tener la funcionalidad completa
-   public Result logTemporal() {
-     String mensaje = flash("grabaUsuario");
-     return ok(logTemporal.render(mensaje));
+     return redirect(controllers.routes.Usuarios.listaUsuarios());
    }
 
 }
