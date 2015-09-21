@@ -1,58 +1,60 @@
 @(usuarioForm: Form[Usuario], mensaje: String)
-
-<!--@if(mensaje != "") {
+@if(mensaje != "") {
   <script type="text/javascript">
-    alert('Cuidado' + @mensaje);
+    alert("Hay errores en el formulario");
   </script>
-}-->
-
+}
 @main("Nuevo Usuario") {
-
-  @if(mensaje != "") {
-   <div class="alert alert-danger">
-     @mensaje
-   </div>
-  }
-
   <head>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/formularioNuevoUsuario.css")">
   </head>
 
   <body>
+    <div class="contenidoExterior">
+      <h1>Añadir usuario</h1>
+    </div>
 
-    <h1>Añadir usuario</h1>
-    <h2>Usuario (nuevo)</h2>
 
-     @helper.form(action = routes.Usuarios.grabaNuevoUsuario()) {
-     <fieldset>
-       @helper.inputText(usuarioForm("login"), '_label -> "Login")
-       @helper.inputText(usuarioForm("nombre"), '_label -> "Nombre")
-       @helper.inputText(usuarioForm("apellidos"), '_label -> "Apellidos")
-       @helper.inputText(usuarioForm("eMail"), '_label -> "Correo electrónico")
-       @helper.inputText(usuarioForm("fechaNacimiento"), '_label -> "Fecha nacimiento (dd-mm-aaaa)")
-     </fieldset>
-     <p>
-       <input type="submit" value="Guardar">
-       <a href="www.google.es">Cancelar</a>
-     </p>
-     }
+    <div class="contenidoInterior">
+      <div class="encabezadoTitulo2">
+        <h2 class="titulo2">Usuario (nuevo)</h2>
+      </div>
 
-    <!--<form method="post">
-      <p>Login</p>
-      <input type="text" name="login" value="">
-      <p>Nombre</p>
-      <input type="text" name="nombre" value="">
-      <p>Apellidos</p>
-      <input type="text" name="apellidos" value="">
-      <p>Correo electrónico</p>
-      <input type="text" name="eMail" value="">
-      <p>Fecha de nacimiento (dd-mm-aaaa)</p>
-      <input type="text" name="fechaNacimiento" value="">
-      <br>
-      <br>
-      <input type="submit" value="Guardar">
-      <button>Cancelar</button>
-    </form>-->
+      @helper.form(action = routes.Usuarios.grabaNuevoUsuario()) {
+         <fieldset class="marco_principal">
+           <p class="etiqueta">Login</p>
+           <input type="text" name="login" value="" class="datos">
+           <p class="datos_avisos" id="login"> Required </p>
+           <p class="etiqueta">Nombre</p>
+           <input type="text" name="nombre" value="" class="datos">
+           <p class="etiqueta">Apellidos</p>
+           <input type="text" name="apellidos" value="" class="datos">
+           <p class="etiqueta">Correo electrónico</p>
+           <input type="text" name="eMail" value="" class="datos">
+           <p class="etiqueta">Fecha de nacimiento</p>
+           <input type="text" name="fechaNacimiento" value="" class="datos">
+           <p class="datos_avisos" id="fechaNacimiento"> Formato (dd-mm-yyyy)</p>
+
+           <div class="botones_inferiores">
+             <input type="submit" value="Guardar" >
+             <input type="button" value="Cancelar" onclick="window.open('nuevo')" style="float:right" />
+           </div>
+         </fieldset>
+       }
+
+       @if(mensaje != "") {
+         <!--<script src="@routes.Assets.versioned("javascripts/erroresForm.js")">  </script>-->
+         <script type="text/javascript">
+            function coloreaRestriccion() {
+             //Ponemos en rojo los cuadros con restricciones
+             var campologin = document.getElementById('login');
+             campologin.style.color = "#FD0505";
+             var campofecha = document.getElementById('fechaNacimiento');
+             campofecha.style.color = "#FD0505";
+            }
+            coloreaRestriccion();
+          </script>
+        }
+     </div>
   </body>
-
 }
