@@ -1,5 +1,5 @@
 @(usuarios: List[Usuario], mensaje: String)
-@scripts = {
+<!--@scripts = {
   <script type="text/javascript">
        function del(urlBorrar) {
          $.ajax({url: urlBorrar, type: 'DELETE',
@@ -10,24 +10,55 @@
          });
        }
   </script>
-}
+}-->
+<!-- PREGUNTA: Al final no lo usaremos pero, porque no va?-->
 @if(mensaje != "") {
-      <p> @mensaje </p>
-}
-@main("Listado de usuarios", scripts) {
-
-}
-
-
-<!--@if(mensaje != "") {
   <script type="text/javascript">
-    function mensajelog(men) {
-      alert(men);
-    }
-    mensajelog(mensaje);
+    <!--alert("El usuario se ha grabado correctamente");si va-->
+    <!--alert(@mensaje);no va, y si lo consigue es undefined porque se carga antes de cargarse la llamada del redirect no?-->
+    <!--document.getElementById("mensajes").value = mensaje;-->
   </script>
 }
-@main("Nuevo Usuario") {
+@main("Listado de usuarios", scripts) {
+  <head>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/listaUsuarios.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
+  </head>
+
+  <body>
+    <div class="contenidoExterior">
+      <h1>Listado de usuarios</h1>
+    </div>
+
+    <div class="contenidoInterior">
+       <table class="table" id="tabla_usuarios">
+        <tbody>
+          <tr>
+           <th>id</th>
+           <th>Login</th>
+           <th>Nombre</th>
+           <th>Apellidos</th>
+           <th>Acción</th>
+          </tr>
+          @for(usuario <- usuarios) {
+            <tr>
+             <td class="active">@usuario.id</td>
+             <td class="active">@usuario.login</td>
+             <td class="active">@usuario.nombre</td>
+             <td class="active">@usuario.apellidos</td>
+             <td class="active">...</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+     @if(mensaje != "") {
+       <p id="mensajes"> @mensaje </p>
+      }
+     </div>
+  </body>
+}
+
+<!--@main("Nuevo Usuario") {
   <head>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/formularioNuevoUsuario.css")">
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
