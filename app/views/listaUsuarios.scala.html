@@ -31,8 +31,9 @@
     </div>
 
     <div class="contenidoInterior">
-       <table class="table" id="tabla_usuarios">
+       <table class="table table-striped" id="tabla_usuarios">
         <tbody>
+          <!--Titulos columnas de la tabla-->
           <tr>
            <th>id</th>
            <th>Login</th>
@@ -40,75 +41,46 @@
            <th>Apellidos</th>
            <th>Acción</th>
           </tr>
+          <!--Usuarios en filas de la tabla-->
           @for(usuario <- usuarios) {
             <tr>
-             <td class="active">@usuario.id</td>
-             <td class="active">@usuario.login</td>
-             <td class="active">@usuario.nombre</td>
-             <td class="active">@usuario.apellidos</td>
-             <td class="active">...</td>
+             <td>@usuario.id</td>
+             <td>@usuario.login</td>
+             <td>@usuario.nombre</td>
+             <td>@usuario.apellidos</td>
+             <!--Iconos para ver, editar o eliminar usuario-->
+             <td class="iconos_accion">
+               <a href="" class="iconos_link">
+                 <sapn class="glyphicon glyphicon-eye-open"></span>
+               </a>
+               <a href="" class="iconos_link">
+                 <sapn class="glyphicon glyphicon-pencil"></span>
+               </a>
+               <a href="" class="iconos_link">
+                 <sapn class="glyphicon glyphicon-trash"></span>
+               </a>
+             </td>
             </tr>
           }
+          <!--Para añadir usuario a la tabla-->
+          <tr>
+           <td class="iconos_accion">
+             <a href="usuarios/nuevo" class="iconos_link">
+               <sapn class="glyphicon glyphicon-plus"></span>
+             </a>
+           </td>
+           <td></td><td></td><td></td><td></td>
+          </tr>
         </tbody>
       </table>
      @if(mensaje != "") {
-       <p id="mensajes"> @mensaje </p>
+       <div class="alert alert-success" id="mensajes"> @mensaje </div>
       }
+     <!--@if(!mensaje != "") {
+          <script type="text/javascript">
+            document.getElementById("mensajes").style.visibility = "hidden";
+          </script>
+      }ENTRASIEMPREPORQUE?-->
      </div>
   </body>
 }
-
-<!--@main("Nuevo Usuario") {
-  <head>
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/formularioNuevoUsuario.css")">
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
-  </head>
-
-  <body>
-    <div class="contenidoExterior">
-      <h1>Añadir usuario</h1>
-    </div>
-
-
-    <div class="contenidoInterior">
-      <div class="encabezadoTitulo2">
-        <h2 class="titulo2">Usuario (nuevo)</h2>
-      </div>
-
-      @helper.form(action = routes.Usuarios.grabaNuevoUsuario()) {
-         <fieldset class="marco_principal">
-           <p class="etiqueta">Login</p>
-           <input type="text" name="login" value="" class="datos">
-           <p class="datos_avisos" id="login"> Required </p>
-           <p class="etiqueta">Nombre</p>
-           <input type="text" name="nombre" value="" class="datos">
-           <p class="etiqueta">Apellidos</p>
-           <input type="text" name="apellidos" value="" class="datos">
-           <p class="etiqueta">Correo electrónico</p>
-           <input type="text" name="eMail" value="" class="datos">
-           <p class="etiqueta">Fecha de nacimiento</p>
-           <input type="text" name="fechaNacimiento" value="" class="datos">
-           <p class="datos_avisos" id="fechaNacimiento"> Formato (dd-mm-yyyy)</p>
-
-           <div class="botones_inferiores">
-             <input type="submit" value="Guardar" class="btn btn-primary">
-             <input type="button" value="Cancelar" class="btn btn-primary" onclick="window.open('nuevo')" style="float:right" />
-           </div>
-         </fieldset>
-       }
-
-       @if(mensaje != "") {
-         <script type="text/javascript">
-            function coloreaRestriccion() {
-             //Ponemos en rojo los cuadros con restricciones
-             var campologin = document.getElementById('login');
-             campologin.style.color = "#FD0505";
-             var campofecha = document.getElementById('fechaNacimiento');
-             campofecha.style.color = "#FD0505";
-            }
-            coloreaRestriccion();
-          </script>
-        }
-     </div>
-  </body>
-}-->
