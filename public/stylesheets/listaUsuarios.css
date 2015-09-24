@@ -1,0 +1,48 @@
+body {
+  margin: 0px;
+  background-color: #eee !important;
+}
+
+/*Encabezado*/
+
+.contenidoExterior {
+  margin-left: 100px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/*Interior*/
+
+.container {
+  width: 100%;
+  padding: 0px !important;
+}
+
+.contenidoInterior {
+  background-color: white;
+  padding-left: 100px;
+  padding-top: 3px;
+  padding-bottom: 40px;
+  height: 100%;
+}
+
+#tabla_usuarios {
+  width: 90%;
+  margin-top: 45px;
+}
+
+/*Mensajes enviados a la página*/
+
+#mensajes {
+  width: 90%;
+}
+
+/*Iconos*/
+
+.iconos_link {
+  color: #2895F1;
+}
+
+.iconos_accion {
+  color: #2895F1;
+}

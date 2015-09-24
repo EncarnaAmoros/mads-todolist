@@ -1,0 +1,80 @@
+@(usuarios: List[Usuario], mensaje: String)
+@scripts = {
+  <script type="text/javascript">
+       function del(urlBorrar) {
+         $.ajax({url: urlBorrar, type: 'DELETE',
+                 success: function(results) {
+                   //refresh the page
+                   location.reload();
+                 }
+         });
+       }
+  </script>
+}
+<!--Muestra los mensajes en la página por javascript-->
+<!--@if(mensaje != "") {
+  <script type="text/javascript">
+    alert('@mensaje');
+  </script>
+}-->
+@main("Listado de usuarios", scripts) {
+  <head>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/listaUsuarios.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
+  </head>
+
+  <body>
+    <div class="contenidoExterior">
+      <h1>Listado de usuarios</h1>
+    </div>
+
+    <div class="contenidoInterior">
+       <table class="table table-striped" id="tabla_usuarios">
+        <tbody>
+          <!--Titulos columnas de la tabla-->
+          <tr>
+           <th>id</th>
+           <th>Login</th>
+           <th>Nombre</th>
+           <th>Apellidos</th>
+           <th>Acción</th>
+          </tr>
+          <!--Usuarios en filas de la tabla-->
+          @for(usuario <- usuarios) {
+            <tr>
+             <td>@usuario.id</td>
+             <td>@usuario.login</td>
+             <td>@usuario.nombre</td>
+             <td>@usuario.apellidos</td>
+             <!--Iconos para ver, editar o eliminar usuario-->
+             <td class="iconos_accion">
+               <a href="" class="iconos_link">
+                 <sapn class="glyphicon glyphicon-eye-open"></span>
+               </a>
+               <a href="" class="iconos_link">
+                 <sapn class="glyphicon glyphicon-pencil"></span>
+               </a>
+               <a href="" class="iconos_link">
+                 <sapn class="glyphicon glyphicon-trash"></span>
+               </a>
+             </td>
+            </tr>
+          }
+          <!--Para añadir usuario a la tabla-->
+          <tr>
+           <td class="iconos_accion">
+             <a href="usuarios/nuevo" class="iconos_link">
+               <sapn class="glyphicon glyphicon-plus"></span>
+             </a>
+           </td>
+           <td></td><td></td><td></td><td></td>
+          </tr>
+        </tbody>
+      </table>
+      <!--Muestra los mensajes en la página html-->
+     @if(mensaje != "") {
+       <div class="alert alert-success" id="mensajes"> @mensaje </div>
+      }
+     </div>
+  </body>
+}

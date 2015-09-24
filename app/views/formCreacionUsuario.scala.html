@@ -7,7 +7,7 @@
 @main("Nuevo Usuario") {
   <head>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/formularioNuevoUsuario.css")">
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap/stylesheets/bootstrap.min.css")">
   </head>
 
   <body>
@@ -38,7 +38,7 @@
 
            <div class="botones_inferiores">
              <input type="submit" value="Guardar" class="btn btn-primary">
-             <input type="button" value="Cancelar" class="btn btn-primary" onclick="window.open('nuevo')" style="float:right" />
+             <a class="btn btn-primary" style="float:right" href="@routes.Usuarios.listaUsuarios()">Cancelar</a>
            </div>
          </fieldset>
        }

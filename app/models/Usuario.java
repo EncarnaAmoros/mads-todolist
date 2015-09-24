@@ -35,8 +35,8 @@ public class Usuario {
      fechaStr = formateador.format(fechaNacimiento);
    }
    return String.format("Usuario id: %s login: %s nombre: %s " +
-   "apellidos: %s eMail: %s fechaNacimiento: %s",
-   id, login, nombre, apellidos, eMail, fechaStr);
+                         "apellidos: %s eMail: %s fechaNacimiento: %s",
+                         id, login, nombre, apellidos, eMail, fechaStr);
  }
 
 }
