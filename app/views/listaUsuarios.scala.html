@@ -1,5 +1,5 @@
 @(usuarios: List[Usuario], mensaje: String)
-<!--@scripts = {
+@scripts = {
   <script type="text/javascript">
        function del(urlBorrar) {
          $.ajax({url: urlBorrar, type: 'DELETE',
@@ -10,15 +10,13 @@
          });
        }
   </script>
-}-->
-<!-- PREGUNTA: Al final no lo usaremos pero, porque no va?-->
-@if(mensaje != "") {
-  <script type="text/javascript">
-    <!--alert("El usuario se ha grabado correctamente");si va-->
-    <!--alert(@mensaje);no va, y si lo consigue es undefined porque se carga antes de cargarse la llamada del redirect no?-->
-    <!--document.getElementById("mensajes").value = mensaje;-->
-  </script>
 }
+<!--Muestra los mensajes en la página por javascript-->
+<!--@if(mensaje != "") {
+  <script type="text/javascript">
+    alert('@mensaje');
+  </script>
+}-->
 @main("Listado de usuarios", scripts) {
   <head>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/listaUsuarios.css")">
@@ -73,14 +71,10 @@
           </tr>
         </tbody>
       </table>
+      <!--Muestra los mensajes en la página html-->
      @if(mensaje != "") {
        <div class="alert alert-success" id="mensajes"> @mensaje </div>
       }
-     <!--@if(!mensaje != "") {
-          <script type="text/javascript">
-            document.getElementById("mensajes").style.visibility = "hidden";
-          </script>
-      }ENTRASIEMPREPORQUE?-->
      </div>
   </body>
 }

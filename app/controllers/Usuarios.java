@@ -19,8 +19,8 @@ public class Usuarios extends Controller {
       // Obtenemos el mensaje flash guardado en la petición
       // por el controller grabaUsuario
       String mensaje = flash("grabaUsuario");
+      if(mensaje == null) mensaje = "";
       List<Usuario> usuarios = UsuarioService.findAllUsuarios();
-      //return ok(formCreacionUsuario.render(Form.form(Usuario.class),""));
       return ok(listaUsuarios.render(usuarios, mensaje));
     }
 
