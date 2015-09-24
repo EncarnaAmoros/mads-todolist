@@ -42,4 +42,11 @@ public class Usuarios extends Controller {
      return redirect(controllers.routes.Usuarios.listaUsuarios());
    }
 
+   @Transactional(readOnly = true)
+   // Devuelve una página con el detalle del usuario por su id
+   public Result detalleUsuario(String id) {
+     Usuario usuario = UsuarioService.findUsuario(id);
+     return ok(detalleUsuario.render(usuario));
+   }
+
 }

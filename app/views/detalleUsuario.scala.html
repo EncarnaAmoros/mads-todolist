@@ -1,0 +1,45 @@
+@(usuario: Usuario)
+@main("Detalle Usuario") {
+  <head>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/detalleUsuario.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap/stylesheets/bootstrap.min.css")">
+  </head>
+
+  <body>
+    @if(usuario != null) {
+      <div class="contenidoExterior">
+        <h1>Detalle usuario @{usuario.id}</h1>
+      </div>
+
+      <div class="contenidoInterior">
+        <div class="encabezadoTitulo2">
+          <h2 class="titulo2">Datos</h2>
+        </div>
+
+         <fieldset class="marco_principal">
+           <p class="etiqueta">Login: <span>@{usuario.login}</span> </p>
+           <p class="etiqueta">Nombre: <span>@{usuario.nombre}</span> </p>
+           <p class="etiqueta">Apellidos: <span>@{usuario.apellidos}</span> </p>
+           <p class="etiqueta">Correo electrónico: <span>@{usuario.eMail}</span> </p>
+           <p class="etiqueta">Fecha de nacimiento: <span>@{usuario.fechaNacimiento}</span> </p>
+           <!--<input type="text" name="login" value="" class="datos">
+           <p class="datos_avisos" id="login"> Required </p>
+           <p class="etiqueta">Nombre</p>
+           <input type="text" name="nombre" value="" class="datos">
+           <p class="etiqueta">Apellidos</p>
+           <input type="text" name="apellidos" value="" class="datos">
+           <p class="etiqueta">Correo electrónico</p>
+           <input type="text" name="eMail" value="" class="datos">
+           <p class="etiqueta">Fecha de nacimiento</p>
+           <input type="text" name="fechaNacimiento" value="" class="datos">
+           <p class="datos_avisos" id="fechaNacimiento"> Formato (dd-mm-yyyy)</p>-->
+
+           <div class="botones_inferiores">
+             <a class="btn btn-primary" href="@routes.Usuarios.listaUsuarios()">Editar</a>
+             <a class="btn btn-primary" style="float:right" href="@routes.Usuarios.listaUsuarios()">Cancelar</a>
+           </div>
+         </fieldset>
+       </div>
+      }
+  </body>
+}
