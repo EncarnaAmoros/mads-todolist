@@ -28,10 +28,17 @@
            <p class="etiqueta">Fecha de nacimiento: </p>
            <h5 class="datos_u" id="fechausuario"></h5>
 
+           <!--Mostramos la fecha en el formato correcto dd-MM-yyyy-->
            <script type="text/javascript">
-             var fecha = '@{usuario.fechaNacimiento}'.replace("00:00:00.0","");
-             var datofecha = document.getElementById("fechausuario");
-             datofecha.innerHTML = fecha;
+             var fecha = '@{usuario.fechaNacimiento}';
+             if (fecha!= null) {
+               var fecha1 = new Date('@{usuario.fechaNacimiento}');
+               var day = fecha1.getDay();
+               var month = fecha1.getMonth();
+               var year = fecha1.getFullYear();
+               var datofecha = document.getElementById("fechausuario");
+               datofecha.innerHTML = day+"/"+month+"/"+year;
+             }
            </script>
 
            <div class="botones_inferiores">

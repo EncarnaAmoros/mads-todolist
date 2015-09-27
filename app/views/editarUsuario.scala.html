@@ -15,47 +15,62 @@
       <h1>Editar usuario</h1>
     </div>
 
+    @if(usuario != null) {
+      <div class="contenidoInterior">
+        <div class="encabezadoTitulo2">
+          <h2 class="titulo2">Usuario @usuario.id</h2>
+        </div>
 
-    <div class="contenidoInterior">
-      <div class="encabezadoTitulo2">
-        <h2 class="titulo2">Usuario @usuario.id</h2>
-      </div>
+        <form name="formulario" method="POST" action="@routes.Usuarios.grabaUsuarioModificado()">
+           <fieldset class="marco_principal">
+             <p class="etiqueta">Login</p>
+             <input type="text" name="login" value="@usuario.login" class="datos">
+             <p class="datos_avisos" id="login"> Required </p>
+             <p class="etiqueta">Nombre</p>
+             <input type="text" name="nombre" value="@usuario.nombre" class="datos">
+             <p class="etiqueta">Apellidos</p>
+             <input type="text" name="apellidos" value="@usuario.apellidos" class="datos">
+             <p class="etiqueta">Correo electrónico</p>
+             <input type="text" name="eMail" value="@usuario.eMail" class="datos">
+             <p class="etiqueta">Fecha de nacimiento</p>
+             <input type="text" name="fechaNacimientoUsuario" id="fechaNacimientoid" value ="" class="datos">
+             <p class="datos_avisos" id="fechaNacimientoRest"> Formato (dd-mm-yyyy)</p>
 
-      @helper.form(action = routes.Usuarios.grabaUsuarioModificado()) {
-         <fieldset class="marco_principal">
-           <p class="etiqueta">Login</p>
-           <input type="text" name="login" value="@usuario.login" class="datos">
-           <p class="datos_avisos" id="login"> Required </p>
-           <p class="etiqueta">Nombre</p>
-           <input type="text" name="nombre" value="@usuario.nombre" class="datos">
-           <p class="etiqueta">Apellidos</p>
-           <input type="text" name="apellidos" value="@usuario.apellidos" class="datos">
-           <p class="etiqueta">Correo electrónico</p>
-           <input type="text" name="eMail" value="@usuario.eMail" class="datos">
-           <p class="etiqueta">Fecha de nacimiento</p>
-           <input type="text" name="fechaNacimiento" value="@usuario.fechaNacimiento" class="datos">
-           <p class="datos_avisos" id="fechaNacimiento"> Formato (dd-mm-yyyy)</p>
+             <!--Mostramos la fecha en el formato correcto dd-MM-yyyy-->
+             <script type="text/javascript">
+               var fecha = '@{usuario.fechaNacimiento}';
+               if (fecha!= null) {
+                 var fecha1 = new Date('@{usuario.fechaNacimiento}');
+                 var day = fecha1.getDay();
+                 var month = fecha1.getMonth();
+                 var year = fecha1.getFullYear();
+                 var datofecha = document.getElementById("fechaNacimientoid");
+                 datofecha.value = day+"/"+month+"/"+year;
+               }
+             </script>
 
-           <div class="botones_inferiores">
-             <input type="submit" value="Guardar" class="btn btn-primary">
-             <a class="btn btn-primary" style="float:right" href="@routes.Usuarios.listaUsuarios()">Cancelar</a>
-           </div>
-         </fieldset>
-       }
+             <div class="botones_inferiores">
+               <input type="submit" value="Guardar" class="btn btn-primary">
+               <a class="btn btn-primary" style="float:right" href="@routes.Usuarios.listaUsuarios()">Cancelar</a>
+             </div>
+           </fieldset>
+         </form>
 
-       @if(mensaje != "") {
-         <!--<script src="@routes.Assets.versioned("javascripts/erroresForm.js")">  </script>-->
-         <script type="text/javascript">
-            function coloreaRestriccion() {
-             //Ponemos en rojo los cuadros con restricciones
-             var campologin = document.getElementById('login');
-             campologin.style.color = "#FD0505";
-             var campofecha = document.getElementById('fechaNacimiento');
-             campofecha.style.color = "#FD0505";
-            }
-            coloreaRestriccion();
-          </script>
+         @if(mensaje != "") {
+           <!--Mostramos las restricciones con un color rojo-->
+           <script type="text/javascript">
+              function coloreaRestriccion() {
+               //Ponemos en rojo los cuadros con restricciones
+               var campologin = document.getElementById('login');
+               campologin.style.color = "#FD0505";
+               var campofecha = document.getElementById('fechaNacimientoRest');
+               campofecha.style.color = "#FD0505";
+              }
+              coloreaRestriccion();
+            </script>
+          }
         }
+
      </div>
   </body>
 }
