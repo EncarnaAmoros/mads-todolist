@@ -17,26 +17,20 @@
         </div>
 
          <fieldset class="marco_principal">
-           <p class="etiqueta">Login: <span>@{usuario.login}</span> </p>
-           <p class="etiqueta">Nombre: <span>@{usuario.nombre}</span> </p>
-           <p class="etiqueta">Apellidos: <span>@{usuario.apellidos}</span> </p>
-           <p class="etiqueta">Correo electrónico: <span>@{usuario.eMail}</span> </p>
-           <p class="etiqueta">Fecha de nacimiento: <span>@{usuario.fechaNacimiento}</span> </p>
-           <!--<input type="text" name="login" value="" class="datos">
-           <p class="datos_avisos" id="login"> Required </p>
-           <p class="etiqueta">Nombre</p>
-           <input type="text" name="nombre" value="" class="datos">
-           <p class="etiqueta">Apellidos</p>
-           <input type="text" name="apellidos" value="" class="datos">
-           <p class="etiqueta">Correo electrónico</p>
-           <input type="text" name="eMail" value="" class="datos">
-           <p class="etiqueta">Fecha de nacimiento</p>
-           <input type="text" name="fechaNacimiento" value="" class="datos">
-           <p class="datos_avisos" id="fechaNacimiento"> Formato (dd-mm-yyyy)</p>-->
+           <p class="etiqueta">Login: </p>
+           <h5 class="datos_u">@{usuario.login}</h5>
+           <p class="etiqueta">Nombre: </p>
+           <h5 class="datos_u">@{usuario.nombre}</h5>
+           <p class="etiqueta">Apellidos: </p>
+           <h5 class="datos_u">@{usuario.apellidos}</h5>
+           <p class="etiqueta">Correo electrónico: </p>
+           <h5 class="datos_u">@{usuario.eMail}</h5>
+           <p class="etiqueta">Fecha de nacimiento: </p>
+           <h5 class="datos_u">@{usuario.fechaNacimiento}</h5>
 
            <div class="botones_inferiores">
              <a class="btn btn-primary" href="@routes.Usuarios.listaUsuarios()">Editar</a>
-             <a class="btn btn-primary" style="float:right" href="@routes.Usuarios.listaUsuarios()">Cancelar</a>
+             <a class="btn btn-primary" style="margin-left:16px" href="@routes.Usuarios.listaUsuarios()">Volver</a>
            </div>
          </fieldset>
        </div>
