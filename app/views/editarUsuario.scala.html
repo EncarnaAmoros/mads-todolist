@@ -1,0 +1,61 @@
+@(usuarioForm: Form[Usuario], usuario: Usuario, mensaje: String)
+@if(mensaje != "") {
+  <script type="text/javascript">
+    alert("Hay errores en el formulario");
+  </script>
+}
+@main("Nuevo Usuario") {
+  <head>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/formularioNuevoUsuario.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap/stylesheets/bootstrap.min.css")">
+  </head>
+
+  <body>
+    <div class="contenidoExterior">
+      <h1>Editar usuario</h1>
+    </div>
+
+
+    <div class="contenidoInterior">
+      <div class="encabezadoTitulo2">
+        <h2 class="titulo2">Usuario @usuario.id</h2>
+      </div>
+
+      @helper.form(action = routes.Usuarios.grabaUsuarioModificado()) {
+         <fieldset class="marco_principal">
+           <p class="etiqueta">Login</p>
+           <input type="text" name="login" value="@usuario.login" class="datos">
+           <p class="datos_avisos" id="login"> Required </p>
+           <p class="etiqueta">Nombre</p>
+           <input type="text" name="nombre" value="@usuario.nombre" class="datos">
+           <p class="etiqueta">Apellidos</p>
+           <input type="text" name="apellidos" value="@usuario.apellidos" class="datos">
+           <p class="etiqueta">Correo electrónico</p>
+           <input type="text" name="eMail" value="@usuario.eMail" class="datos">
+           <p class="etiqueta">Fecha de nacimiento</p>
+           <input type="text" name="fechaNacimiento" value="@usuario.fechaNacimiento" class="datos">
+           <p class="datos_avisos" id="fechaNacimiento"> Formato (dd-mm-yyyy)</p>
+
+           <div class="botones_inferiores">
+             <input type="submit" value="Guardar" class="btn btn-primary">
+             <a class="btn btn-primary" style="float:right" href="@routes.Usuarios.listaUsuarios()">Cancelar</a>
+           </div>
+         </fieldset>
+       }
+
+       @if(mensaje != "") {
+         <!--<script src="@routes.Assets.versioned("javascripts/erroresForm.js")">  </script>-->
+         <script type="text/javascript">
+            function coloreaRestriccion() {
+             //Ponemos en rojo los cuadros con restricciones
+             var campologin = document.getElementById('login');
+             campologin.style.color = "#FD0505";
+             var campofecha = document.getElementById('fechaNacimiento');
+             campofecha.style.color = "#FD0505";
+            }
+            coloreaRestriccion();
+          </script>
+        }
+     </div>
+  </body>
+}
