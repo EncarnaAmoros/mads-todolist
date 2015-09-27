@@ -14,7 +14,12 @@ public class UsuarioService {
  }
 
  public static List<Usuario> findAllUsuarios() {
-   return UsuarioDAO.findAllUsuarios();
+   return UsuarioDAO.findAll();
+ }
+
+ //Devuelve un usuario según su id
+ public static Usuario findUsuario(String id) {
+   return UsuarioDAO.find(id);
  }
 
 }

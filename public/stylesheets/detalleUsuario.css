@@ -1,0 +1,63 @@
+body {
+  margin: 0px;
+  background-color: #eee !important;
+}
+
+/*Encabezado*/
+
+.contenidoExterior {
+  margin-left: 100px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/*Interior*/
+
+.container {
+  width: 100%;
+  padding: 0px !important;
+}
+
+.contenidoInterior {
+  background-color: white;
+  padding-left: 100px;
+  padding-top: 3px;
+  padding-bottom: 40px;
+  width: 100%;
+}
+
+.encabezadoTitulo2 {
+  border-bottom: 1px solid #E2DDDD;
+  margin-bottom: 15px;
+  width: 95%;
+}
+
+.titulo2 {
+  margin-bottom: 4px;
+}
+
+/*Formulario y su contenido*/
+
+.marco_principal {
+  border-style: none;
+  background: #fff;
+  padding-top: 10px;
+  padding-left: 14px;
+  padding-bottom: 4px;
+  width: 360px;
+}
+
+.etiqueta {
+  margin-bottom: 0px;
+  font-weight: bold;
+}
+
+.botones_inferiores {
+  margin-left: -2px;
+  padding-top: 10px;
+  margin-bottom: 15px;
+}
+
+.datos_u {
+  display: inline-block;
+}
