@@ -18,7 +18,6 @@ public class Usuarios extends Controller {
     //relleno por defecto al entrar (cuando volvemos de errores badRequest)
     Form<Usuario> usuarioForm;
 
-
     @Transactional(readOnly = true)
     // Devuelve una página con la lista de usuarios
     public Result listaUsuarios() {
@@ -77,6 +76,14 @@ public class Usuarios extends Controller {
     UsuarioService.modificarUsuario(usuario);
     flash("grabaUsuario", "El usuario se ha grabado correctamente");
     return redirect(controllers.routes.Usuarios.listaUsuarios());
+  }
+
+  @Transactional
+  //Elimina un usuario en la BD según su id
+  public Result borraUsuario(String id) {
+    System.out.println("entra1");
+    UsuarioService.deleteUsuario(id);
+    return redirect("ok");
   }
 
 }

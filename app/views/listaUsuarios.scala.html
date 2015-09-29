@@ -1,14 +1,16 @@
 @(usuarios: List[Usuario], mensaje: String)
 @scripts = {
-  <script type="text/javascript">
-       function del(urlBorrar) {
-         $.ajax({url: urlBorrar, type: 'DELETE',
-                 success: function(results) {
-                   //refresh the page
-                   location.reload();
-                 }
-         });
-       }
+   <script type="text/javascript">
+     function del(urlBorrar) {
+       $.ajax({
+         url: urlBorrar,
+         type: 'DELETE',
+         success: function(results) {
+           //refresh the page
+           location.reload();
+         }
+       });
+     }
   </script>
 }
 <!--Muestra los mensajes en la página por javascript-->
@@ -49,13 +51,14 @@
              <!--Iconos para ver, editar o eliminar usuario-->
              <td class="iconos_accion">
                <a href="usuarios/@usuario.id" class="iconos_link">
-                 <sapn class="glyphicon glyphicon-eye-open"></span>
+                 <span class="glyphicon glyphicon-eye-open"></span>
                </a>
                <a href="usuarios/@usuario.id/editar" class="iconos_link">
-                 <sapn class="glyphicon glyphicon-pencil"></span>
+                 <span class="glyphicon glyphicon-pencil"></span>
                </a>
-               <a href="" class="iconos_link">
-                 <sapn class="glyphicon glyphicon-trash"></span>
+               <a class="iconos_link" onmouseover="" style="cursor: pointer;"
+                onclick="del('@routes.Usuarios.borraUsuario(usuario.id)')">
+                 <span class="glyphicon glyphicon-trash"></span>
                </a>
              </td>
             </tr>
@@ -64,7 +67,7 @@
           <tr>
            <td class="iconos_accion">
              <a href="usuarios/nuevo" class="iconos_link">
-               <sapn class="glyphicon glyphicon-plus"></span>
+               <span class="glyphicon glyphicon-plus"></span>
              </a>
            </td>
            <td></td><td></td><td></td><td></td>

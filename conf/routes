@@ -21,10 +21,13 @@ GET     /usuarios                   controllers.Usuarios.listaUsuarios()
 GET     /usuarios/:id               controllers.Usuarios.detalleUsuario(id: String)
 
 # Pagina editar usuario
-GET    /usuarios/:id/editar         controllers.Usuarios.editarUsuario(id: String)
+GET     /usuarios/:id/editar         controllers.Usuarios.editarUsuario(id: String)
 
 # Para grabar la modificación de un usuario
-POST  /usuarios/modifica            controllers.Usuarios.grabaUsuarioModificado()
+POST    /usuarios/modifica           controllers.Usuarios.grabaUsuarioModificado()
+
+# Para eliminar un usuario
+DELETE  /usuarios/:id                controllers.Usuarios.borraUsuario(id: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
