@@ -22,9 +22,7 @@ public class UsuarioDAO {
 
  //Modifica el usuario y lo devuelve
  public static void update (Usuario usuario) {
-   System.out.println("EN UPDATE:::::::"+usuario.toString());
    JPA.em().merge(usuario);
-   System.out.println("DESPUES DE UPDATE:::::::"+usuario.toString());
  }
 
  public static List<Usuario> findAll() {

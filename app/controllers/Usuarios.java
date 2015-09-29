@@ -16,7 +16,7 @@ public class Usuarios extends Controller {
 
     //Guardamos la información del usuario para tener formulario
     //relleno por defecto al entrar (cuando volvemos de errores badRequest)
-    Usuario usuario_a_modificar;
+    Form<Usuario> usuarioForm;
 
 
     @Transactional(readOnly = true)
@@ -60,8 +60,9 @@ public class Usuarios extends Controller {
    //datos del usuario pudiendose modificar
    public Result editarUsuario(String id) {
      Usuario usuario = UsuarioService.findUsuario(id);
-     usuario_a_modificar = usuario;
-     return ok(formModificarUsuario.render(Form.form(Usuario.class), usuario, ""));
+     Form<Usuario> formulario = Form.form(Usuario.class);
+     usuarioForm = formulario.fill(usuario);
+     return ok(formModificarUsuario.render(usuarioForm, ""));
    }
 
    @Transactional
@@ -70,10 +71,9 @@ public class Usuarios extends Controller {
   public Result grabaUsuarioModificado() {
     Form<Usuario> usuarioForm = Form.form(Usuario.class).bindFromRequest();
     if (usuarioForm.hasErrors()) {
-      return badRequest(formModificarUsuario.render(usuarioForm, usuario_a_modificar, "Hay errores en el formulario"));
+      return badRequest(formModificarUsuario.render(usuarioForm, "Hay errores en el formulario"));
     }
     Usuario usuario = usuarioForm.get();
-    System.out.println("EN USUFORM.get:::::::"+usuario.toString());
     UsuarioService.modificarUsuario(usuario);
     flash("grabaUsuario", "El usuario se ha grabado correctamente");
     return redirect(controllers.routes.Usuarios.listaUsuarios());

@@ -1,4 +1,4 @@
-@(usuarioForm: Form[Usuario], usuario: Usuario, mensaje: String)
+@(usuarioForm: Form[Usuario], mensaje: String)
 @if(mensaje != "") {
   <script type="text/javascript">
     alert("Hay errores en el formulario");
@@ -15,42 +15,27 @@
       <h1>Editar usuario</h1>
     </div>
 
-    @if(usuario != null) {
+    @if(usuarioForm != null) {
       <div class="contenidoInterior">
         <div class="encabezadoTitulo2">
-          <h2 class="titulo2">Usuario @usuario.id</h2>
+          <h2 class="titulo2">Usuario @usuarioForm("id").value</h2>
         </div>
 
         <form name="formulario" method="POST" action="@routes.Usuarios.grabaUsuarioModificado()">
            <fieldset class="marco_principal">
-             <input type="hidden" name="id" value='@usuario.id'>
+             <input type="hidden" name="id" value='@usuarioForm("id").value'>
              <p class="etiqueta">Login</p>
-             <input type="text" name="login" value="@usuario.login" class="datos">
+             <input type="text" name="login" value='@usuarioForm("login").value' class="datos">
              <p class="datos_avisos" id="login"> Required </p>
              <p class="etiqueta">Nombre</p>
-             <input type="text" name="nombre" value="@usuario.nombre" class="datos">
+             <input type="text" name="nombre" value='@usuarioForm("nombre").value' class="datos">
              <p class="etiqueta">Apellidos</p>
-             <input type="text" name="apellidos" value="@usuario.apellidos" class="datos">
+             <input type="text" name="apellidos" value='@usuarioForm("apellidos").value' class="datos">
              <p class="etiqueta">Correo electrónico</p>
-             <input type="text" name="eMail" value="@usuario.eMail" class="datos">
+             <input type="text" name="eMail" value='@usuarioForm("eMail").value' class="datos">
              <p class="etiqueta">Fecha de nacimiento</p>
-             <input type="text" name="fechaNacimiento" id="fechaNacimiento" value ="@usuario.fechaNacimiento" class="datos">
+             <input type="text" name="fechaNacimiento" id="fechaNacimiento" value='@usuarioForm("fechaNacimiento").value' class="datos">
              <p class="datos_avisos" id="fechaNacimientoRest"> Formato (dd-mm-yyyy)</p>
-
-             <!--Mostramos la fecha en el formato correcto dd-MM-yyyy-->
-             <script type="text/javascript">
-               var fecha = '@{usuario.fechaNacimiento}';
-               if (fecha!= null) {
-                 alert('@{usuario.fechaNacimiento}');
-                 var fecha1 = new Date('@{usuario.fechaNacimiento}');
-                 var day = fecha1.getDay();
-                 var month = fecha1.getMonth();
-                 var year = fecha1.getFullYear();
-                 var datofecha = document.getElementById("fechaNacimiento");
-                 datofecha.value = day+"-"+month+"-"+year;
-                 alert(day+"-"+month+"-"+year);
-               }
-             </script>
 
              <div class="botones_inferiores">
                <input type="submit" value="Guardar" class="btn btn-primary">
