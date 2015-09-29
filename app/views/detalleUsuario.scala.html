@@ -26,16 +26,10 @@
            <p class="etiqueta">Correo electrónico: </p>
            <h5 class="datos_u">@{usuario.eMail}</h5>
            <p class="etiqueta">Fecha de nacimiento: </p>
-           <h5 class="datos_u" id="fechausuario"></h5>
-
-           <script type="text/javascript">
-             var fecha = '@{usuario.fechaNacimiento}'.replace("00:00:00.0","");
-             var datofecha = document.getElementById("fechausuario");
-             datofecha.innerHTML = fecha;
-           </script>
+           <h5 class="datos_u" id="fechausuario">@usuario.fechaNacimiento.format("dd-MM-yyyy")</h5>
 
            <div class="botones_inferiores">
-             <a class="btn btn-primary" href="@routes.Usuarios.listaUsuarios()">Editar</a>
+             <a class="btn btn-primary" href="@routes.Usuarios.editarUsuario({usuario.id})">Editar</a>
              <a class="btn btn-primary" style="margin-left:16px" href="@routes.Usuarios.listaUsuarios()">Volver</a>
            </div>
          </fieldset>

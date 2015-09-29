@@ -20,6 +20,11 @@ public class UsuarioDAO {
    return usuario;
  }
 
+ //Modifica el usuario y lo devuelve
+ public static void update (Usuario usuario) {
+   JPA.em().merge(usuario);
+ }
+
  public static List<Usuario> findAll() {
    return (List<Usuario>) JPA.em().createQuery("select u from Usuario u ORDER BY id").getResultList();
  }

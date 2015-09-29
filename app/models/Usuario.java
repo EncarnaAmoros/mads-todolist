@@ -31,7 +31,7 @@ public class Usuario {
  public String toString() {
    String fechaStr = null;
    if (fechaNacimiento != null) {
-     SimpleDateFormat formateador = new SimpleDateFormat("dd-MMyyyy");
+     SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
      fechaStr = formateador.format(fechaNacimiento);
    }
    return String.format("Usuario id: %s login: %s nombre: %s " +

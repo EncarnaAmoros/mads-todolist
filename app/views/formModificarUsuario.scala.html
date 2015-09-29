@@ -1,0 +1,64 @@
+@(usuarioForm: Form[Usuario], mensaje: String)
+@if(mensaje != "") {
+  <script type="text/javascript">
+    alert("Hay errores en el formulario");
+  </script>
+}
+@main("Nuevo Usuario") {
+  <head>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/formularioNuevoUsuario.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap/stylesheets/bootstrap.min.css")">
+  </head>
+
+  <body>
+    <div class="contenidoExterior">
+      <h1>Editar usuario</h1>
+    </div>
+
+    @if(usuarioForm != null) {
+      <div class="contenidoInterior">
+        <div class="encabezadoTitulo2">
+          <h2 class="titulo2">Usuario @usuarioForm("id").value</h2>
+        </div>
+
+        <form name="formulario" method="POST" action="@routes.Usuarios.grabaUsuarioModificado()">
+           <fieldset class="marco_principal">
+             <input type="hidden" name="id" value='@usuarioForm("id").value'>
+             <p class="etiqueta">Login</p>
+             <input type="text" name="login" value='@usuarioForm("login").value' class="datos">
+             <p class="datos_avisos" id="login"> Required </p>
+             <p class="etiqueta">Nombre</p>
+             <input type="text" name="nombre" value='@usuarioForm("nombre").value' class="datos">
+             <p class="etiqueta">Apellidos</p>
+             <input type="text" name="apellidos" value='@usuarioForm("apellidos").value' class="datos">
+             <p class="etiqueta">Correo electrónico</p>
+             <input type="text" name="eMail" value='@usuarioForm("eMail").value' class="datos">
+             <p class="etiqueta">Fecha de nacimiento</p>
+             <input type="text" name="fechaNacimiento" id="fechaNacimiento" value='@usuarioForm("fechaNacimiento").value' class="datos">
+             <p class="datos_avisos" id="fechaNacimientoRest"> Formato (dd-mm-yyyy)</p>
+
+             <div class="botones_inferiores">
+               <input type="submit" value="Guardar" class="btn btn-primary">
+               <a class="btn btn-primary" style="float:right" href="@routes.Usuarios.listaUsuarios()">Cancelar</a>
+             </div>
+           </fieldset>
+         </form>
+
+         @if(mensaje != "") {
+           <!--Mostramos las restricciones con un color rojo-->
+           <script type="text/javascript">
+              function coloreaRestriccion() {
+               //Ponemos en rojo los cuadros con restricciones
+               var campologin = document.getElementById('login');
+               campologin.style.color = "#FD0505";
+               var campofecha = document.getElementById('fechaNacimientoRest');
+               campofecha.style.color = "#FD0505";
+              }
+              coloreaRestriccion();
+            </script>
+          }
+        }
+
+     </div>
+  </body>
+}
