@@ -13,6 +13,11 @@ public class UsuarioService {
    return UsuarioDAO.create(usuario);
  }
 
+ //Modifica los datos del usuario y lo devuelve
+ public static void modificarUsuario(Usuario usuario) {
+   UsuarioDAO.update(usuario);
+ }
+
  public static List<Usuario> findAllUsuarios() {
    return UsuarioDAO.findAll();
  }

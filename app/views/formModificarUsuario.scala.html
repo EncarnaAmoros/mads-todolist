@@ -23,6 +23,7 @@
 
         <form name="formulario" method="POST" action="@routes.Usuarios.grabaUsuarioModificado()">
            <fieldset class="marco_principal">
+             <input type="hidden" name="id" value='@usuario.id'>
              <p class="etiqueta">Login</p>
              <input type="text" name="login" value="@usuario.login" class="datos">
              <p class="datos_avisos" id="login"> Required </p>
@@ -33,19 +34,21 @@
              <p class="etiqueta">Correo electrónico</p>
              <input type="text" name="eMail" value="@usuario.eMail" class="datos">
              <p class="etiqueta">Fecha de nacimiento</p>
-             <input type="text" name="fechaNacimientoUsuario" id="fechaNacimientoid" value ="" class="datos">
+             <input type="text" name="fechaNacimiento" id="fechaNacimiento" value ="@usuario.fechaNacimiento" class="datos">
              <p class="datos_avisos" id="fechaNacimientoRest"> Formato (dd-mm-yyyy)</p>
 
              <!--Mostramos la fecha en el formato correcto dd-MM-yyyy-->
              <script type="text/javascript">
                var fecha = '@{usuario.fechaNacimiento}';
                if (fecha!= null) {
+                 alert('@{usuario.fechaNacimiento}');
                  var fecha1 = new Date('@{usuario.fechaNacimiento}');
                  var day = fecha1.getDay();
                  var month = fecha1.getMonth();
                  var year = fecha1.getFullYear();
-                 var datofecha = document.getElementById("fechaNacimientoid");
-                 datofecha.value = day+"/"+month+"/"+year;
+                 var datofecha = document.getElementById("fechaNacimiento");
+                 datofecha.value = day+"-"+month+"-"+year;
+                 alert(day+"-"+month+"-"+year);
                }
              </script>
 

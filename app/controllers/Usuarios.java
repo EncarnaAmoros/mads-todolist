@@ -14,6 +14,11 @@ import java.util.Date;
 
 public class Usuarios extends Controller {
 
+    //Guardamos la información del usuario para tener formulario
+    //relleno por defecto al entrar (cuando volvemos de errores badRequest)
+    Usuario usuario_a_modificar;
+
+
     @Transactional(readOnly = true)
     // Devuelve una página con la lista de usuarios
     public Result listaUsuarios() {
@@ -55,20 +60,21 @@ public class Usuarios extends Controller {
    //datos del usuario pudiendose modificar
    public Result editarUsuario(String id) {
      Usuario usuario = UsuarioService.findUsuario(id);
-     return ok(editarUsuario.render(Form.form(Usuario.class), usuario, ""));
+     usuario_a_modificar = usuario;
+     return ok(formModificarUsuario.render(Form.form(Usuario.class), usuario, ""));
    }
 
    @Transactional
   // Modifica un usuario en la BD y devuelve código HTTP
   // de redirección a la página de listado de usuarios
   public Result grabaUsuarioModificado() {
-    /*Form<Usuario> usuarioForm = Form.form(Usuario.class).bindFromRequest();
+    Form<Usuario> usuarioForm = Form.form(Usuario.class).bindFromRequest();
     if (usuarioForm.hasErrors()) {
-      Usuario usuario = usuarioForm.get();
-      return badRequest(editarUsuario.render(usuarioForm, usuario, "Hay errores en el formulario"));
+      return badRequest(formModificarUsuario.render(usuarioForm, usuario_a_modificar, "Hay errores en el formulario"));
     }
     Usuario usuario = usuarioForm.get();
-    //usuario = UsuarioService.grabaUsuarioModificado(usuario);*/
+    System.out.println("EN USUFORM.get:::::::"+usuario.toString());
+    UsuarioService.modificarUsuario(usuario);
     flash("grabaUsuario", "El usuario se ha grabado correctamente");
     return redirect(controllers.routes.Usuarios.listaUsuarios());
   }

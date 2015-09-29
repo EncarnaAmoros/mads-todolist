@@ -11,7 +11,6 @@ public class UsuarioDAO {
 
  public static Usuario create (Usuario usuario) {
    usuario.nulificaAtributos();
-   System.out.println("Mira su fecha:"+usuario.fechaNacimiento);
    JPA.em().persist(usuario);
    // Hacemos un flush y un refresh para asegurarnos de que se realiza
    // la creación en la BD y se devuelve el id inicializado
@@ -19,6 +18,13 @@ public class UsuarioDAO {
    JPA.em().refresh(usuario);
    Logger.debug(usuario.toString());
    return usuario;
+ }
+
+ //Modifica el usuario y lo devuelve
+ public static void update (Usuario usuario) {
+   System.out.println("EN UPDATE:::::::"+usuario.toString());
+   JPA.em().merge(usuario);
+   System.out.println("DESPUES DE UPDATE:::::::"+usuario.toString());
  }
 
  public static List<Usuario> findAll() {

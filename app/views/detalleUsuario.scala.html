@@ -37,12 +37,12 @@
                var month = fecha1.getMonth();
                var year = fecha1.getFullYear();
                var datofecha = document.getElementById("fechausuario");
-               datofecha.innerHTML = day+"/"+month+"/"+year;
+               datofecha.innerHTML = day+"-"+month+"-"+year;
              }
            </script>
 
            <div class="botones_inferiores">
-             <a class="btn btn-primary" href="@routes.Usuarios.listaUsuarios()">Editar</a>
+             <a class="btn btn-primary" href="@routes.Usuarios.editarUsuario({usuario.id})">Editar</a>
              <a class="btn btn-primary" style="margin-left:16px" href="@routes.Usuarios.listaUsuarios()">Volver</a>
            </div>
          </fieldset>
