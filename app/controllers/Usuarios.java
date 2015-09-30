@@ -81,7 +81,6 @@ public class Usuarios extends Controller {
   @Transactional
   //Elimina un usuario en la BD según su id
   public Result borraUsuario(String id) {
-    System.out.println("entra1");
     UsuarioService.deleteUsuario(id);
     return redirect("ok");
   }

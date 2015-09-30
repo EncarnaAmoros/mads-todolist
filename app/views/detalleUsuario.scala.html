@@ -26,7 +26,11 @@
            <p class="etiqueta">Correo electrónico: </p>
            <h5 class="datos_u">@{usuario.eMail}</h5>
            <p class="etiqueta">Fecha de nacimiento: </p>
-           <h5 class="datos_u" id="fechausuario">@usuario.fechaNacimiento.format("dd-MM-yyyy")</h5>
+           @if(usuario.fechaNacimiento != null) {
+             <h5 class="datos_u" id="fechausuario">@usuario.fechaNacimiento.format("dd-MM-yyyy")</h5>
+           } else {
+             <h5 class="datos_u" id="fechausuario"></h5>
+           }
 
            <div class="botones_inferiores">
              <a class="btn btn-primary" href="@routes.Usuarios.editarUsuario({usuario.id})">Editar</a>
