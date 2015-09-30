@@ -12,7 +12,7 @@ GET     /saludo                     controllers.Application.saludo(nombre: Strin
 GET     /usuarios/nuevo             controllers.Usuarios.formularioNuevoUsuario()
 
 # Para grabar nuevo usuario
-POST    /usuarios/nuevo             controllers.Usuarios.grabaNuevoUsuario()
+POST    /usuarios/nuevo             controllers.Usuarios.grabaNuevoUsuario(n: Integer)
 
 # Pagina listar usuarios
 GET     /usuarios                   controllers.Usuarios.listaUsuarios()

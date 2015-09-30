@@ -38,15 +38,23 @@ public class Usuarios extends Controller {
     @Transactional
    // Añade un nuevo usuario en la BD y devuelve código HTTP
    // de redirección a la página de listado de usuarios
-   public Result grabaNuevoUsuario() {
+   public Result grabaNuevoUsuario(int n) {
      Form<Usuario> usuarioForm = Form.form(Usuario.class).bindFromRequest();
      if (usuarioForm.hasErrors()) {
        return badRequest(formCreacionUsuario.render(usuarioForm, "Hay errores en el formulario"));
      }
      Usuario usuario = usuarioForm.get();
      usuario = UsuarioService.grabaUsuario(usuario);
-     flash("grabaUsuario", "El usuario se ha grabado correctamente");
-     return redirect(controllers.routes.Usuarios.listaUsuarios());
+     //El argumento 0 quiere decir que el usuario lo ha creado el administrador
+     //Se le reenvia a la página con la lista de usuarios
+     if(n==0) {
+       flash("grabaUsuario", "El usuario se ha grabado correctamente");
+       return redirect(controllers.routes.Usuarios.listaUsuarios());
+     } //Si el argumento es 1 el usuario se ha registrado y se le envia a una
+     //página de saludo
+     else {
+       return redirect(controllers.routes.Application.saludo(usuario.login));
+     }
    }
 
    @Transactional(readOnly = true)

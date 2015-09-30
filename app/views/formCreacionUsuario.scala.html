@@ -21,7 +21,7 @@
         <h2 class="titulo2">Usuario (nuevo)</h2>
       </div>
 
-      @helper.form(action = routes.Usuarios.grabaNuevoUsuario()) {
+      @helper.form(action = routes.Usuarios.grabaNuevoUsuario(0)) {
          <fieldset class="marco_principal">
            <p class="etiqueta">Login</p>
            <input type="text" name="login" value="" class="datos">
