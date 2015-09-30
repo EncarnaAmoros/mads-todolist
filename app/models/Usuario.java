@@ -19,6 +19,7 @@ public class Usuario {
  public String eMail;
  @Formats.DateTime(pattern="dd-MM-yyyy")
  public Date fechaNacimiento;
+ public String password;
 
  // Sustituye por null todas las cadenas vacías que pueda tener
  // un usuario en sus atributos
@@ -26,6 +27,7 @@ public class Usuario {
    if (nombre != null && nombre.isEmpty()) nombre = null;
    if (apellidos != null && apellidos.isEmpty()) apellidos = null;
    if (eMail != null && eMail.isEmpty()) eMail = null;
+   if (password != null && password.isEmpty()) password = null;
  }
 
  public String toString() {
@@ -35,8 +37,9 @@ public class Usuario {
      fechaStr = formateador.format(fechaNacimiento);
    }
    return String.format("Usuario id: %s login: %s nombre: %s " +
-                         "apellidos: %s eMail: %s fechaNacimiento: %s",
-                         id, login, nombre, apellidos, eMail, fechaStr);
+                         "apellidos: %s eMail: %s fechaNacimiento: %s" +
+                         "password: %s",
+                         id, login, nombre, apellidos, eMail, fechaStr, password);
  }
 
 }
