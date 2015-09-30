@@ -4,7 +4,7 @@
     alert("Hay errores en el formulario");
   </script>
 }
-@main("Nuevo Usuario") {
+@main("Registro") {
   <head>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/formularioNuevoUsuario.css")">
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
@@ -12,16 +12,16 @@
 
   <body>
     <div class="contenidoExterior">
-      <h1>Añadir usuario</h1>
+      <h1>To-do List</h1>
     </div>
 
 
     <div class="contenidoInterior">
       <div class="encabezadoTitulo2">
-        <h2 class="titulo2">Usuario (nuevo)</h2>
+        <h2 class="titulo2">Registro</h2>
       </div>
 
-      @helper.form(action = routes.Usuarios.grabaNuevoUsuario(0)) {
+      @helper.form(action = routes.Usuarios.grabaNuevoUsuario(1)) {
          <fieldset class="marco_principal">
            <p class="etiqueta">Login</p>
            <input type="text" name="login" value="" class="datos">
@@ -35,10 +35,13 @@
            <p class="etiqueta">Fecha de nacimiento</p>
            <input type="text" name="fechaNacimiento" value="" class="datos">
            <p class="datos_avisos" id="fechaNacimiento"> Formato (dd-mm-yyyy)</p>
-
+           <p class="etiqueta">Contraseña</p>
+           <input type="password" name="password" value="" class="datos">
+           <br>
+           <br>
            <div class="botones_inferiores">
              <input type="submit" value="Guardar" class="btn btn-primary">
-             <a class="btn btn-primary" style="float:right" href="@routes.Usuarios.listaUsuarios()">Cancelar</a>
+             <!--<a class="btn btn-primary" style="float:right" href="@routes.Usuarios.listaUsuarios()">Cancelar</a>-->
            </div>
          </fieldset>
        }

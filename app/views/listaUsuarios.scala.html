@@ -13,16 +13,10 @@
      }
   </script>
 }
-<!--Muestra los mensajes en la página por javascript-->
-<!--@if(mensaje != "") {
-  <script type="text/javascript">
-    alert('@mensaje');
-  </script>
-}-->
 @main("Listado de usuarios", scripts) {
   <head>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/listaUsuarios.css")">
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
   </head>
 
   <body>
