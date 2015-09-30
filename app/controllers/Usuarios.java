@@ -29,6 +29,8 @@ public class Usuarios extends Controller {
       return ok(listaUsuarios.render(usuarios, mensaje));
     }
 
+    //Muestra un formulario que se rellena con la información
+    //del usuario que posteriormente se grabará en la BD
     public Result formularioNuevoUsuario() {
       return ok(formCreacionUsuario.render(Form.form(Usuario.class),""));
     }
@@ -83,6 +85,13 @@ public class Usuarios extends Controller {
   public Result borraUsuario(String id) {
     UsuarioService.deleteUsuario(id);
     return redirect("ok");
+  }
+
+  @Transactional
+  //Muestra un formulario que se rellena con la información
+  //del usuario que posteriormente se grabará en la BD
+  public Result registrarUsuario() {
+    return ok(formRegistroUsuario.render(Form.form(Usuario.class),""));
   }
 
 }
