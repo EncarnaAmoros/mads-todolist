@@ -29,8 +29,6 @@ public class Usuarios extends Controller {
       return ok(listaUsuarios.render(usuarios, mensaje));
     }
 
-    //Muestra un formulario que se rellena con la información
-    //del usuario que posteriormente se grabará en la BD
     public Result formularioNuevoUsuario() {
       return ok(formCreacionUsuario.render(Form.form(Usuario.class),""));
     }
@@ -50,7 +48,8 @@ public class Usuarios extends Controller {
      if(n==0) {
        flash("grabaUsuario", "El usuario se ha grabado correctamente");
        return redirect(controllers.routes.Usuarios.listaUsuarios());
-     } //Si el argumento es 1 el usuario se ha registrado y se le envia a una
+     }
+     //Si el argumento es 1 el usuario se ha registrado y se le envia a una
      //página de saludo
      else {
        return redirect(controllers.routes.Application.saludo(usuario.login));
@@ -91,6 +90,7 @@ public class Usuarios extends Controller {
   @Transactional
   //Elimina un usuario en la BD según su id
   public Result borraUsuario(String id) {
+    System.out.println("entra1");
     UsuarioService.deleteUsuario(id);
     return redirect("ok");
   }
@@ -100,6 +100,13 @@ public class Usuarios extends Controller {
   //del usuario que posteriormente se grabará en la BD
   public Result registrarUsuario() {
     return ok(formRegistroUsuario.render(Form.form(Usuario.class),""));
+  }
+
+  @Transactional
+  //Muestra una página que se rellena con la información
+  //del usuario login y password para que se logee
+  public Result loginUsuario() {
+    return ok("Esta es la dirección de logeo");
   }
 
 }
