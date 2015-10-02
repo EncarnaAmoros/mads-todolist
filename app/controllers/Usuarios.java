@@ -102,11 +102,21 @@ public class Usuarios extends Controller {
     return ok(formRegistroUsuario.render(Form.form(Usuario.class),""));
   }
 
-  @Transactional
+  @Transactional (readOnly = true)
   //Muestra una página que se rellena con la información
   //del usuario login y password para que se logee
   public Result loginUsuario() {
+    compruebaLoginUsuario("prueba", "prueba");
     return ok("Esta es la dirección de logeo");
+  }
+
+  @Transactional (readOnly = true)
+  //Comprueba si el login y password pertenecen a un
+  //usuario real, si no devuelve mensaje de error
+  public void compruebaLoginUsuario(String login, String password) {
+    Usuario usuario = UsuarioService.findUsuarioByLoginPassword(login, password);
+    if(usuario==null) { System.out.println("NO lo ha encontrado");}
+    else { System.out.println("LO ha encontrado");}
   }
 
 }

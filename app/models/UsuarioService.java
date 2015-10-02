@@ -40,4 +40,9 @@ public class UsuarioService {
    }
  }
 
+ //Devuelve un usuario según su login y password
+ public static Usuario findUsuarioByLoginPassword(String login, String password) {
+   return UsuarioDAO.findByLoginPassword(login, password);
+ }
+
 }
