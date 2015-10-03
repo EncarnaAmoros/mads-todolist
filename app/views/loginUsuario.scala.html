@@ -1,0 +1,52 @@
+@(mensaje: String)
+@main("Iniciar sesión") {
+  <head>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/loginUsuario.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
+  </head>
+
+  <body>
+    <div class="contenidoExterior">
+      <h1>To-do List</h1>
+    </div>
+
+
+    <div class="contenidoInterior">
+      <div class="encabezadoTitulo2">
+        <h2 class="titulo2">Iniciar sesión</h2>
+      </div>
+
+         <div class="card signin-card">
+           <p class="etiqueta">Login</p>
+           <input type="text" name="login" value="" class="datos">
+           <p class="etiqueta">Pasword</p>
+           <input type="password" name="password" value="" class="datos">
+
+           <div class="botones_inferiores">
+             <a class="btn btn-primary" id="boton" href="">Iniciar sesión</a>
+           </div>
+         </div>
+
+         <div class="info">
+           <p class="tagline">
+             To-do List, tu lista para los que haceres diarios y cada día la de más gente
+           </p>
+        </div>
+
+       @if(mensaje != "") {
+         <!--Mostramos las restricciones con un color rojo-->
+         <script type="text/javascript">
+            function alertaDatos() {
+             /*/Ponemos en rojo los cuadros con restricciones
+             var campologin = document.getElementById('login');
+             campologin.style.color = "#FD0505";
+             var campofecha = document.getElementById('fechaNacimiento');
+             campofecha.style.color = "#FD0505";*/
+             alert("Los datos no son correctos");
+            }
+            alertaDatos();
+          </script>
+        }
+     </div>
+  </body>
+}

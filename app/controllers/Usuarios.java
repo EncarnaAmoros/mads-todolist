@@ -107,7 +107,7 @@ public class Usuarios extends Controller {
   //del usuario login y password para que se logee
   public Result loginUsuario() {
     compruebaLoginUsuario("prueba", "prueba");
-    return ok("Esta es la dirección de logeo");
+    return ok(loginUsuario.render(""));
   }
 
   @Transactional (readOnly = true)
