@@ -90,7 +90,6 @@ public class Usuarios extends Controller {
   @Transactional
   //Elimina un usuario en la BD según su id
   public Result borraUsuario(String id) {
-    System.out.println("entra1");
     UsuarioService.deleteUsuario(id);
     return redirect("ok");
   }
@@ -106,17 +105,28 @@ public class Usuarios extends Controller {
   //Muestra una página que se rellena con la información
   //del usuario login y password para que se logee
   public Result loginUsuario() {
-    compruebaLoginUsuario("prueba", "prueba");
     return ok(loginUsuario.render(""));
   }
 
   @Transactional (readOnly = true)
   //Comprueba si el login y password pertenecen a un
   //usuario real, si no devuelve mensaje de error
-  public void compruebaLoginUsuario(String login, String password) {
-    Usuario usuario = UsuarioService.findUsuarioByLoginPassword(login, password);
-    if(usuario==null) { System.out.println("NO lo ha encontrado");}
-    else { System.out.println("LO ha encontrado");}
+  public Result compruebaLoginUsuario() {
+    Form<Usuario> usuarioForm = Form.form(Usuario.class).bindFromRequest();
+    Usuario usuario = usuarioForm.get();
+    usuario = UsuarioService.findUsuarioByLoginPassword(usuario.login, usuario.password);
+    //Si no encuentra el usuario mostramos mensaje de error
+    if(usuario==null) {
+      return ok(loginUsuario.render("Lo sentimos, no se reconoce el usuario introducido"));
+    }
+    //Si lo encuentra si es admin va a listaUsuarios, si no, a la página de saludo
+    else {
+      if(usuario.login.equals("admin") && usuario.password.equals("admin")) {
+        return redirect(controllers.routes.Usuarios.listaUsuarios());
+      } else {
+        return redirect(controllers.routes.Application.saludo(usuario.login));
+      }
+    }
   }
 
 }

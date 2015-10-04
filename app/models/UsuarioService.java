@@ -30,12 +30,10 @@ public class UsuarioService {
  public static boolean deleteUsuario(String id) {
    try {
      UsuarioDAO.delete(id);
-     System.out.println("VA");
      return true;
    }
    catch(Exception e)
    {
-     System.out.println("NO VA");
      return false;
    }
  }

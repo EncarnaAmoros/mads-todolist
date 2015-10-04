@@ -39,7 +39,7 @@ body {
   margin-bottom: 4px;
 }
 
-/*Formulario y su contenido*/
+/*Formulario y demás contenido*/
 
 .signin-card {
   position: relative;
@@ -100,12 +100,6 @@ body {
   margin-bottom: 15px;
 }
 
-.datos_avisos {
-  margin-left: 2px;
-  margin-top: 3px;
-  color: #9E9898;
-}
-
 #boton {
   margin-top: 0px;
   width: 114%;
@@ -146,6 +140,8 @@ body {
   z-index: 1;
 }
 
+/*Mensajes de error, validaciones*/
+
 .mensaje-error {
   transition: max-height 0.3s, opacity 0.3s 0s steps(10, end);
   height: auto;
@@ -155,4 +151,13 @@ body {
   display: block;
   color: #dd4b39;
   line-height: 17px;
+}
+
+#mensaje-noencontrado {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  border: 0px;
+  margin-right: 37%;
+  margin-left: 37%;
+  background-color: #fff !important;
 }

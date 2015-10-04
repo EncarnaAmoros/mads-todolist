@@ -1,17 +1,30 @@
 @(mensaje: String)
 @scripts = {
-   <script type="text/javascript">
-     function del(urlBorrar) {
-       $.ajax({
-         url: urlBorrar,
-         type: 'DELETE',
-         success: function(results) {
-           //refresh the page
-           location.reload();
-         }
-       });
+  <!--Mostramos restricciones de campos no vacíos-->
+  <script type="text/javascript">
+     function validacion() {
+       //Comprobamos si algun campo está vacio al enviar datos
+       var campologin = document.getElementById('login');
+       var campopass = document.getElementById('password');
+       var errorlogin = document.getElementById('error_login');
+       var errorpass = document.getElementById('error_password');
+       if(campologin.value == "" && campopass.value == "") {
+         errorlogin.style.opacity = "1";
+         errorpass.style.opacity = "1";
+         return false;
+       } else if(campologin.value == "") {
+         errorlogin.style.opacity = "1";
+         errorpass.style.opacity = "0";
+         return false;
+       } else if(campopass.value == "") {
+         errorlogin.style.opacity = "0";
+         errorpass.style.opacity = "1";
+         return false;
+       } else {
+         return true;
+       }
      }
-  </script>
+ </script>
 }
 @main("Iniciar sesión", scripts) {
   <head>
@@ -29,7 +42,12 @@
         <h2 class="titulo2">Iniciar sesión</h2>
       </div>
 
-      <form action="" method="" name="" onsubmit="return validacion()">
+      <!--Muestra los mensajes en la página html-->
+     @if(mensaje != "") {
+       <div class="alert alert-danger" id="mensaje-noencontrado"> @mensaje </div>
+      }
+
+      <form method="POST" action="@routes.Usuarios.compruebaLoginUsuario()" onsubmit="return validacion()">
         <div class="card signin-card">
          <p class="etiqueta">Login</p>
          <input type="login" name="login" id="login" value="" class="datos" placeholder=" Introduce el login">
@@ -39,9 +57,6 @@
          <span role="alert" class="mensaje-error" id="error_password">Es obligatorio rellenar este campo</span>
 
          <div class="botones_inferiores">
-           <!--<a class="btn btn-primary" style="cursor: pointer;" id="boton">
-             Iniciar sesión
-           </a>-->
            <input type="submit" class="btn btn-primary" style="cursor: pointer;" id="boton" value="Iniciar sesión">
          </div>
         </div>
@@ -52,32 +67,6 @@
              To-do List, tu lista para los que haceres diarios y cada día la de más gente
            </p>
         </div>
-
-         <!--Mostramos restricciones de campos no vacíos-->
-         <script type="text/javascript">
-            function validacion() {
-              //Comprobamos si algun campo está vacio al enviar datos
-              var campologin = document.getElementById('login');
-              var campopass = document.getElementById('password');
-              var errorlogin = document.getElementById('error_login');
-              var errorpass = document.getElementById('error_password');
-              if(campologin.value == "" && campopass.value == "") {
-                errorlogin.style.opacity = "1";
-                errorpass.style.opacity = "1";
-                return false;
-              } else if(campologin.value == "") {
-                errorlogin.style.opacity = "1";
-                errorpass.style.opacity = "0";
-                return false;
-              } else if(campopass.value == "") {
-                errorlogin.style.opacity = "0";
-                errorpass.style.opacity = "1";
-                return false;
-              } else {
-                return true;
-              }
-            }
-        </script>
 
      </div>
   </body>
