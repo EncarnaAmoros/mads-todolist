@@ -86,12 +86,15 @@ public class Usuarios extends Controller {
    @Transactional
   // Modifica un usuario en la BD y devuelve código HTTP
   // de redirección a la página de listado de usuarios
+  //No modificael pa ssword del usuario
   public Result grabaUsuarioModificado() {
+    String password_no_change = usuarioForm.get().password;
     Form<Usuario> usuarioForm = Form.form(Usuario.class).bindFromRequest();
     if (usuarioForm.hasErrors()) {
       return badRequest(formModificarUsuario.render(usuarioForm, "Hay errores en el formulario"));
     }
     Usuario usuario = usuarioForm.get();
+    usuario.password = password_no_change;
     UsuarioService.modificarUsuario(usuario);
     flash("grabaUsuario", "El usuario se ha grabado correctamente");
     return redirect(controllers.routes.Usuarios.listaUsuarios());
@@ -124,18 +127,20 @@ public class Usuarios extends Controller {
   public Result compruebaLoginUsuario() {
     Form<Usuario> usuarioForm = Form.form(Usuario.class).bindFromRequest();
     Usuario usuario = usuarioForm.get();
-    usuario = UsuarioService.findUsuarioByLoginPassword(usuario.login, usuario.password);
-    //Si no encuentra el usuario mostramos mensaje de error
-    if(usuario==null) {
-      return ok(loginUsuario.render("Lo sentimos, no se reconoce el usuario introducido"));
+
+    //Si se logea admin va a listaUsuarios
+    if(usuario.login.equals("admin") && usuario.password.equals("admin")) {
+      return redirect(controllers.routes.Usuarios.listaUsuarios());
     }
-    //Si lo encuentra si es admin va a listaUsuarios, si no, a la página de saludo
+    //Si no es un admin
     else {
-      if(usuario.login.equals("admin") && usuario.password.equals("admin")) {
-        return redirect(controllers.routes.Usuarios.listaUsuarios());
-      } else {
+      usuario = UsuarioService.findUsuarioByLoginPassword(usuario.login, usuario.password);
+      //Si no encuentra el usuario mostramos mensaje de error
+      if(usuario==null)
+        return ok(loginUsuario.render("Lo sentimos, no se reconoce el usuario introducido"));
+      //Si lo encuentra va a la página de saludo
+      else
         return redirect(controllers.routes.Application.saludo(usuario.login));
-      }
     }
   }
 

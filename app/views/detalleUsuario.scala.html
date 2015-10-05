@@ -2,29 +2,30 @@
 @main("Detalle Usuario") {
   <head>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/detalleUsuario.css")">
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
   </head>
 
   <body>
     @if(usuario != null) {
-      <div class="contenidoExterior">
-        <h1>Detalle usuario @{usuario.id}</h1>
+      <div class="divEncabezado">
+        <div class="contenidoExterior">
+          <h1>To-do List</h1>
+        </div>
       </div>
 
       <div class="contenidoInterior">
         <div class="encabezadoTitulo2">
-          <h2 class="titulo2">Datos</h2>
+          <h2 class="titulo2">Detalle usuario @{usuario.id}</h2>
         </div>
 
          <fieldset class="marco_principal">
            <p class="etiqueta">Login: </p>
-           <h5 class="datos_u">@{usuario.login}</h5>
+           <h5 class="datos_u">@{usuario.login}</h5> </br>
            <p class="etiqueta">Nombre: </p>
-           <h5 class="datos_u">@{usuario.nombre}</h5>
+           <h5 class="datos_u">@{usuario.nombre}</h5> </br>
            <p class="etiqueta">Apellidos: </p>
-           <h5 class="datos_u">@{usuario.apellidos}</h5>
+           <h5 class="datos_u">@{usuario.apellidos}</h5> </br>
            <p class="etiqueta">Correo electrónico: </p>
-           <h5 class="datos_u">@{usuario.eMail}</h5>
+           <h5 class="datos_u">@{usuario.eMail}</h5> </br>
            <p class="etiqueta">Fecha de nacimiento: </p>
            @if(usuario.fechaNacimiento != null) {
              <h5 class="datos_u" id="fechausuario">@usuario.fechaNacimiento.format("dd-MM-yyyy")</h5>
@@ -34,7 +35,7 @@
 
            <div class="botones_inferiores">
              <a class="btn btn-primary" href="@routes.Usuarios.editarUsuario({usuario.id})">Editar</a>
-             <a class="btn btn-primary" style="margin-left:16px" href="@routes.Usuarios.listaUsuarios()">Volver</a>
+             <a class="btn btn-primary" style="float:right;margin-right:40px" href="@routes.Usuarios.listaUsuarios()">Volver</a>
            </div>
          </fieldset>
        </div>

@@ -1,5 +1,30 @@
 @(nombre: String)
 
 @main("Hola") {
-  <h1>Hola <em>@nombre</em>!</h1>
+  <head>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/loginUsuario.css")">
+  </head>
+
+  <body>
+    <div class="divEncabezado">
+      <div class="contenidoExterior">
+        <h1>To-do List</h1>
+      </div>
+    </div>
+
+    <div class="contenidoInterior" style="height: 511px !important;">
+      <div class="encabezadoTitulo2">
+        <h2 class="titulo2">
+          <h1 style="text-align: center; padding-top: 5%; color: rgb(0, 126, 229);">
+            Hola @nombre, bienvenido a
+          </h1>
+        </h2>
+      </div>
+      <div class="tituloApp">
+        <p>
+          To-do List
+        </p>
+      </div>
+    </div>
+  </body>
 }

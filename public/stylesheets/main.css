@@ -1,0 +1,73 @@
+body {
+  margin: 0px;
+  background-color: rgba(0, 126, 229, 0.9) !important;
+}
+
+/*Encabezado*/
+
+.divEncabezado {
+  margin-top: -15px;
+  border-bottom: 1px solid rgba(0, 126, 229, 0.5);
+}
+
+.encabezadoTitulo2 {
+  /*color: rgba(0, 126, 229, 0.7);*/
+}
+
+.contenidoExterior h1 {
+  font-size: 25px !important;
+  color: white;
+}
+
+.contenidoExterior {
+  margin-left: 100px;
+  margin-top: 20px;
+}
+
+/*Interior*/
+
+.container {
+  width: 100% !important;
+  padding: 0px !important;
+}
+
+.contenidoInterior {
+  background-color: white;
+  height: 100%;
+}
+
+/*Formulario y su contenido*/
+
+.h2 {
+  /*color: white;*/
+}
+
+.tagline {
+  /*color: white;*/
+}
+
+/*Botones*/
+.botones_inferiores {
+  background-color: color: rgba(0, 126, 229, 0.7);
+}
+
+.btn-primary {
+  border-radius: 2px !important;
+  width: 83px;
+}
+
+/*Pagina saludo*/
+
+.tituloApp {
+  border-bottom: 1px solid rgb(0, 126, 229);
+  border-top: 1px solid rgb(0, 126, 229);
+  margin-top: 45px;
+  height: 34%;
+}
+
+.tituloApp p {
+  color: rgb(0, 126, 229);
+  font-size: 56px;
+  text-align: center;
+  margin-top: 2.5%;
+}

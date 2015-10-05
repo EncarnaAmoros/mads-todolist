@@ -7,18 +7,18 @@
 @main("Nuevo Usuario") {
   <head>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/formularioNuevoUsuario.css")">
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
   </head>
 
   <body>
-    <div class="contenidoExterior">
-      <h1>Añadir usuario</h1>
+    <div class="divEncabezado">
+      <div class="contenidoExterior">
+        <h1>To-do List</h1>
+      </div>
     </div>
-
 
     <div class="contenidoInterior">
       <div class="encabezadoTitulo2">
-        <h2 class="titulo2">Usuario (nuevo)</h2>
+        <h2 class="titulo2">Nuevo usuario</h2>
       </div>
 
       @helper.form(action = routes.Usuarios.grabaNuevoUsuario(0)) {

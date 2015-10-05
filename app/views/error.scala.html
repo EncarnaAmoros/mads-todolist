@@ -1,13 +1,25 @@
 @(codigo: String, mensaje: String)
 
 @main("Not found") {
-  <br>
-  <br>
-  <h1>Error @codigo</h1>
-  <br>
-  <br>
-  <br>
-  @if(mensaje != "") {
-    <h1>Lo sentimos, <em>@mensaje</em></h1>
-   }
+  <head>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/detalleUsuario.css")">
+  </head>
+
+  <body>
+    <div class="divEncabezado">
+      <div class="contenidoExterior">
+        <h1>To-do List</h1>
+      </div>
+    </div>
+
+    <div class="contenidoInterior" style="padding-left: 100px;">
+      <br>
+      <br>
+      <h1>Error @codigo</h1>
+      <br>
+      @if(mensaje != "") {
+        <h1>Lo sentimos, <em>@mensaje</em></h1>
+       }
+     </div>
+   </body>
 }

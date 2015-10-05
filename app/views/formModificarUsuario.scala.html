@@ -7,18 +7,19 @@
 @main("Modificar Usuario") {
   <head>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/formularioNuevoUsuario.css")">
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
   </head>
 
   <body>
-    <div class="contenidoExterior">
-      <h1>Editar usuario</h1>
+    <div class="divEncabezado">
+      <div class="contenidoExterior">
+        <h1>To-do List</h1>
+      </div>
     </div>
 
     @if(usuarioForm != null) {
       <div class="contenidoInterior">
         <div class="encabezadoTitulo2">
-          <h2 class="titulo2">Usuario @usuarioForm("id").value</h2>
+          <h2 class="titulo2">Editar usuario @usuarioForm("id").value</h2>
         </div>
 
         <form name="formulario" method="POST" action="@routes.Usuarios.grabaUsuarioModificado()">
