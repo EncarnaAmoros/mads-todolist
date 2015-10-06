@@ -49,7 +49,7 @@
       }
 
       <form method="POST" action="@routes.Usuarios.compruebaLoginUsuario()" onsubmit="return validacion()">
-        <div class="card signin-card">
+        <div class="marco_principal signin-card">
          <p class="etiqueta">Login</p>
          <input type="login" name="login" id="login" value="" class="datos" placeholder=" Introduce el login">
          <span role="alert" class="mensaje-error" id="error_login">Es obligatorio rellenar este campo</span>
@@ -58,7 +58,7 @@
          <span role="alert" class="mensaje-error" id="error_password">Es obligatorio rellenar este campo</span>
 
          <div class="botones_inferiores">
-           <input type="submit" class="btn btn-primary" style="cursor: pointer;" id="boton" value="Iniciar sesión">
+           <input type="submit" class="btn btn-primary" value="Iniciar sesión">
          </div>
         </div>
        </form>
