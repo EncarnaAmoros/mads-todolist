@@ -41,6 +41,16 @@ public class Usuarios extends Controller {
      if (usuarioForm.hasErrors()) {
        return badRequest(formCreacionUsuario.render(usuarioForm, "Hay errores en el formulario"));
      }
+
+     //Si el login ya está en uso ha de escribir otro
+     if(UsuarioService.findUsuarioByLogin(usuarioForm.get().login) != null) {
+       if(n==0) {
+         return badRequest(formCreacionUsuario.render(usuarioForm, "Ya hay un usuario con dicho login"));
+       } else {
+         return badRequest(formRegistroUsuario.render(usuarioForm, "Ya hay un usuario con dicho login"));
+       }
+     }
+
      Usuario usuario = usuarioForm.get();
      usuario = UsuarioService.grabaUsuario(usuario);
      //El argumento 0 quiere decir que el usuario lo ha creado el administrador
@@ -93,6 +103,12 @@ public class Usuarios extends Controller {
     if (usuarioForm.hasErrors()) {
       return badRequest(formModificarUsuario.render(usuarioForm, "Hay errores en el formulario"));
     }
+
+    //Si el login ya está en uso ha de escribir otro
+    if(UsuarioService.findUsuarioByLoginNotId(usuarioForm.get().login, usuarioForm.get().id) != null) {
+      return badRequest(formModificarUsuario.render(usuarioForm, "Ya hay un usuario con dicho login"));
+    }
+
     Usuario usuario = usuarioForm.get();
     usuario.password = password_no_change;
     UsuarioService.modificarUsuario(usuario);

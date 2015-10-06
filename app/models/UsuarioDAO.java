@@ -50,9 +50,31 @@ public class UsuarioDAO {
     if(results.size()!=0) {
       u = results.get(0);
     }
-
     return u;
+ }
 
+ //Devuelve un usuario según su login
+ public static Usuario findByLoginPassword(String login) {
+   TypedQuery<Usuario> query = JPA.em().createQuery("SELECT u FROM Usuario AS u where u.login='" + login +
+                                              "'", Usuario.class);
+    List<Usuario> results = query.getResultList();
+    Usuario u = null;
+    if(results.size()!=0) {
+      u = results.get(0);
+    }
+    return u;
+ }
+
+ //Devuelve un usuario según su login que no tenga determinado id
+ public static Usuario findByLoginNotId(String login, String id) {
+   TypedQuery<Usuario> query = JPA.em().createQuery("SELECT u FROM Usuario AS u where u.login='" + login +
+                                              "' and u.id <> '" + id + "'", Usuario.class);
+    List<Usuario> results = query.getResultList();
+    Usuario u = null;
+    if(results.size()!=0) {
+      u = results.get(0);
+    }
+    return u;
  }
 
 }

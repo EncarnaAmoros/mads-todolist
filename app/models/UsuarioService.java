@@ -43,4 +43,14 @@ public class UsuarioService {
    return UsuarioDAO.findByLoginPassword(login, password);
  }
 
+ //Devuelve un usuario según su login
+ public static Usuario findUsuarioByLogin(String login) {
+   return UsuarioDAO.findByLoginPassword(login);
+ }
+
+ //Devuelve un usuario según su login que no tenga determinado id
+ public static Usuario findUsuarioByLoginNotId(String login, String id) {
+   return UsuarioDAO.findByLoginNotId(login, id);
+ }
+
 }

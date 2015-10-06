@@ -1,9 +1,4 @@
 @(usuarioForm: Form[Usuario], mensaje: String)
-@if(mensaje != "") {
-  <script type="text/javascript">
-    alert("Hay errores en el formulario");
-  </script>
-}
 @main("Registro") {
   <head>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/formularioNuevoUsuario.css")">
@@ -16,7 +11,6 @@
       </div>
     </div>
 
-
     <div class="contenidoInterior">
       <div class="encabezadoTitulo2">
         <h2 class="titulo2">Registro</h2>
@@ -24,6 +18,12 @@
 
       @helper.form(action = routes.Usuarios.grabaNuevoUsuario(1)) {
          <fieldset class="marco_principal">
+
+           <!--Muestra los mensajes en la página html-->
+           @if(mensaje != "") {
+            <div class="alert alert-danger" id="mensaje-noencontrado"> @mensaje </div>
+           }
+
            <p class="etiqueta">Login</p>
            <input type="text" name="login" value="" class="datos">
            <p class="datos_avisos" id="login"> Required </p>
@@ -47,7 +47,7 @@
          </fieldset>
        }
 
-       @if(mensaje != "") {
+       @if(mensaje == "Hay errores en el formulario") {
          <!--Mostramos las restricciones con un color rojo-->
          <script type="text/javascript">
             function coloreaRestriccion() {
