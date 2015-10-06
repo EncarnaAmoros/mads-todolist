@@ -21,16 +21,22 @@ GET     /usuarios                   controllers.Usuarios.listaUsuarios()
 GET     /usuarios/:id               controllers.Usuarios.detalleUsuario(id: String)
 
 # Pagina editar usuario
-GET     /usuarios/:id/editar         controllers.Usuarios.editarUsuario(id: String)
+GET     /usuarios/:id/editar        controllers.Usuarios.editarUsuario(id: String)
 
 # Para grabar la modificación de un usuario
-POST    /usuarios/modifica           controllers.Usuarios.grabaUsuarioModificado()
+POST    /usuarios/modifica          controllers.Usuarios.grabaUsuarioModificado()
 
 # Para eliminar un usuario
-DELETE  /usuarios/:id                controllers.Usuarios.borraUsuario(id: String)
+DELETE  /usuarios/:id               controllers.Usuarios.borraUsuario(id: String)
 
 # Pagina para el registro de usuarios
-GET     /registro                    controllers.Usuarios.registrarUsuario()
+GET     /registro                   controllers.Usuarios.registrarUsuario()
+
+# Pagina para el login de usuarios
+GET     /login                      controllers.Usuarios.loginUsuario()
+
+# Para logear un usuario
+POST    /login                      controllers.Usuarios.compruebaLoginUsuario()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

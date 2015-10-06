@@ -29,8 +29,6 @@ public class Usuarios extends Controller {
       return ok(listaUsuarios.render(usuarios, mensaje));
     }
 
-    //Muestra un formulario que se rellena con la información
-    //del usuario que posteriormente se grabará en la BD
     public Result formularioNuevoUsuario() {
       return ok(formCreacionUsuario.render(Form.form(Usuario.class),""));
     }
@@ -38,40 +36,61 @@ public class Usuarios extends Controller {
     @Transactional
    // Añade un nuevo usuario en la BD y devuelve código HTTP
    // de redirección a la página de listado de usuarios
+   //Argumento indica origen 0 de nuevo usuario y 1 de registro
    public Result grabaNuevoUsuario(int n) {
      Form<Usuario> usuarioForm = Form.form(Usuario.class).bindFromRequest();
      if (usuarioForm.hasErrors()) {
-       return badRequest(formCreacionUsuario.render(usuarioForm, "Hay errores en el formulario"));
+       if(n==0) {
+         return badRequest(formCreacionUsuario.render(usuarioForm, "Hay errores en el formulario"));
+       } else {
+         return badRequest(formRegistroUsuario.render(usuarioForm, "Hay errores en el formulario"));
+       }
      }
+
+     //Si el login ya está en uso ha de escribir otro
+     if(UsuarioService.findUsuarioByLogin(usuarioForm.get().login) != null) {
+       if(n==0) {
+         return badRequest(formCreacionUsuario.render(usuarioForm, "Ya hay un usuario con dicho login"));
+       } else {
+         return badRequest(formRegistroUsuario.render(usuarioForm, "Ya hay un usuario con dicho login"));
+       }
+     }
+
      Usuario usuario = usuarioForm.get();
      usuario = UsuarioService.grabaUsuario(usuario);
-     //El argumento 0 quiere decir que el usuario lo ha creado el administrador
-     //Se le reenvia a la página con la lista de usuarios
      if(n==0) {
        flash("grabaUsuario", "El usuario se ha grabado correctamente");
        return redirect(controllers.routes.Usuarios.listaUsuarios());
-     } //Si el argumento es 1 el usuario se ha registrado y se le envia a una
-     //página de saludo
-     else {
+     } else {
        return redirect(controllers.routes.Application.saludo(usuario.login));
      }
    }
 
    @Transactional(readOnly = true)
    // Devuelve una página con el detalle del usuario por su id
+   //Si no lo encuentra devuelve mensaje de error not found
    public Result detalleUsuario(String id) {
      Usuario usuario = UsuarioService.findUsuario(id);
-     return ok(detalleUsuario.render(usuario));
+     if(usuario!=null) {
+       return ok(detalleUsuario.render(usuario));
+     } else {
+       return notFound(error.render("404", "recurso no encontrado."));
+     }
    }
 
    @Transactional(readOnly = true)
    // Devuelve una página con un formulario relleno con los
    //datos del usuario pudiendose modificar
+   //Si el usuario no existe muestra pág error
    public Result editarUsuario(String id) {
      Usuario usuario = UsuarioService.findUsuario(id);
-     Form<Usuario> formulario = Form.form(Usuario.class);
-     usuarioForm = formulario.fill(usuario);
-     return ok(formModificarUsuario.render(usuarioForm, ""));
+     if(usuario!=null) {
+       Form<Usuario> formulario = Form.form(Usuario.class);
+       usuarioForm = formulario.fill(usuario);
+       return ok(formModificarUsuario.render(usuarioForm, ""));
+     } else {
+       return notFound(error.render("404", "recurso no encontrado."));
+     }
    }
 
    @Transactional
@@ -82,7 +101,17 @@ public class Usuarios extends Controller {
     if (usuarioForm.hasErrors()) {
       return badRequest(formModificarUsuario.render(usuarioForm, "Hay errores en el formulario"));
     }
+
+    //Si el login ya está en uso ha de escribir otro
+    if(UsuarioService.findUsuarioByLoginNotId(usuarioForm.get().login, usuarioForm.get().id) != null) {
+      return badRequest(formModificarUsuario.render(usuarioForm, "Ya hay un usuario con dicho login"));
+    }
+
+    //Se queda con el password que ya tenia, el admin no lo modifica
+    String password_no_change = UsuarioService.findUsuario(usuarioForm.get().id).password;
+
     Usuario usuario = usuarioForm.get();
+    usuario.password = password_no_change;
     UsuarioService.modificarUsuario(usuario);
     flash("grabaUsuario", "El usuario se ha grabado correctamente");
     return redirect(controllers.routes.Usuarios.listaUsuarios());
@@ -92,7 +121,7 @@ public class Usuarios extends Controller {
   //Elimina un usuario en la BD según su id
   public Result borraUsuario(String id) {
     UsuarioService.deleteUsuario(id);
-    return redirect("ok");
+    return redirect(controllers.routes.Usuarios.listaUsuarios());
   }
 
   @Transactional
@@ -100,6 +129,36 @@ public class Usuarios extends Controller {
   //del usuario que posteriormente se grabará en la BD
   public Result registrarUsuario() {
     return ok(formRegistroUsuario.render(Form.form(Usuario.class),""));
+  }
+
+  @Transactional (readOnly = true)
+  //Muestra una página que se rellena con la información
+  //del usuario login y password para que se logee
+  public Result loginUsuario() {
+    return ok(loginUsuario.render(""));
+  }
+
+  @Transactional (readOnly = true)
+  //Comprueba si el login y password pertenecen a un
+  //usuario real, si no devuelve mensaje de error
+  public Result compruebaLoginUsuario() {
+    Form<Usuario> usuarioForm = Form.form(Usuario.class).bindFromRequest();
+    Usuario usuario = usuarioForm.get();
+
+    //Si se logea admin va a listaUsuarios
+    if(usuario.login.equals("admin") && usuario.password.equals("admin")) {
+      return redirect(controllers.routes.Usuarios.listaUsuarios());
+    }
+    //Si no es un admin
+    else {
+      usuario = UsuarioService.findUsuarioByLoginPassword(usuario.login, usuario.password);
+      //Si no encuentra el usuario mostramos mensaje de error
+      if(usuario==null)
+        return ok(loginUsuario.render("Lo sentimos, no se reconoce el usuario introducido"));
+      //Si lo encuentra va a la página de saludo
+      else
+        return redirect(controllers.routes.Application.saludo(usuario.login));
+    }
   }
 
 }

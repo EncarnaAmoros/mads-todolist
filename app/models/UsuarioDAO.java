@@ -6,6 +6,7 @@ import play.db.jpa.*;
 import java.util.List;
 import java.util.Date;
 import models.*;
+import javax.persistence.TypedQuery;
 
 public class UsuarioDAO {
 
@@ -38,6 +39,42 @@ public class UsuarioDAO {
  public static void delete(String idUsuario) {
    Usuario usuario = JPA.em().getReference(Usuario.class, idUsuario);
    JPA.em().remove(usuario);
+ }
+
+ //Devuelve un usuario según su login y password
+ public static Usuario findByLoginPassword(String login, String password) {
+   TypedQuery<Usuario> query = JPA.em().createQuery("SELECT u FROM Usuario AS u where u.login='" + login +
+                                              "' and u.password='" + password + "'", Usuario.class);
+    List<Usuario> results = query.getResultList();
+    Usuario u = null;
+    if(results.size()!=0) {
+      u = results.get(0);
+    }
+    return u;
+ }
+
+ //Devuelve un usuario según su login
+ public static Usuario findByLoginPassword(String login) {
+   TypedQuery<Usuario> query = JPA.em().createQuery("SELECT u FROM Usuario AS u where u.login='" + login +
+                                              "'", Usuario.class);
+    List<Usuario> results = query.getResultList();
+    Usuario u = null;
+    if(results.size()!=0) {
+      u = results.get(0);
+    }
+    return u;
+ }
+
+ //Devuelve un usuario según su login que no tenga determinado id
+ public static Usuario findByLoginNotId(String login, String id) {
+   TypedQuery<Usuario> query = JPA.em().createQuery("SELECT u FROM Usuario AS u where u.login='" + login +
+                                              "' and u.id <> '" + id + "'", Usuario.class);
+    List<Usuario> results = query.getResultList();
+    Usuario u = null;
+    if(results.size()!=0) {
+      u = results.get(0);
+    }
+    return u;
  }
 
 }

@@ -1,0 +1,74 @@
+@(mensaje: String)
+@scripts = {
+  <!--Mostramos restricciones de campos no vacíos-->
+  <script type="text/javascript">
+     function validacion() {
+       //Comprobamos si algun campo está vacio al enviar datos
+       var campologin = document.getElementById('login');
+       var campopass = document.getElementById('password');
+       var errorlogin = document.getElementById('error_login');
+       var errorpass = document.getElementById('error_password');
+       if(campologin.value == "" && campopass.value == "") {
+         errorlogin.style.opacity = "1";
+         errorpass.style.opacity = "1";
+         return false;
+       } else if(campologin.value == "") {
+         errorlogin.style.opacity = "1";
+         errorpass.style.opacity = "0";
+         return false;
+       } else if(campopass.value == "") {
+         errorlogin.style.opacity = "0";
+         errorpass.style.opacity = "1";
+         return false;
+       } else {
+         return true;
+       }
+     }
+ </script>
+}
+@main("Iniciar sesión", scripts) {
+  <head>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/loginUsuario.css")">
+  </head>
+
+  <body>
+    <div class="divEncabezado">
+      <div class="contenidoExterior">
+        <h1>To-do List</h1>
+      </div>
+    </div>
+
+    <div class="contenidoInterior">
+      <div class="encabezadoTitulo2">
+        <h2 class="titulo2">Iniciar sesión</h2>
+      </div>
+
+      <!--Muestra los mensajes en la página html-->
+     @if(mensaje != "") {
+       <div class="alert alert-danger" id="mensaje-noencontrado"> @mensaje </div>
+      }
+
+      <form method="POST" action="@routes.Usuarios.compruebaLoginUsuario()" onsubmit="return validacion()">
+        <div class="marco_principal signin-card">
+         <p class="etiqueta">Login</p>
+         <input type="login" name="login" id="login" value="" class="datos" placeholder=" Introduce el login">
+         <span role="alert" class="mensaje-error" id="error_login">Es obligatorio rellenar este campo</span>
+         <p class="etiqueta">Pasword</p>
+         <input type="password" name="password" id="password" value="" class="datos" placeholder=" Introduce tu password">
+         <span role="alert" class="mensaje-error" id="error_password">Es obligatorio rellenar este campo</span>
+
+         <div class="botones_inferiores">
+           <input type="submit" class="btn btn-primary" value="Iniciar sesión">
+         </div>
+        </div>
+       </form>
+
+         <div class="info">
+           <p class="tagline">
+             To-do List, tu lista para los que haceres diarios y cada día la de más gente
+           </p>
+        </div>
+
+     </div>
+  </body>
+}

@@ -16,18 +16,23 @@
 @main("Listado de usuarios", scripts) {
   <head>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/listaUsuarios.css")">
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
   </head>
 
   <body>
-    <div class="contenidoExterior">
-      <h1>Listado de usuarios</h1>
+    <div class="divEncabezado">
+      <div class="contenidoExterior">
+        <h1>To-do List</h1>
+      </div>
     </div>
 
     <div class="contenidoInterior">
-       <table class="table table-striped" id="tabla_usuarios">
+      <div class="encabezadoTitulo2">
+        <h2 class="titulo2">Listado de usuarios</h2>
+      </div>
+
+      <table class="table table-striped" id="tabla_usuarios">
         <tbody>
-          <!--Titulos columnas de la tabla-->
+            <!--Titulos columnas de la tabla-->
           <tr>
            <th>id</th>
            <th>Login</th>
@@ -68,10 +73,11 @@
           </tr>
         </tbody>
       </table>
+
       <!--Muestra los mensajes en la página html-->
-     @if(mensaje != "") {
+      @if(mensaje != "") {
        <div class="alert alert-success" id="mensajes"> @mensaje </div>
       }
-     </div>
+    </div>
   </body>
 }

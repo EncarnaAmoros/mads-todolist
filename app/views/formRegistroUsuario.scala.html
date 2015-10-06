@@ -1,20 +1,15 @@
 @(usuarioForm: Form[Usuario], mensaje: String)
-@if(mensaje != "") {
-  <script type="text/javascript">
-    alert("Hay errores en el formulario");
-  </script>
-}
 @main("Registro") {
   <head>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/formularioNuevoUsuario.css")">
-    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
   </head>
 
   <body>
-    <div class="contenidoExterior">
-      <h1>To-do List</h1>
+    <div class="divEncabezado">
+      <div class="contenidoExterior">
+        <h1>To-do List</h1>
+      </div>
     </div>
-
 
     <div class="contenidoInterior">
       <div class="encabezadoTitulo2">
@@ -23,6 +18,12 @@
 
       @helper.form(action = routes.Usuarios.grabaNuevoUsuario(1)) {
          <fieldset class="marco_principal">
+
+           <!--Muestra los mensajes en la página html-->
+           @if(mensaje != "") {
+            <div class="alert alert-danger" id="mensaje-noencontrado"> @mensaje </div>
+           }
+
            <p class="etiqueta">Login</p>
            <input type="text" name="login" value="" class="datos">
            <p class="datos_avisos" id="login"> Required </p>
@@ -37,8 +38,8 @@
            <p class="datos_avisos" id="fechaNacimiento"> Formato (dd-mm-yyyy)</p>
            <p class="etiqueta">Contraseña</p>
            <input type="password" name="password" value="" class="datos">
-           <br>
-           <br>
+           <p class="datos_avisos" id="password"> Required </p>
+           
            <div class="botones_inferiores">
              <input type="submit" value="Guardar" class="btn btn-primary">
              <!--<a class="btn btn-primary" style="float:right" href="@routes.Usuarios.listaUsuarios()">Cancelar</a>-->
@@ -46,7 +47,7 @@
          </fieldset>
        }
 
-       @if(mensaje != "") {
+       @if(mensaje == "Hay errores en el formulario") {
          <!--Mostramos las restricciones con un color rojo-->
          <script type="text/javascript">
             function coloreaRestriccion() {
@@ -55,6 +56,8 @@
              campologin.style.color = "#FD0505";
              var campofecha = document.getElementById('fechaNacimiento');
              campofecha.style.color = "#FD0505";
+             var campopass = document.getElementById('password');
+             campopass.style.color = "#FD0505";
             }
             coloreaRestriccion();
           </script>

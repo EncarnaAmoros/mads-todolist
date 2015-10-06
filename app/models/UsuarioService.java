@@ -30,14 +30,27 @@ public class UsuarioService {
  public static boolean deleteUsuario(String id) {
    try {
      UsuarioDAO.delete(id);
-     System.out.println("VA");
      return true;
    }
    catch(Exception e)
    {
-     System.out.println("NO VA");
      return false;
    }
+ }
+
+ //Devuelve un usuario según su login y password
+ public static Usuario findUsuarioByLoginPassword(String login, String password) {
+   return UsuarioDAO.findByLoginPassword(login, password);
+ }
+
+ //Devuelve un usuario según su login
+ public static Usuario findUsuarioByLogin(String login) {
+   return UsuarioDAO.findByLoginPassword(login);
+ }
+
+ //Devuelve un usuario según su login que no tenga determinado id
+ public static Usuario findUsuarioByLoginNotId(String login, String id) {
+   return UsuarioDAO.findByLoginNotId(login, id);
  }
 
 }

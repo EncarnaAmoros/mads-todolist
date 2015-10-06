@@ -19,6 +19,7 @@ public class Usuario {
  public String eMail;
  @Formats.DateTime(pattern="dd-MM-yyyy")
  public Date fechaNacimiento;
+ @Constraints.Required
  public String password;
 
  // Sustituye por null todas las cadenas vacías que pueda tener
