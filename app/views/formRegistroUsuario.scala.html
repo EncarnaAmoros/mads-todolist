@@ -38,8 +38,8 @@
            <p class="datos_avisos" id="fechaNacimiento"> Formato (dd-mm-yyyy)</p>
            <p class="etiqueta">Contraseña</p>
            <input type="password" name="password" value="" class="datos">
-           <br>
-           <br>
+           <p class="datos_avisos" id="password"> Required </p>
+           
            <div class="botones_inferiores">
              <input type="submit" value="Guardar" class="btn btn-primary">
              <!--<a class="btn btn-primary" style="float:right" href="@routes.Usuarios.listaUsuarios()">Cancelar</a>-->
@@ -56,6 +56,8 @@
              campologin.style.color = "#FD0505";
              var campofecha = document.getElementById('fechaNacimiento');
              campofecha.style.color = "#FD0505";
+             var campopass = document.getElementById('password');
+             campopass.style.color = "#FD0505";
             }
             coloreaRestriccion();
           </script>
