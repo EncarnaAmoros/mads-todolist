@@ -1,33 +1,19 @@
 /*Interior*/
 
-.container {
-  width: 100% !important;
-  padding: 0px !important;
-}
-
-.contenidoInterior {
-  padding-top: 3px;
-  padding-bottom: 40px;
-}
-
-.encabezadoTitulo2 {
-  font-family: 'Open Sans', arial;
-  -webkit-font-smoothing: antialiased;
+.divTituloContenido {
   font-size: 18px;
   font-weight: 400;
   margin-bottom: 25px;
   text-align: -webkit-center;
 }
 
-.titulo2 {
+.tituloContenido {
   margin-bottom: 4px;
 }
 
 /*Formulario y su contenido*/
 
 .marco_principal {
-  border-radius: 2px;
-  background: #fff;
   padding-top: 15px;
   padding-left: 24px;
   padding-bottom: 4px;
@@ -36,41 +22,18 @@
 }
 
 .etiqueta {
-  margin-top: 7px;
-  margin-bottom: 7px;
-  font-weight: bold;
+  font-weight: bold !important;
 }
 
 .datos {
   width: 305px;
   height: 29px;
   padding: 0 8px;
-  direction: ltr;
-  margin-bottom: 10px;
-  position: relative;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
-  margin: 0;
-  background: #fff;
-  border: 1px solid #d9d9d9;
-  border-top: 1px solid #c0c0c0;
-  box-sizing: border-box;
-  -webkit-border-radius: 1px;
-  border-radius: 1px;
-  font-size: 15px;
   padding-left: 5px;
-}
-
-.datos:hover {
-    border: 1.5px solid #C3C2C2;
+  direction: ltr;
 }
 
 /*Botones*/
-
-.botones_inferiores {
-  margin-right: 30px;
-  padding-top: 5px;
-  margin-bottom: 15px;
-}
 
 /*Mensajes de error, validaciones*/
 
