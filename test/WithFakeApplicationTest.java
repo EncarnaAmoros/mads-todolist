@@ -20,4 +20,18 @@ public class WithFakeApplicationTest {
             });
         });
     }
+
+    @Test
+    public void testfindAllUsuariosDevuelveUnUsuario() {
+        running (fakeApplication(inMemoryDatabase()), () -> {
+            JPA.withTransaction(() -> {
+                Usuario usuario = new Usuario();
+                usuario.login = "pepe";
+                usuario.password = "pepe";
+                UsuarioService.grabaUsuario(usuario);
+                List<Usuario> listaUsuarios = UsuarioService.findAllUsuarios();
+                assertTrue(listaUsuarios.size() == 1);
+            });
+        });
+    }
 }
