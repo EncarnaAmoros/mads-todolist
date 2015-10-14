@@ -34,4 +34,18 @@ public class WithFakeApplicationTest {
             });
         });
     }
+
+    @Test
+    public void testfindUsuarioDevuelveUnUsuario() {
+        running (fakeApplication(inMemoryDatabase()), () -> {
+            JPA.withTransaction(() -> {
+                Usuario usuario = new Usuario();
+                usuario.login = "pepe";
+                usuario.password = "pepe";
+                UsuarioService.grabaUsuario(usuario);
+                Usuario usuario_encontrado = UsuarioService.findUsuario("1");
+                assertEquals(usuario.login, usuario_encontrado.login);
+            });
+        });
+    }
 }
