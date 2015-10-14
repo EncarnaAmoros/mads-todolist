@@ -84,4 +84,14 @@ public class WebServiceTest {
         });
     }
 
+    @Test
+    public void testListadoUsuarios() {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())), () -> {
+            int timeout = 8000;
+            WSResponse response = WS.url("http://localhost:3333/usuarios").get().get(timeout);
+            assertEquals(OK, response.getStatus());
+            assertTrue(response.getBody().contains("Listado de usuarios"));
+        });
+    }
+
 }
