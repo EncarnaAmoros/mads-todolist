@@ -8,9 +8,11 @@ scalaVersion := "2.11.6"
 
 libraryDependencies ++= Seq(
   javaJdbc,
+  javaJpa,
+  "org.hibernate" % "hibernate-entitymanager" % "4.3.7.Final",
+  "mysql" % "mysql-connector-java" % "5.1.18",
   cache,
-  javaWs,
-  javaJpa, "org.hibernate" % "hibernate-entitymanager" % "4.3.9.Final"
+  javaWs
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the
