@@ -56,4 +56,18 @@ public class WebServiceTest {
         });
     }
 
+    @Test
+    public void testdoRegistraNuevoUsuario() {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())), () -> {
+            int timeout = 10000;
+            WSResponse response = WS.url("http://localhost:3333/usuarios/nuevo?n=1")
+                        .setFollowRedirects(true)
+                        .setContentType("application/x-www-form-urlencoded")
+                        .post("login=Pepe&password=pepe&eMail=pepe@gmail.com")
+                        .get(timeout);
+            assertEquals(OK, response.getStatus());
+            assertTrue(response.getBody().contains("Hola Pepe, bienvenido a"));
+        });
+    }
+
 }
