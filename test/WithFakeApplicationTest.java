@@ -77,5 +77,27 @@ public class WithFakeApplicationTest {
         });
     }
 
+    //Para cuando se modifica un usuario, mire si hay un login igual que no sea él mismo
+    //Pues él mismo si puede repetir su login al modificar, pero no repetir login de otro usuario
+    @Test
+    public void testfindUsuarioByLoginNotIdDevuelveNull() {
+        running (fakeApplication(inMemoryDatabase()), () -> {
+            JPA.withTransaction(() -> {
+                //Primer usuario
+                Usuario usuario = new Usuario();
+                usuario.login = "pepe";
+                usuario.password = "pass";
+                UsuarioService.grabaUsuario(usuario);
+                //Segundo usuario
+                usuario = new Usuario();
+                usuario.login = "paco";
+                usuario.password = "pass";
+                UsuarioService.grabaUsuario(usuario);
+                //Busca un usuario (que no sea él mismo) que tenga el login que le envía
+                Usuario usuario_encontrado = UsuarioService.findUsuarioByLoginNotId("paco", "2");
+                assertEquals(null, usuario_encontrado);
+            });
+        });
+    }
 
 }
