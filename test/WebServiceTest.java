@@ -43,5 +43,17 @@ public class WebServiceTest {
         });
     }
 
+    @Test
+    public void testdoLoginUsuarioAdmin() {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())), () -> {
+            int timeout = 10000;
+            WSResponse response = WS.url("http://localhost:3333/login")
+                            .setContentType("application/x-www-form-urlencoded")
+                            .post("login=admin&password=admin")
+                            .get(timeout);
+            assertEquals(OK, response.getStatus());
+            assertTrue(response.getBody().contains("Listado de usuarios"));
+        });
+    }
 
 }
