@@ -131,4 +131,19 @@ public class WithFakeApplicationTest {
         });
     }
 
+    @Test
+    public void testdoDeleteUsuarioQueNoExiste() {
+        running (fakeApplication(inMemoryDatabase()), () -> {
+            JPA.withTransaction(() -> {
+                Usuario usuario = new Usuario();
+                usuario.login = "pepe";
+                usuario.password = "pepe";
+                UsuarioService.grabaUsuario(usuario);
+                UsuarioService.deleteUsuario("2");
+                List<Usuario> listaUsuarios = UsuarioService.findAllUsuarios();
+                assertTrue(listaUsuarios.size() == 1);
+            });
+        });
+    }
+
 }
