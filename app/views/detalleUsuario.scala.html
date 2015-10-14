@@ -6,15 +6,13 @@
 
   <body>
     @if(usuario != null) {
-      <div class="divEncabezado">
-        <div class="contenidoExterior">
-          <h1>To-do List</h1>
-        </div>
+      <div class="divCabecera">
+        <h1>To-do List</h1>
       </div>
 
-      <div class="contenidoInterior">
-        <div class="encabezadoTitulo2">
-          <h2 class="titulo2">Detalle usuario @{usuario.id}</h2>
+      <div class="divContenido">
+        <div class="divTituloContenido">
+          <h2 class="tituloContenido">Detalle usuario @{usuario.id}</h2>
         </div>
 
          <fieldset class="marco_principal">

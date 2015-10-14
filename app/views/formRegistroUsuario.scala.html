@@ -2,18 +2,17 @@
 @main("Registro") {
   <head>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/formularioNuevoUsuario.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/formulario.css")">
   </head>
 
   <body>
-    <div class="divEncabezado">
-      <div class="contenidoExterior">
-        <h1>To-do List</h1>
-      </div>
+    <div class="divCabecera">
+      <h1>To-do List</h1>
     </div>
 
-    <div class="contenidoInterior">
-      <div class="encabezadoTitulo2">
-        <h2 class="titulo2">Registro</h2>
+    <div class="divContenido">
+      <div class="divTituloContenido">
+        <h2 class="tituloContenido">Registro</h2>
       </div>
 
       @helper.form(action = routes.Usuarios.grabaNuevoUsuario(1)) {
@@ -39,7 +38,7 @@
            <p class="etiqueta">Contraseña</p>
            <input type="password" name="password" value="" class="datos">
            <p class="datos_avisos" id="password"> Required </p>
-           
+
            <div class="botones_inferiores">
              <input type="submit" value="Guardar" class="btn btn-primary">
              <!--<a class="btn btn-primary" style="float:right" href="@routes.Usuarios.listaUsuarios()">Cancelar</a>-->

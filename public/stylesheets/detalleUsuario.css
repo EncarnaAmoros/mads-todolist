@@ -1,31 +1,26 @@
 /*Interior*/
 
-.container {
-  width: 100% !important;
-  padding: 0px !important;
+.divContenido {
+  height: 513px !important;
 }
 
-.contenidoInterior {
-  padding-top: 3px;
-  padding-bottom: 40px;
-  width: 100%;
-  height: 512px !important;
-}
-
-.encabezadoTitulo2 {
+.divTituloContenido {
   margin-bottom: 15px;
   width: 95%;
   text-align: center;
 }
 
-.titulo2 {
+.tituloContenido {
   margin-bottom: 4px;
 }
 
-/*Formulario y su contenido*/
+/*Contenido detalle usuario*/
 
 .marco_principal {
   background: #fff;
+  border-radius: 2px;
+  border: 1px solid rgba(52, 54, 56, 0.5);
+  box-shadow: 0px 2px 2px rgba(52, 54, 56, 0.5);
   padding-top: 15px;
   padding-left: 40px;
   padding-bottom: 4px;

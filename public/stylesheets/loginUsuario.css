@@ -1,25 +1,13 @@
 /*Interior*/
 
-.container {
-  width: 100% !important;
-  padding: 0px !important;
-}
-
-.contenidoInterior {
-  padding-top: 3px;
-  padding-bottom: 34px;
-}
-
-.encabezadoTitulo2 {
-  font-family: 'Open Sans', arial;
-  -webkit-font-smoothing: antialiased;
+.divTituloContenido {
   font-size: 18px;
   font-weight: 400;
   margin-bottom: 25px;
   text-align: -webkit-center;
 }
 
-.titulo2 {
+.tituloContenido {
   margin-bottom: 4px;
 }
 
@@ -34,46 +22,17 @@
 
 .marco_principal {
   margin-bottom: 0;
-  background-color: #fff;
   padding: 20px 25px 30px;
   margin: 0 auto 25px;
   width: 304px;
-  border-radius: 2px;
-}
-
-.etiqueta {
-  margin-top: 5px;
-  margin-bottom: 7px;
-  font-family: 'Open Sans', arial;
-  -webkit-font-smoothing: antialiased;
-  color: #555;
 }
 
 .datos {
-  direction: ltr;
   width: 100%;
   margin-bottom: 10px;
-  z-index: 1;
-  position: relative;
-  -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
-  -webkit-appearance: none;
-  display: inline-block;
   height: 36px;
-  margin: 0;
-  background: #fff;
-  border: 1px solid #d9d9d9;
-  border-top: 1px solid #c0c0c0;
-  box-sizing: border-box;
-  -webkit-border-radius: 1px;
-  border-radius: 1px;
-  font-size: 15px;
   padding: 1px 0px;
   padding-left: 5px;
-}
-
-.datos:hover {
-    border: 1.5px solid #C3C2C2;
 }
 
 .tagline {
@@ -98,12 +57,6 @@
 
 /*Botones*/
 
-.botones_inferiores {
-  margin-right: 30px;
-  padding-top: 5px;
-  margin-bottom: 15px;
-}
-
 .btn-primary {
   margin-top: 0px;
   width: 114%;
@@ -119,7 +72,6 @@
 .mensaje-error {
   transition: max-height 0.3s, opacity 0.3s 0s steps(10, end);
   height: auto;
-  /*max-height: 0;*/
   opacity: 0;
   margin: .5em 0;
   display: block;
