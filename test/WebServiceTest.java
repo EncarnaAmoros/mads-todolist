@@ -70,4 +70,18 @@ public class WebServiceTest {
         });
     }
 
+    @Test
+    public void testdoCreaNuevoUsuario() {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())), () -> {
+            int timeout = 8000;
+            WSResponse response = WS.url("http://localhost:3333/usuarios/nuevo?n=0")
+                        .setFollowRedirects(true)
+                        .setContentType("application/x-www-form-urlencoded")
+                        .post("login=Pep&nombre=Pep&apellidos=Guardiola&password=default")
+                        .get(timeout);
+            assertEquals(OK, response.getStatus());
+            assertTrue(response.getBody().contains("Listado de usuarios"));
+        });
+    }
+
 }
