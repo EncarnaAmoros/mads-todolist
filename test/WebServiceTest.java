@@ -30,4 +30,16 @@ public class WebServiceTest {
             assertTrue(response.getBody().contains("Iniciar sesión"));
         });
     }
+
+    @Test
+    public void testdoLoginUsuarioNotFound() {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())), () -> {
+            int timeout = 4000;
+            WSResponse response = WS.url("http://localhost:3333/login")
+                            .setContentType("application/x-www-form-urlencoded")
+                            .post("login=encarna&password=password")
+                            .get(timeout);
+            assertTrue(response.getBody().contains("Lo sentimos, no se reconoce el usuario introducido"));
+        });
+    }
 }
