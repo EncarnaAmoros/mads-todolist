@@ -94,4 +94,14 @@ public class WebServiceTest {
         });
     }
 
+    @Test
+    public void testDetalleUsuarioNotFound() {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())), () -> {
+            int timeout = 8000;
+            WSResponse response = WS.url("http://localhost:3333/usuarios/10").get().get(timeout);
+            assertEquals(NOT_FOUND, response.getStatus());
+            assertTrue(response.getBody().contains("<h1>Error 404</h1>"));
+        });
+    }
+
 }
