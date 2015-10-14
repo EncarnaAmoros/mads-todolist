@@ -100,4 +100,20 @@ public class WithFakeApplicationTest {
         });
     }
 
+    @Test
+    public void testdoModificarUsuario() {
+        running (fakeApplication(inMemoryDatabase()), () -> {
+            JPA.withTransaction(() -> {
+                Usuario usuario = new Usuario();
+                usuario.login = "pepe";
+                usuario.password = "pass";
+                UsuarioService.grabaUsuario(usuario);
+                usuario.eMail="pepe@gmail.com";
+                UsuarioService.modificarUsuario(usuario);
+                usuario = UsuarioService.findUsuario("1");
+                assertEquals(usuario.eMail, "pepe@gmail.com");
+            });
+        });
+    }
+
 }
