@@ -43,7 +43,7 @@ public class WithFakeApplicationTest {
                 usuario.login = "pepe";
                 usuario.password = "pepe";
                 UsuarioService.grabaUsuario(usuario);
-                Usuario usuario_encontrado = UsuarioService.findUsuario("1");
+                Usuario usuario_encontrado = UsuarioService.findUsuario(1);
                 assertEquals(usuario.login, usuario_encontrado.login);
             });
         });
@@ -94,7 +94,7 @@ public class WithFakeApplicationTest {
                 usuario.password = "pass";
                 UsuarioService.grabaUsuario(usuario);
                 //Busca un usuario (que no sea él mismo) que tenga el login que le envía
-                Usuario usuario_encontrado = UsuarioService.findUsuarioByLoginNotId("paco", "2");
+                Usuario usuario_encontrado = UsuarioService.findUsuarioByLoginNotId("paco", 2);
                 assertEquals(null, usuario_encontrado);
             });
         });
@@ -110,7 +110,7 @@ public class WithFakeApplicationTest {
                 UsuarioService.grabaUsuario(usuario);
                 usuario.eMail="pepe@gmail.com";
                 UsuarioService.modificarUsuario(usuario);
-                usuario = UsuarioService.findUsuario("1");
+                usuario = UsuarioService.findUsuario(1);
                 assertEquals(usuario.eMail, "pepe@gmail.com");
             });
         });
@@ -124,7 +124,7 @@ public class WithFakeApplicationTest {
                 usuario.login = "pepe";
                 usuario.password = "pepe";
                 UsuarioService.grabaUsuario(usuario);
-                UsuarioService.deleteUsuario("1");
+                UsuarioService.deleteUsuario(1);
                 List<Usuario> listaUsuarios = UsuarioService.findAllUsuarios();
                 assertTrue(listaUsuarios.size() == 0);
             });
@@ -139,7 +139,7 @@ public class WithFakeApplicationTest {
                 usuario.login = "pepe";
                 usuario.password = "pepe";
                 UsuarioService.grabaUsuario(usuario);
-                UsuarioService.deleteUsuario("2");
+                UsuarioService.deleteUsuario(2);
                 List<Usuario> listaUsuarios = UsuarioService.findAllUsuarios();
                 assertTrue(listaUsuarios.size() == 1);
             });

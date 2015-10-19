@@ -23,11 +23,11 @@ public class UsuarioService {
  }
 
  //Devuelve un usuario según su id
- public static Usuario findUsuario(String id) {
+ public static Usuario findUsuario(Integer id) {
    return UsuarioDAO.find(id);
  }
 
- public static boolean deleteUsuario(String id) {
+ public static boolean deleteUsuario(Integer id) {
    try {
      UsuarioDAO.delete(id);
      return true;
@@ -49,7 +49,7 @@ public class UsuarioService {
  }
 
  //Devuelve un usuario según su login que no tenga determinado id
- public static Usuario findUsuarioByLoginNotId(String login, String id) {
+ public static Usuario findUsuarioByLoginNotId(String login, Integer id) {
    return UsuarioDAO.findByLoginNotId(login, id);
  }
 

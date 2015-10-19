@@ -31,12 +31,12 @@ public class UsuarioDAO {
  }
 
  //Devuelve un usuario según su id
- public static Usuario find(String id) {
+ public static Usuario find(Integer id) {
    return (Usuario) JPA.em().find(Usuario.class, id);
  }
 
  //Elimina el usuario que tenga como id el pasado por parámetro
- public static void delete(String idUsuario) {
+ public static void delete(Integer idUsuario) {
    Usuario usuario = JPA.em().getReference(Usuario.class, idUsuario);
    JPA.em().remove(usuario);
  }
@@ -66,7 +66,7 @@ public class UsuarioDAO {
  }
 
  //Devuelve un usuario según su login que no tenga determinado id
- public static Usuario findByLoginNotId(String login, String id) {
+ public static Usuario findByLoginNotId(String login, Integer id) {
    TypedQuery<Usuario> query = JPA.em().createQuery("SELECT u FROM Usuario AS u where u.login='" + login +
                                               "' and u.id <> '" + id + "'", Usuario.class);
     List<Usuario> results = query.getResultList();

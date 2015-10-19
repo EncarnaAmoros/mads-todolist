@@ -18,16 +18,16 @@ POST    /usuarios/nuevo             controllers.Usuarios.grabaNuevoUsuario(n: In
 GET     /usuarios                   controllers.Usuarios.listaUsuarios()
 
 # Pagina detalle de un Usuario
-GET     /usuarios/:id               controllers.Usuarios.detalleUsuario(id: String)
+GET     /usuarios/:id               controllers.Usuarios.detalleUsuario(id: Integer)
 
 # Pagina editar usuario
-GET     /usuarios/:id/editar        controllers.Usuarios.editarUsuario(id: String)
+GET     /usuarios/:id/editar        controllers.Usuarios.editarUsuario(id: Integer)
 
 # Para grabar la modificación de un usuario
 POST    /usuarios/modifica          controllers.Usuarios.grabaUsuarioModificado()
 
 # Para eliminar un usuario
-DELETE  /usuarios/:id               controllers.Usuarios.borraUsuario(id: String)
+DELETE  /usuarios/:id               controllers.Usuarios.borraUsuario(id: Integer)
 
 # Pagina para el registro de usuarios
 GET     /registro                   controllers.Usuarios.registrarUsuario()
