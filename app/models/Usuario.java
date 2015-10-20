@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 import play.data.validation.Constraints;
 import play.data.format.*;
@@ -21,6 +22,8 @@ public class Usuario {
  public Date fechaNacimiento;
  @Constraints.Required
  public String password;
+ @OneToMany(mappedBy="usuario")
+ public List<Tarea> tareas;
 
  // Sustituye por null todas las cadenas vacías que pueda tener
  // un usuario en sus atributos
