@@ -27,7 +27,12 @@ public class Tareas extends Controller {
     @Transactional
     // Devuelve una página con el formulario para crear tareas
     public Result formularioNuevaTarea(Integer usuarioId) {
-        return ok(formCreacionTarea.render());
+        Usuario usuario = UsuarioDAO.find(usuarioId);
+        if(usuario!=null) {
+          return ok(formCreacionTarea.render(""));
+        } else {
+          return notFound(error.render("404", "recurso no encontrado."));
+        }
     }
 
 
