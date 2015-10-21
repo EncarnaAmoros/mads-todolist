@@ -23,4 +23,12 @@ public class Tareas extends Controller {
           return notFound(error.render("404", "recurso no encontrado."));
         }
     }
+
+    @Transactional
+    // Devuelve una página con el formulario para crear tareas
+    public Result formularioNuevaTarea(Integer usuarioId) {
+        return ok(formCreacionTarea.render());
+    }
+
+
 }
