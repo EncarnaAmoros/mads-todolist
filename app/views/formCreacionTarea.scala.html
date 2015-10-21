@@ -1,4 +1,4 @@
-@(mensaje: String)
+@(tareaForm: Form[Tarea], usuarioId: Integer, mensaje: String)
 @main("Nueva tarea") {
   <head>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/formularioNuevaTarea.css")">
@@ -15,13 +15,8 @@
         <h2 class="tituloContenido">Nueva tarea</h2>
       </div>
 
+        @helper.form(action = routes.Tareas.grabaNuevaTarea(usuarioId)) {
          <fieldset class="marco_principal">
-
-           <!--Muestra los mensajes en la página html-->
-           @if(mensaje != "") {
-            <div class="alert alert-danger" id="mensaje-noencontrado"> @mensaje </div>
-           }
-
            <p class="etiqueta">Descripción</p>
            <textarea name="descripcion" class="datos"></textarea>
            <p class="datos_avisos" id="descripcion"> Required </p>
@@ -31,18 +26,8 @@
              <a class="btn btn-primary" style="float:right" href="">Cancelar</a>
            </div>
          </fieldset>
+       }
 
-       @if(mensaje == "Hay errores en el formulario") {
-         <!--Mostramos las restricciones con un color rojo-->
-         <script type="text/javascript">
-            function coloreaRestriccion() {
-             //Ponemos en rojo los cuadros con restricciones
-             var campologin = document.getElementById('descripcion');
-             campologin.style.color = "#FD0505";
-            }
-            coloreaRestriccion();
-          </script>
-        }
      </div>
   </body>
 }

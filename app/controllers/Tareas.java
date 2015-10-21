@@ -29,10 +29,22 @@ public class Tareas extends Controller {
     public Result formularioNuevaTarea(Integer usuarioId) {
         Usuario usuario = UsuarioDAO.find(usuarioId);
         if(usuario!=null) {
-          return ok(formCreacionTarea.render(""));
+          return ok(formCreacionTarea.render(Form.form(Tarea.class), usuarioId, ""));
         } else {
           return notFound(error.render("404", "recurso no encontrado."));
         }
+    }
+
+    @Transactional
+    // Llama al modelo para crear la tarea
+    public Result grabaNuevaTarea(Integer usuarioId) {
+        Usuario usuario = UsuarioDAO.find(usuarioId);
+        Form<Tarea> tareaForm = Form.form(Tarea.class).bindFromRequest();
+        Tarea tarea = new Tarea(usuario, tareaForm.get().descripcion);
+        TareaService.grabaTarea(tarea);
+
+        List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
+        return ok(listaTareas.render(tareas));
     }
 
 
