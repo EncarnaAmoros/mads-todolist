@@ -76,4 +76,19 @@ public class CrearTareaTests {
         });
     }
 
+    @Test
+    public void testGrabaTarea() {
+        running (app, () -> {
+            JPA.withTransaction(() -> {
+                Usuario usuario = UsuarioDAO.find(1);
+                Tarea tarea = new Tarea(usuario, "Entregar práctica 5 de MADS");
+                TareaService.grabaTarea(tarea);
+                List<Tarea> tareas = usuario.tareas;
+                assertEquals(tareas.size(), 4);
+                assertTrue(tareas.contains(
+                    new Tarea(usuario, "Entregar práctica 5 de MADS")));
+            });
+        });
+    }
+
 }

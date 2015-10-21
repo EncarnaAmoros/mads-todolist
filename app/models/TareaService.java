@@ -9,13 +9,16 @@ import java.util.List;
 
 public class TareaService {
 
-  //Devuelve un usuario según su id
   public static List<Tarea> findAllTareasUsuario(Integer id) {
     Usuario usuario = UsuarioDAO.find(id);
     if(usuario!=null)
       return usuario.tareas;
     else
       return null;
+  }
+
+  public static Tarea grabaTarea(Tarea tarea) {
+    return TareaDAO.create(tarea);
   }
 
 }
