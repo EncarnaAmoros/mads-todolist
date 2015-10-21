@@ -52,4 +52,15 @@ public class Tarea {
       return result;
   }
 
+  // Sustituye por null todas las cadenas vacías que pueda tener
+  // un usuario en sus atributos
+  public void nulificaAtributos() {
+    if (descripcion != null && descripcion.isEmpty()) descripcion = null;
+  }
+
+  public String toString() {
+    return String.format("Tarea id: %s descripcion: %s",
+                          id, descripcion);
+  }
+
 }
