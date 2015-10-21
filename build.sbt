@@ -11,6 +11,7 @@ libraryDependencies ++= Seq(
   javaJpa,
   "org.hibernate" % "hibernate-entitymanager" % "4.3.7.Final",
   "mysql" % "mysql-connector-java" % "5.1.18",
+  "org.dbunit" % "dbunit" % "2.4.9",
   cache,
   javaWs
 )

@@ -1,0 +1,45 @@
+@(tareas: List[Tarea])
+@main("Listado de tareas") {
+  <head>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/listados.css")">
+  </head>
+
+  <body>
+    <div class="divCabecera">
+      <h1>To-do List</h1>
+    </div>
+
+    <div class="divContenido">
+      <div class="divTituloContenido">
+        <h2 class="tituloContenido">Listado de tareas</h2>
+      </div>
+
+      <table class="table table-striped" id="tabla_usuarios">
+        <tbody>
+          <!--Titulos columnas de la tabla-->
+          <tr>
+           <th>id</th>
+           <th>descripcion</th>
+          </tr>
+          <!--Tareas en filas de la tabla-->
+          @for(tarea <- tareas) {
+            <tr>
+             <td>@tarea.id</td>
+             <td>@tarea.descripcion</td>
+            </tr>
+          }
+          <!--Para añadir tareas a la tabla-->
+          <tr>
+           <td class="iconos_accion">
+             <a href="" class="iconos_link">
+               <span class="glyphicon glyphicon-plus"></span>
+             </a>
+           </td>
+           <td></td><td></td><td></td><td></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </body>
+}

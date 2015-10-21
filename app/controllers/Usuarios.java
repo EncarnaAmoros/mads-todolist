@@ -69,7 +69,7 @@ public class Usuarios extends Controller {
    @Transactional(readOnly = true)
    // Devuelve una página con el detalle del usuario por su id
    //Si no lo encuentra devuelve mensaje de error not found
-   public Result detalleUsuario(String id) {
+   public Result detalleUsuario(Integer id) {
      Usuario usuario = UsuarioService.findUsuario(id);
      if(usuario!=null) {
        return ok(detalleUsuario.render(usuario));
@@ -82,7 +82,7 @@ public class Usuarios extends Controller {
    // Devuelve una página con un formulario relleno con los
    //datos del usuario pudiendose modificar
    //Si el usuario no existe muestra pág error
-   public Result editarUsuario(String id) {
+   public Result editarUsuario(Integer id) {
      Usuario usuario = UsuarioService.findUsuario(id);
      if(usuario!=null) {
        Form<Usuario> formulario = Form.form(Usuario.class);
@@ -119,7 +119,7 @@ public class Usuarios extends Controller {
 
   @Transactional
   //Elimina un usuario en la BD según su id
-  public Result borraUsuario(String id) {
+  public Result borraUsuario(Integer id) {
     UsuarioService.deleteUsuario(id);
     return redirect(controllers.routes.Usuarios.listaUsuarios());
   }
