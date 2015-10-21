@@ -28,6 +28,8 @@ public class Usuario {
     public Usuario() {}
 
     public Usuario(String login, String password) {
+        if (login == null || password == null)
+            throw new IllegalArgumentException();
         this.login = login;
         this.password = password;
     }

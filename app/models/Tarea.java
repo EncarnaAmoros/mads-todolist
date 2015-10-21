@@ -20,6 +20,8 @@ public class Tarea {
   public Tarea() {}
 
   public Tarea(Usuario usuario, String descripcion) {
+      if (descripcion == null || usuario == null)
+        throw new IllegalArgumentException();
       this.descripcion = descripcion;
       this.usuario = usuario;
   }
@@ -46,8 +48,7 @@ public class Tarea {
       int result = 1;
       result = prime * result +
           ((id == null) ? 0 : id);
-      result = prime * result +
-          ((descripcion == null) ? 0 : descripcion.hashCode());
+      result = prime * result + descripcion.hashCode();
       return result;
   }
 
