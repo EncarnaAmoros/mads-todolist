@@ -72,4 +72,22 @@ public class ListadoTareasTests {
             });
         });
     }
+
+    @Test
+    public void testTareasUsuarioDevuelveSusTareas() {
+        running (app, () -> {
+            JPA.withTransaction(() -> {
+                Usuario usuario = UsuarioDAO.find(1);
+                List<Tarea> tareas = usuario.tareas;
+                assertEquals(tareas.size(), 3);
+                assertTrue(tareas.contains(
+                    new Tarea(usuario, "Preparar el trabajo del tema 1 de biología")));
+                assertTrue(tareas.contains(
+                    new Tarea(usuario, "Estudiar el parcial de matemáticas")));
+                assertTrue(tareas.contains(
+                    new Tarea(usuario, "Leer el libro de inglés")));
+            });
+        });
+    }
+
 }
