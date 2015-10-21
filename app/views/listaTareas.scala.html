@@ -1,3 +1,4 @@
+@(tareas: List[Tarea])
 @main("Listado de tareas") {
   <head>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/listados.css")">
@@ -18,12 +19,15 @@
           <!--Titulos columnas de la tabla-->
           <tr>
            <th>id</th>
-           <th>Login</th>
-           <th>Nombre</th>
-           <th>Apellidos</th>
-           <th>Acción</th>
+           <th>descripcion</th>
           </tr>
-
+          <!--Tareas en filas de la tabla-->
+          @for(tarea <- tareas) {
+            <tr>
+             <td>@tarea.id</td>
+             <td>@tarea.descripcion</td>
+            </tr>
+          }
           <!--Para añadir tareas a la tabla-->
           <tr>
            <td class="iconos_accion">

@@ -16,6 +16,7 @@ public class Tareas extends Controller {
     @Transactional(readOnly = true)
     // Devuelve una página con la lista de tareas
     public Result listaTareas(Integer usuarioId) {
-        return ok(listaTareas.render());
+        List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
+        return ok(listaTareas.render(tareas));
     }
 }
