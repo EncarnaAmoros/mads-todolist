@@ -89,4 +89,23 @@ public class ListadoTareasTests {
             });
         });
     }
+
+    @Test
+    public void testTareaServiceFindAllTareasDevuelveTodasLasTareas() {
+        running (app, () -> {
+            JPA.withTransaction(() -> {
+                Integer usuarioId = 1;
+                List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
+
+                Usuario pepito = new Usuario("pepito", "perez");
+                assertTrue(tareas.contains(
+                    new Tarea(pepito, "Preparar el trabajo del tema 1 de biología")));
+                assertTrue(tareas.contains(
+                    new Tarea(pepito, "Estudiar el parcial de matemáticas")));
+                assertTrue(tareas.contains(
+                    new Tarea(pepito, "Leer el libro de inglés")));
+                });
+        });
+    }
+    
 }
