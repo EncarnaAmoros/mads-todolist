@@ -17,6 +17,10 @@ public class Tareas extends Controller {
     // Devuelve una página con la lista de tareas
     public Result listaTareas(Integer usuarioId) {
         List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
-        return ok(listaTareas.render(tareas));
+        if(tareas!=null) {
+          return ok(listaTareas.render(tareas));
+        } else {
+          return notFound(error.render("404", "recurso no encontrado."));
+        }
     }
 }

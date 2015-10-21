@@ -12,7 +12,10 @@ public class TareaService {
   //Devuelve un usuario según su id
   public static List<Tarea> findAllTareasUsuario(Integer id) {
     Usuario usuario = UsuarioDAO.find(id);
-    return usuario.tareas;
+    if(usuario!=null)
+      return usuario.tareas;
+    else
+      return null;
   }
 
 }
