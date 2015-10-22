@@ -23,4 +23,9 @@ public class TareaDAO {
       Logger.debug(tarea.toString());
       return tarea;
     }
+
+    //Modifica la tarea y la devuelve
+    public static void update (Tarea tarea) {
+      JPA.em().merge(tarea);
+    }
 }
