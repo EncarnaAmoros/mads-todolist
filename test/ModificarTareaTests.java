@@ -71,7 +71,10 @@ public class ModificarTareaTests {
                 tareas.get(pos_tarea).descripcion = "Preparar el parcial de MADS";
                 TareaDAO.update(tareas.get(pos_tarea));
                 tareas = usuario.tareas;
-                assertEquals(tareas.get(pos_tarea).descripcion, "Preparar el parcial de MADS");
+                JPA.em().refresh(usuario);
+                assertEquals(tareas.size(), 3);
+                assertTrue(tareas.contains(
+                    new Tarea(usuario, "Preparar el parcial de MADS")));
             });
         });
     }
@@ -86,7 +89,10 @@ public class ModificarTareaTests {
                 tareas.get(pos_tarea).descripcion = "Preparar el super parcial de MADS";
                 TareaService.modificarTarea(tareas.get(pos_tarea));
                 tareas = usuario.tareas;
-                assertEquals(tareas.get(pos_tarea).descripcion, "Preparar el super parcial de MADS");
+                JPA.em().refresh(usuario);
+                assertEquals(tareas.size(), 3);
+                assertTrue(tareas.contains(
+                    new Tarea(usuario, "Preparar el super parcial de MADS")));
             });
         });
     }
