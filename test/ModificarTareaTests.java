@@ -91,4 +91,18 @@ public class ModificarTareaTests {
         });
     }
 
+    @Test
+    public void testWebPaginaFormModificarTarea() {
+        running(testServer(3333, app), () -> {
+            int timeout = 10000;
+            WSResponse response = WS
+                .url("http://localhost:3333/usuarios/1/tareas/2/editar")
+                .get()
+                .get(timeout);
+            assertEquals(OK, response.getStatus());
+            String body = response.getBody();
+            assertTrue(body.contains("Modificar tarea"));
+        });
+    }
+
 }

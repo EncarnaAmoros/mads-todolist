@@ -53,4 +53,11 @@ public class Tareas extends Controller {
         return ok(listaTareas.render(usuarioId, tareas));
     }
 
+    @Transactional(readOnly = true)
+    // Devuelve una página con un formulario relleno con los
+    //datos de la tarea pudiendose modificar
+    public Result editarTarea(Integer usuarioId, Integer tareaId) {
+        return ok(formModificarTarea.render());
+    }
+
 }
