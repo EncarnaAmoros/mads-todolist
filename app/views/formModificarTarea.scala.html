@@ -1,5 +1,31 @@
 @main("Modificar tarea") {
+  <head>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/formularioNuevaTarea.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/formulario.css")">
+  </head>
+
   <body>
-    Modificar tarea
+    <div class="divCabecera">
+      <h1>To-do List</h1>
+    </div>
+
+    <div class="divContenido">
+      <div class="divTituloContenido">
+        <h2 class="tituloContenido">Modificar tarea</h2>
+      </div>
+
+         <fieldset class="marco_principal">
+
+           <p class="etiqueta">Descripción</p>
+           <textarea name="descripcion" class="datos"></textarea>
+           <p class="datos_avisos" id="descripcion"> Required </p>
+
+           <div class="botones_inferiores">
+             <a class="btn btn-primary" style="float:right" href="">Cancelar</a>
+           </div>
+             <input type="submit" value="Guardar" class="btn btn-primary">
+         </fieldset>
+
+     </div>
   </body>
 }
