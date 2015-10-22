@@ -17,6 +17,12 @@
 
         @helper.form(action = routes.Tareas.grabaNuevaTarea(usuarioId)) {
          <fieldset class="marco_principal">
+
+           <!--Muestra los mensajes en la página html-->
+           @if(mensaje != "") {
+            <div class="alert alert-danger" id="mensaje-noencontrado"> @mensaje </div>
+           }
+
            <p class="etiqueta">Descripción</p>
            <textarea name="descripcion" class="datos"></textarea>
            <p class="datos_avisos" id="descripcion"> Required </p>

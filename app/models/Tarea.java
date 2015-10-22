@@ -15,6 +15,7 @@ public class Tarea {
   @ManyToOne
   @JoinColumn(name="usuarioId")
   public Usuario usuario;
+  @Constraints.Required
   public String descripcion;
 
   public Tarea() {}

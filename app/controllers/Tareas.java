@@ -43,6 +43,9 @@ public class Tareas extends Controller {
           return notFound(error.render("404", "recurso no encontrado."));
 
         Form<Tarea> tareaForm = Form.form(Tarea.class).bindFromRequest();
+        if (tareaForm.hasErrors())
+          return badRequest(formCreacionTarea.render(tareaForm, usuarioId, "La descripción no puede estar vacía."));
+
         Tarea tarea = new Tarea(usuario, tareaForm.get().descripcion);
         TareaService.grabaTarea(tarea);
 

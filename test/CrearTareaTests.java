@@ -108,7 +108,7 @@ public class CrearTareaTests {
     @Test
     public void testWebApiCreacionTarea() {
         running(testServer(3333, app), () -> {
-            int timeout = 4000;
+            int timeout = 10000;
             WSResponse response = WS.url("http://localhost:3333/usuarios/1/tareas/nueva")
                 .setContentType("application/x-www-form-urlencoded")
                 .post("descripcion=Entregar práctica 3 de MADS")
@@ -140,6 +140,21 @@ public class CrearTareaTests {
                 "404"));
             assertTrue(body.contains(
                 "recurso no encontrado."));
+        });
+    }
+
+    @Test
+    public void testWebApiCreacionTareaDescripcionVacia() {
+        running(testServer(3333, app), () -> {
+            int timeout = 10000;
+            WSResponse response = WS.url("http://localhost:3333/usuarios/1/tareas/nueva")
+                .setContentType("application/x-www-form-urlencoded")
+                .post("descripcion=")
+                .get(timeout);
+            assertEquals(BAD_REQUEST, response.getStatus());
+            String body = response.getBody();
+            assertTrue(body.contains(
+                "La descripción no puede estar vacía."));
         });
     }
 
