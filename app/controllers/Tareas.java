@@ -18,7 +18,7 @@ public class Tareas extends Controller {
     public Result listaTareas(Integer usuarioId) {
         List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
         if(tareas!=null) {
-          return ok(listaTareas.render(tareas));
+          return ok(listaTareas.render(usuarioId, tareas));
         } else {
           return notFound(error.render("404", "recurso no encontrado."));
         }
@@ -50,7 +50,7 @@ public class Tareas extends Controller {
         TareaService.grabaTarea(tarea);
 
         List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
-        return ok(listaTareas.render(tareas));
+        return ok(listaTareas.render(usuarioId, tareas));
     }
 
 }

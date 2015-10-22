@@ -17,7 +17,6 @@
 
         @helper.form(action = routes.Tareas.grabaNuevaTarea(usuarioId)) {
          <fieldset class="marco_principal">
-
            <!--Muestra los mensajes en la página html-->
            @if(mensaje != "") {
             <div class="alert alert-danger" id="mensaje-noencontrado"> @mensaje </div>
@@ -29,11 +28,18 @@
 
            <div class="botones_inferiores">
              <input type="submit" value="Guardar" class="btn btn-primary">
-             <a class="btn btn-primary" style="float:right" href="">Cancelar</a>
+             <a class="btn btn-primary" style="float:right" href="@routes.Tareas.listaTareas(usuarioId)">Cancelar</a>
            </div>
          </fieldset>
        }
 
+       @if(mensaje != "") {
+         <!--Mostramos las restricciones con un color rojo-->
+         <script type="text/javascript">
+             var campologin = document.getElementById('descripcion');
+             campologin.style.color = "#FD0505";
+          </script>
+        }
      </div>
   </body>
 }

@@ -1,4 +1,4 @@
-@(tareas: List[Tarea])
+@(usuarioId: Integer, tareas: List[Tarea])
 @main("Listado de tareas") {
   <head>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/listados.css")">
@@ -31,7 +31,7 @@
           <!--Para añadir tareas a la tabla-->
           <tr>
            <td class="iconos_accion">
-             <a href="" class="iconos_link">
+             <a href="@routes.Tareas.formularioNuevaTarea(usuarioId)" class="iconos_link">
                <span class="glyphicon glyphicon-plus"></span>
              </a>
            </td>
