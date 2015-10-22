@@ -76,4 +76,19 @@ public class ModificarTareaTests {
         });
     }
 
+    @Test
+    public void testModificarTarea() {
+        running (app, () -> {
+            JPA.withTransaction(() -> {
+                Usuario usuario = UsuarioDAO.find(1);
+                List<Tarea> tareas = usuario.tareas;
+                Integer pos_tarea = tareas.size()-2;
+                tareas.get(pos_tarea).descripcion = "Preparar el super parcial de MADS";
+                TareaService.modificarTarea(tareas.get(pos_tarea));
+                tareas = usuario.tareas;
+                assertEquals(tareas.get(pos_tarea).descripcion, "Preparar el super parcial de MADS");
+            });
+        });
+    }
+
 }

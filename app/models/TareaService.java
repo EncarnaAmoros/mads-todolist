@@ -21,4 +21,9 @@ public class TareaService {
     return TareaDAO.create(tarea);
   }
 
+  //Modifica los datos de la tarea y la devuelve
+  public static void modificarTarea(Tarea tarea) {
+    TareaDAO.update(tarea);
+  }
+
 }
