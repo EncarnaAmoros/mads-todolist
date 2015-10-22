@@ -18,9 +18,39 @@ public class Tareas extends Controller {
     public Result listaTareas(Integer usuarioId) {
         List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
         if(tareas!=null) {
-          return ok(listaTareas.render(tareas));
+          return ok(listaTareas.render(usuarioId, tareas));
         } else {
           return notFound(error.render("404", "recurso no encontrado."));
         }
     }
+
+    @Transactional(readOnly = true)
+    // Devuelve una página con el formulario para crear tareas
+    public Result formularioNuevaTarea(Integer usuarioId) {
+        Usuario usuario = UsuarioDAO.find(usuarioId);
+        if(usuario!=null) {
+          return ok(formCreacionTarea.render(Form.form(Tarea.class), usuarioId, ""));
+        } else {
+          return notFound(error.render("404", "recurso no encontrado."));
+        }
+    }
+
+    @Transactional
+    // Llama al modelo para crear la tarea
+    public Result grabaNuevaTarea(Integer usuarioId) {
+        Usuario usuario = UsuarioDAO.find(usuarioId);
+        if(usuario==null)
+          return notFound(error.render("404", "recurso no encontrado."));
+
+        Form<Tarea> tareaForm = Form.form(Tarea.class).bindFromRequest();
+        if (tareaForm.hasErrors())
+          return badRequest(formCreacionTarea.render(tareaForm, usuarioId, "La descripción no puede estar vacía."));
+
+        Tarea tarea = new Tarea(usuario, tareaForm.get().descripcion);
+        TareaService.grabaTarea(tarea);
+
+        List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
+        return ok(listaTareas.render(usuarioId, tareas));
+    }
+
 }

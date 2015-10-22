@@ -15,6 +15,7 @@ public class Tarea {
   @ManyToOne
   @JoinColumn(name="usuarioId")
   public Usuario usuario;
+  @Constraints.Required
   public String descripcion;
 
   public Tarea() {}
@@ -50,6 +51,17 @@ public class Tarea {
           ((id == null) ? 0 : id);
       result = prime * result + descripcion.hashCode();
       return result;
+  }
+
+  // Sustituye por null todas las cadenas vacías que pueda tener
+  // un usuario en sus atributos
+  public void nulificaAtributos() {
+    if (descripcion != null && descripcion.isEmpty()) descripcion = null;
+  }
+
+  public String toString() {
+    return String.format("Tarea id: %s descripcion: %s",
+                          id, descripcion);
   }
 
 }

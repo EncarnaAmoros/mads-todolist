@@ -1,0 +1,56 @@
+/*Interior*/
+
+.divTituloContenido {
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 25px;
+  text-align: -webkit-center;
+}
+
+.tituloContenido {
+  margin-bottom: 4px;
+}
+
+/*Formulario y su contenido*/
+
+.marco_principal {
+  padding-top: 15px;
+  padding-left: 24px;
+  padding-bottom: 4px;
+  width: 540px;
+  margin: 0 auto 25px;
+}
+
+.etiqueta {
+  font-weight: bold !important;
+}
+
+.datos {
+  width: 485px;
+  height: 115px;
+  padding: 0 8px;
+  padding-top: 5px;
+  direction: ltr;
+  font-size: 16px;
+}
+
+/*Botones*/
+
+/*Mensajes de error, validaciones*/
+
+.datos_avisos {
+  margin-left: 2px;
+  margin-top: 3px;
+  color: #9E9898;
+}
+
+#mensaje-noencontrado {
+  color: rgba(255, 0, 0, 0.92);
+  margin-left: -20px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  border: 0px;
+  text-align: center;
+  padding-top: 0px;
+  background-color: #fff !important;
+}
