@@ -60,14 +60,17 @@ public class Tareas extends Controller {
         Tarea tarea = TareaDAO.find(tareaId);
         Form<Tarea> formularioT = Form.form(Tarea.class);
         Form<Tarea> tareaForm = formularioT.fill(tarea);
-        return ok(formModificarTarea.render(tareaForm, usuarioId));
+        return ok(formModificarTarea.render(tareaForm, usuarioId, ""));
     }
 
     @Transactional
-     // Modifica un usuario en la BD y devuelve código HTTP
-     // de redirección a la página de listado de usuarios
+     // Modifica una tarea en la BD y devuelve código HTTP
+     // de redirección a la página de listado de tareas
      public Result grabaTareaModificada(Integer usuarioId) {
        Form<Tarea> tareaForm = Form.form(Tarea.class).bindFromRequest();
+       if (tareaForm.hasErrors())
+         return badRequest(formModificarTarea.render(tareaForm, usuarioId, "La descripción no puede estar vacía."));
+
        Usuario usuario = UsuarioService.findUsuario(usuarioId);
        Tarea tarea = tareaForm.get();
        tarea.usuario = usuario;

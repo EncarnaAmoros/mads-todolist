@@ -131,4 +131,20 @@ public class ModificarTareaTests {
         });
     }
 
+    @Test
+    public void testWebApiModificarTareaDescripcionVacia() {
+        running(testServer(3333, app), () -> {
+            int timeout = 10000;
+            WSResponse response = WS.url("http://localhost:3333/usuarios/1/tareas/modifica")
+                .setFollowRedirects(true)
+                .setContentType("application/x-www-form-urlencoded")
+                .post("id=2&descripcion=")
+                .get(timeout);
+            assertEquals(BAD_REQUEST, response.getStatus());
+            String body = response.getBody();
+            assertTrue(body.contains(
+                "La descripción no puede estar vacía."));
+        });
+    }
+
 }
