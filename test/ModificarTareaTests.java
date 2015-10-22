@@ -147,4 +147,19 @@ public class ModificarTareaTests {
         });
     }
 
+    @Test
+    public void testWebPaginaFormModificarTareaUsuarioNotFound() {
+        running(testServer(3333, app), () -> {
+            int timeout = 10000;
+            WSResponse response = WS
+                .url("http://localhost:3333/usuarios/9999/tareas/2/editar")
+                .get()
+                .get(timeout);
+            assertEquals(NOT_FOUND, response.getStatus());
+            String body = response.getBody();
+            assertTrue(body.contains("404"));
+            assertTrue(body.contains("recurso no encontrado."));
+        });
+    }
+
 }

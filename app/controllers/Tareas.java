@@ -57,6 +57,10 @@ public class Tareas extends Controller {
     // Devuelve una página con un formulario relleno con los
     //datos de la tarea pudiendose modificar
     public Result editarTarea(Integer usuarioId, Integer tareaId) {
+        Usuario usuario = UsuarioService.findUsuario(usuarioId);
+        if(usuario==null)
+          return notFound(error.render("404", "recurso no encontrado."));
+
         Tarea tarea = TareaDAO.find(tareaId);
         Form<Tarea> formularioT = Form.form(Tarea.class);
         Form<Tarea> tareaForm = formularioT.fill(tarea);
