@@ -162,4 +162,20 @@ public class ModificarTareaTests {
         });
     }
 
+    @Test
+    public void testWebApiModificarTareaUsuarioNotFound() {
+        running(testServer(3333, app), () -> {
+            int timeout = 10000;
+            WSResponse response = WS.url("http://localhost:3333/usuarios/9999/tareas/modifica")
+                .setFollowRedirects(true)
+                .setContentType("application/x-www-form-urlencoded")
+                .post("id=2&descripcion=Practicar canción Dias de Elias con la guitarra")
+                .get(timeout);
+            assertEquals(NOT_FOUND, response.getStatus());
+            String body = response.getBody();
+            assertTrue(body.contains("404"));
+            assertTrue(body.contains("recurso no encontrado."));
+        });
+    }
+
 }

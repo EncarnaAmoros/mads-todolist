@@ -71,11 +71,14 @@ public class Tareas extends Controller {
      // Modifica una tarea en la BD y devuelve código HTTP
      // de redirección a la página de listado de tareas
      public Result grabaTareaModificada(Integer usuarioId) {
+       Usuario usuario = UsuarioService.findUsuario(usuarioId);
+       if(usuario==null)
+         return notFound(error.render("404", "recurso no encontrado."));
+
        Form<Tarea> tareaForm = Form.form(Tarea.class).bindFromRequest();
        if (tareaForm.hasErrors())
          return badRequest(formModificarTarea.render(tareaForm, usuarioId, "La descripción no puede estar vacía."));
 
-       Usuario usuario = UsuarioService.findUsuario(usuarioId);
        Tarea tarea = tareaForm.get();
        tarea.usuario = usuario;
        TareaService.modificarTarea(tarea);
