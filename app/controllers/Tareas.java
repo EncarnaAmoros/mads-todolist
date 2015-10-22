@@ -57,7 +57,22 @@ public class Tareas extends Controller {
     // Devuelve una página con un formulario relleno con los
     //datos de la tarea pudiendose modificar
     public Result editarTarea(Integer usuarioId, Integer tareaId) {
-        return ok(formModificarTarea.render());
+        Tarea tarea = TareaDAO.find(tareaId);
+        Form<Tarea> formularioT = Form.form(Tarea.class);
+        Form<Tarea> tareaForm = formularioT.fill(tarea);
+        return ok(formModificarTarea.render(tareaForm, usuarioId));
     }
+
+    @Transactional
+     // Modifica un usuario en la BD y devuelve código HTTP
+     // de redirección a la página de listado de usuarios
+     public Result grabaTareaModificada(Integer usuarioId) {
+       Form<Tarea> tareaForm = Form.form(Tarea.class).bindFromRequest();
+       Usuario usuario = UsuarioService.findUsuario(usuarioId);
+       Tarea tarea = tareaForm.get();
+       tarea.usuario = usuario;
+       TareaService.modificarTarea(tarea);
+       return redirect(controllers.routes.Tareas.listaTareas(usuarioId));
+     }
 
 }

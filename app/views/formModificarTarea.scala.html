@@ -1,3 +1,4 @@
+@(tareaForm: Form[Tarea], usuarioId: Integer)
 @main("Modificar tarea") {
   <head>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/formularioNuevaTarea.css")">
@@ -14,18 +15,19 @@
         <h2 class="tituloContenido">Modificar tarea</h2>
       </div>
 
+        @helper.form(action = routes.Tareas.grabaTareaModificada(usuarioId)) {
          <fieldset class="marco_principal">
-
+           <input type="hidden" name="id" value='@tareaForm("id").value'>
            <p class="etiqueta">Descripción</p>
            <textarea name="descripcion" class="datos"></textarea>
            <p class="datos_avisos" id="descripcion"> Required </p>
 
            <div class="botones_inferiores">
-             <a class="btn btn-primary" style="float:right" href="">Cancelar</a>
-           </div>
              <input type="submit" value="Guardar" class="btn btn-primary">
+             <a class="btn btn-primary" style="float:right" href="@routes.Tareas.listaTareas(usuarioId)">Cancelar</a>
+           </div>
          </fieldset>
-
+       }
      </div>
   </body>
 }
