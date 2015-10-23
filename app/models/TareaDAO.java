@@ -31,4 +31,12 @@ public class TareaDAO {
     public static void update (Tarea tarea) {
       JPA.em().merge(tarea);
     }
+
+    //Elimina la tarea que tenga como id el pasado por parámetro
+    public static void delete(Integer idTarea) {
+      Tarea tarea = JPA.em().getReference(Tarea.class, idTarea);
+      JPA.em().remove(tarea);
+      JPA.em().flush();
+      JPA.em().refresh(tarea.usuario);
+    }
 }

@@ -18,7 +18,9 @@ public class Tareas extends Controller {
     public Result listaTareas(Integer usuarioId) {
         List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
         if(tareas!=null) {
-          return ok(listaTareas.render(usuarioId, tareas, ""));
+          String mensaje = flash("mensajesTarea");
+          if(mensaje == null) mensaje = "";
+          return ok(listaTareas.render(usuarioId, tareas, mensaje));
         } else {
           return notFound(error.render("404", "recurso no encontrado."));
         }
@@ -50,7 +52,8 @@ public class Tareas extends Controller {
         TareaService.grabaTarea(tarea);
 
         List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
-        return ok(listaTareas.render(usuarioId, tareas, "La tarea se ha grabado correctamente."));
+        flash("mensajesTarea", "La tarea se ha grabado correctamente.");
+        return redirect(controllers.routes.Tareas.listaTareas(usuarioId));
     }
 
     @Transactional(readOnly = true)
@@ -89,7 +92,25 @@ public class Tareas extends Controller {
        tarea.usuario = usuario;
        TareaService.modificarTarea(tarea);
        List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
-       return ok(listaTareas.render(usuarioId, tareas, "La tarea se ha grabado correctamente."));
+       flash("mensajesTarea", "La tarea se ha grabado correctamente.");
+       return redirect(controllers.routes.Tareas.listaTareas(usuarioId));
+     }
+
+     @Transactional
+     //Elimina una tarea de la BD según su id
+     public Result borraTarea(Integer idUsuario, Integer idTarea) {
+       Usuario usuario = UsuarioService.findUsuario(idUsuario);
+       if(usuario==null)
+          return notFound(error.render("404", "recurso no encontrado."));
+
+       Tarea tarea = TareaService.findTarea(idTarea);
+       if(tarea==null)
+          return notFound(error.render("404", "recurso no encontrado."));
+          
+       TareaService.deleteTarea(idTarea);
+       List<Tarea> tareas = TareaService.findAllTareasUsuario(idUsuario);
+       flash("mensajesTarea", "La tarea se ha borrado correctamente.");
+       return redirect(controllers.routes.Tareas.listaTareas(idUsuario));
      }
 
 }
