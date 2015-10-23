@@ -62,6 +62,9 @@ public class Tareas extends Controller {
           return notFound(error.render("404", "recurso no encontrado."));
 
         Tarea tarea = TareaService.findTarea(tareaId);
+        if(tarea==null)
+          return notFound(error.render("404", "recurso no encontrado."));
+
         Form<Tarea> formularioT = Form.form(Tarea.class);
         Form<Tarea> tareaForm = formularioT.fill(tarea);
         return ok(formModificarTarea.render(tareaForm, usuarioId, ""));
