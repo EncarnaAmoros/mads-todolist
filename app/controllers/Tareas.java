@@ -99,6 +99,10 @@ public class Tareas extends Controller {
      @Transactional
      //Elimina una tarea de la BD según su id
      public Result borraTarea(Integer idUsuario, Integer idTarea) {
+       Usuario usuario = UsuarioService.findUsuario(idUsuario);
+       if(usuario==null)
+          return notFound(error.render("404", "recurso no encontrado."));
+
        TareaService.deleteTarea(idTarea);
        List<Tarea> tareas = TareaService.findAllTareasUsuario(idUsuario);
        flash("mensajesTarea", "La tarea se ha borrado correctamente.");
