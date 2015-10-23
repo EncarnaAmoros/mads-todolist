@@ -1,4 +1,4 @@
-@(usuarioId: Integer, tareas: List[Tarea])
+@(usuarioId: Integer, tareas: List[Tarea], mensaje: String)
 @main("Listado de tareas") {
   <head>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/listados.css")">
@@ -46,6 +46,11 @@
           </tr>
         </tbody>
       </table>
+
+    <!--Muestra los mensajes en la página html-->
+    @if(mensaje != "") {
+     <div class="alert alert-success" id="mensajes"> @mensaje </div>
+    }
 
     </div>
   </body>

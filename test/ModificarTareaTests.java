@@ -188,8 +188,29 @@ public class ModificarTareaTests {
                 .get(timeout);
             assertEquals(OK, response.getStatus());
             String body = response.getBody();
-            System.out.println(body);
             assertTrue(body.contains("Estudiar el parcial de matemáticas"));
+        });
+    }
+
+    @Test
+    public void testWebApiModificarTareaMensajeConfirmacion() {
+        running(testServer(3333, app), () -> {
+            int timeout = 10000;
+            WSResponse response = WS.url("http://localhost:3333/usuarios/1/tareas/modifica")
+                .setFollowRedirects(true)
+                .setContentType("application/x-www-form-urlencoded")
+                .post("id=2&descripcion=Entregar práctica 3 de MADS")
+                .get(timeout);
+            assertEquals(OK, response.getStatus());
+            String body = response.getBody();
+            assertTrue(body.contains(
+                "Preparar el trabajo del tema 1 de biología"));
+            assertTrue(body.contains(
+                "Entregar práctica 3 de MADS"));
+            assertTrue(body.contains(
+                "Leer el libro de inglés"));
+            assertTrue(body.contains(
+                "La tarea se ha grabado correctamente."));
         });
     }
 
