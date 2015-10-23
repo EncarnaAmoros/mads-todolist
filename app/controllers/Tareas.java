@@ -50,7 +50,7 @@ public class Tareas extends Controller {
         TareaService.grabaTarea(tarea);
 
         List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
-        return ok(listaTareas.render(usuarioId, tareas, ""));
+        return ok(listaTareas.render(usuarioId, tareas, "La tarea se ha grabado correctamente."));
     }
 
     @Transactional(readOnly = true)
