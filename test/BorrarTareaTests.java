@@ -77,4 +77,21 @@ public class BorrarTareaTests {
             });
         });
     }
+
+    @Test
+    public void testDeleteTareaService() {
+        running (app, () -> {
+            JPA.withTransaction(() -> {
+                Usuario usuario = UsuarioDAO.find(1);
+                List<Tarea> tareas = usuario.tareas;
+                TareaService.deleteTarea(tareas.get(1).id);
+                tareas = usuario.tareas;
+                assertEquals(tareas.size(), 2);
+                assertTrue(tareas.contains(
+                    new Tarea(usuario, "Preparar el trabajo del tema 1 de biología")));
+                assertTrue(tareas.contains(
+                    new Tarea(usuario, "Leer el libro de inglés")));
+            });
+        });
+    }
 }

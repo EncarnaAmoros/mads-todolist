@@ -32,4 +32,14 @@ public class TareaService {
     TareaDAO.update(tarea);
   }
 
+  //Elimina una tarea llamando al DAO true si va bien
+  public static boolean deleteTarea(Integer id) {
+    try {
+      TareaDAO.delete(id);
+      return true;
+    } catch(Exception e) {
+      return false;
+    }
+  }
+
 }
