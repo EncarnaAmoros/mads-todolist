@@ -52,7 +52,8 @@ public class Tareas extends Controller {
         TareaService.grabaTarea(tarea);
 
         List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
-        return ok(listaTareas.render(usuarioId, tareas, "La tarea se ha grabado correctamente."));
+        flash("mensajesTarea", "La tarea se ha grabado correctamente.");
+        return redirect(controllers.routes.Tareas.listaTareas(usuarioId));
     }
 
     @Transactional(readOnly = true)
@@ -91,7 +92,8 @@ public class Tareas extends Controller {
        tarea.usuario = usuario;
        TareaService.modificarTarea(tarea);
        List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
-       return ok(listaTareas.render(usuarioId, tareas, "La tarea se ha grabado correctamente."));
+       flash("mensajesTarea", "La tarea se ha grabado correctamente.");
+       return redirect(controllers.routes.Tareas.listaTareas(usuarioId));
      }
 
      @Transactional
@@ -99,7 +101,7 @@ public class Tareas extends Controller {
      public Result borraTarea(Integer idUsuario, Integer idTarea) {
        TareaService.deleteTarea(idTarea);
        List<Tarea> tareas = TareaService.findAllTareasUsuario(idUsuario);
-       flash("mensajesTarea", "Tarea borrada correctamente.");
+       flash("mensajesTarea", "La tarea se ha borrado correctamente.");
        return redirect(controllers.routes.Tareas.listaTareas(idUsuario));
      }
 

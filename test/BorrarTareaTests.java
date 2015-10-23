@@ -110,7 +110,7 @@ public class BorrarTareaTests {
             assertTrue(body.contains(
                 "Leer el libro de inglés"));
             assertTrue(body.contains(
-                "Tarea borrada correctamente."));
+                "La tarea se ha borrado correctamente."));
         });
     }
 
