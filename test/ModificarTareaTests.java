@@ -188,6 +188,7 @@ public class ModificarTareaTests {
                 .get(timeout);
             assertEquals(OK, response.getStatus());
             String body = response.getBody();
+            System.out.println(body);
             assertTrue(body.contains("Estudiar el parcial de matemáticas"));
         });
     }
