@@ -82,6 +82,9 @@ public class Tareas extends Controller {
        if (tareaForm.hasErrors())
          return badRequest(formModificarTarea.render(tareaForm, usuarioId, "La descripción no puede estar vacía."));
 
+       if(TareaService.findTarea(tareaForm.get().id)==null)
+         return notFound(error.render("404", "recurso no encontrado."));
+
        Tarea tarea = tareaForm.get();
        tarea.usuario = usuario;
        TareaService.modificarTarea(tarea);
