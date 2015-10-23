@@ -148,4 +148,20 @@ public class BorrarTareaTests {
         });
     }
 
+    @Test
+    public void testWebPaginaIconoBorrarListadoTareas() {
+        running(testServer(3333, app), () -> {
+            int timeout = 4000;
+            WSResponse response = WS
+                .url("http://localhost:3333/usuarios/1/tareas")
+                .get()
+                .get(timeout);
+            assertEquals(OK, response.getStatus());
+            String body = response.getBody();
+            assertTrue(body.contains("del('/usuarios/1/tareas/1')"));
+            assertTrue(body.contains("del('/usuarios/1/tareas/2')"));
+            assertTrue(body.contains("del('/usuarios/1/tareas/3')"));
+        });
+    }
+
 }

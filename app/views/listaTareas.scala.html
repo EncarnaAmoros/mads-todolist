@@ -1,5 +1,19 @@
 @(usuarioId: Integer, tareas: List[Tarea], mensaje: String)
-@main("Listado de tareas") {
+@scripts = {
+   <script type="text/javascript">
+     function del(urlBorrar) {
+       $.ajax({
+         url: urlBorrar,
+         type: 'DELETE',
+         success: function(results) {
+           //refresh the page
+           location.reload();
+         }
+       });
+     }
+  </script>
+}
+@main("Listado de tareas", scripts) {
   <head>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/listados.css")">
   </head>
@@ -31,6 +45,10 @@
               <td class="iconos_accion">
                 <a href="@routes.Tareas.editarTarea(usuarioId, tarea.id)" class="iconos_link">
                   <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <a class="iconos_link" onmouseover="" style="cursor: pointer;"
+                 onclick="del('@routes.Tareas.borraTarea(usuarioId, tarea.id)')">
+                  <span class="glyphicon glyphicon-trash"></span>
                 </a>
               </td>
             </tr>
