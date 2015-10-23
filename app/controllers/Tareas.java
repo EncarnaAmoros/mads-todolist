@@ -18,7 +18,9 @@ public class Tareas extends Controller {
     public Result listaTareas(Integer usuarioId) {
         List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
         if(tareas!=null) {
-          return ok(listaTareas.render(usuarioId, tareas, ""));
+          String mensaje = flash("mensajesTarea");
+          if(mensaje == null) mensaje = "";
+          return ok(listaTareas.render(usuarioId, tareas, mensaje));
         } else {
           return notFound(error.render("404", "recurso no encontrado."));
         }
@@ -90,6 +92,15 @@ public class Tareas extends Controller {
        TareaService.modificarTarea(tarea);
        List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
        return ok(listaTareas.render(usuarioId, tareas, "La tarea se ha grabado correctamente."));
+     }
+
+     @Transactional
+     //Elimina una tarea de la BD según su id
+     public Result borraTarea(Integer idUsuario, Integer idTarea) {
+       TareaService.deleteTarea(idTarea);
+       List<Tarea> tareas = TareaService.findAllTareasUsuario(idUsuario);
+       flash("mensajesTarea", "Tarea borrada correctamente.");
+       return redirect(controllers.routes.Tareas.listaTareas(idUsuario));
      }
 
 }
