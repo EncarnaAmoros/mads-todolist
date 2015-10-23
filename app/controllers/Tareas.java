@@ -103,6 +103,10 @@ public class Tareas extends Controller {
        if(usuario==null)
           return notFound(error.render("404", "recurso no encontrado."));
 
+       Tarea tarea = TareaService.findTarea(idTarea);
+       if(tarea==null)
+          return notFound(error.render("404", "recurso no encontrado."));
+          
        TareaService.deleteTarea(idTarea);
        List<Tarea> tareas = TareaService.findAllTareasUsuario(idUsuario);
        flash("mensajesTarea", "La tarea se ha borrado correctamente.");
