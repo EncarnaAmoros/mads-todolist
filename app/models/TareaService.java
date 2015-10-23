@@ -9,6 +9,11 @@ import java.util.List;
 
 public class TareaService {
 
+  //Devuelve una tarea por su id llamando al DAO
+  public static Tarea findTarea(Integer idTarea) {
+      return TareaDAO.find(idTarea);
+  }
+
   public static List<Tarea> findAllTareasUsuario(Integer id) {
     Usuario usuario = UsuarioDAO.find(id);
     if(usuario!=null)
@@ -17,8 +22,14 @@ public class TareaService {
       return null;
   }
 
+  //Graba una nueva tarea llamando al DAO y la devuelve
   public static Tarea grabaTarea(Tarea tarea) {
     return TareaDAO.create(tarea);
+  }
+
+  //Modifica los datos de la tarea llamando al DAO y la devuelve
+  public static void modificarTarea(Tarea tarea) {
+    TareaDAO.update(tarea);
   }
 
 }

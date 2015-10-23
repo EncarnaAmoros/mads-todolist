@@ -54,7 +54,7 @@ public class Tarea {
   }
 
   // Sustituye por null todas las cadenas vacías que pueda tener
-  // un usuario en sus atributos
+  // una tarea en sus atributos
   public void nulificaAtributos() {
     if (descripcion != null && descripcion.isEmpty()) descripcion = null;
   }

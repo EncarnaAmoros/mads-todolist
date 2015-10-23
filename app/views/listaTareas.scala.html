@@ -1,4 +1,4 @@
-@(usuarioId: Integer, tareas: List[Tarea])
+@(usuarioId: Integer, tareas: List[Tarea], mensaje: String)
 @main("Listado de tareas") {
   <head>
     <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/listados.css")">
@@ -18,14 +18,21 @@
         <tbody>
           <!--Titulos columnas de la tabla-->
           <tr>
-           <th>id</th>
-           <th>descripcion</th>
+           <th>Id</th>
+           <th>Descripcion</th>
+           <th>Acción</th>
           </tr>
           <!--Tareas en filas de la tabla-->
           @for(tarea <- tareas) {
             <tr>
-             <td>@tarea.id</td>
-             <td>@tarea.descripcion</td>
+              <td>@tarea.id</td>
+              <td>@tarea.descripcion</td>
+              <!--Iconos para ver, editar o eliminar usuario-->
+              <td class="iconos_accion">
+                <a href="@routes.Tareas.editarTarea(usuarioId, tarea.id)" class="iconos_link">
+                  <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+              </td>
             </tr>
           }
           <!--Para añadir tareas a la tabla-->
@@ -35,10 +42,15 @@
                <span class="glyphicon glyphicon-plus"></span>
              </a>
            </td>
-           <td></td>
+           <td></td><td></td>
           </tr>
         </tbody>
       </table>
+
+    <!--Muestra los mensajes en la página html-->
+    @if(mensaje != "") {
+     <div class="alert alert-success" id="mensajes"> @mensaje </div>
+    }
 
     </div>
   </body>

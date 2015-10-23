@@ -18,7 +18,7 @@ public class Tareas extends Controller {
     public Result listaTareas(Integer usuarioId) {
         List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
         if(tareas!=null) {
-          return ok(listaTareas.render(usuarioId, tareas));
+          return ok(listaTareas.render(usuarioId, tareas, ""));
         } else {
           return notFound(error.render("404", "recurso no encontrado."));
         }
@@ -50,7 +50,46 @@ public class Tareas extends Controller {
         TareaService.grabaTarea(tarea);
 
         List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
-        return ok(listaTareas.render(usuarioId, tareas));
+        return ok(listaTareas.render(usuarioId, tareas, "La tarea se ha grabado correctamente."));
     }
+
+    @Transactional(readOnly = true)
+    // Devuelve una página con un formulario relleno con los
+    //datos de la tarea pudiendose modificar
+    public Result editarTarea(Integer usuarioId, Integer tareaId) {
+        Usuario usuario = UsuarioService.findUsuario(usuarioId);
+        if(usuario==null)
+          return notFound(error.render("404", "recurso no encontrado."));
+
+        Tarea tarea = TareaService.findTarea(tareaId);
+        if(tarea==null)
+          return notFound(error.render("404", "recurso no encontrado."));
+
+        Form<Tarea> formularioT = Form.form(Tarea.class);
+        Form<Tarea> tareaForm = formularioT.fill(tarea);
+        return ok(formModificarTarea.render(tareaForm, usuarioId, ""));
+    }
+
+    @Transactional
+     // Modifica una tarea en la BD y devuelve código HTTP
+     // de redirección a la página de listado de tareas
+     public Result grabaTareaModificada(Integer usuarioId) {
+       Usuario usuario = UsuarioService.findUsuario(usuarioId);
+       if(usuario==null)
+         return notFound(error.render("404", "recurso no encontrado."));
+
+       Form<Tarea> tareaForm = Form.form(Tarea.class).bindFromRequest();
+       if (tareaForm.hasErrors())
+         return badRequest(formModificarTarea.render(tareaForm, usuarioId, "La descripción no puede estar vacía."));
+
+       if(TareaService.findTarea(tareaForm.get().id)==null)
+         return notFound(error.render("404", "recurso no encontrado."));
+
+       Tarea tarea = tareaForm.get();
+       tarea.usuario = usuario;
+       TareaService.modificarTarea(tarea);
+       List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
+       return ok(listaTareas.render(usuarioId, tareas, "La tarea se ha grabado correctamente."));
+     }
 
 }

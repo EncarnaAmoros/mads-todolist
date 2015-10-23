@@ -9,10 +9,13 @@ import java.util.Date;
 import javax.persistence.*;
 
 public class TareaDAO {
+
+    //Devuelve una tarea por su id
     public static Tarea find(Integer idTarea) {
         return JPA.em().find(Tarea.class, idTarea);
     }
 
+    //Graba una nueva tarea y la devuelve
     public static Tarea create (Tarea tarea) {
       tarea.nulificaAtributos();
       JPA.em().persist(tarea);
@@ -22,5 +25,10 @@ public class TareaDAO {
       JPA.em().refresh(tarea);
       Logger.debug(tarea.toString());
       return tarea;
+    }
+
+    //Modifica la tarea y la devuelve
+    public static void update (Tarea tarea) {
+      JPA.em().merge(tarea);
     }
 }

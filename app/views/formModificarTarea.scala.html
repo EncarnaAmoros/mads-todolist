@@ -1,0 +1,47 @@
+@(tareaForm: Form[Tarea], usuarioId: Integer, mensaje: String)
+@main("Modificar tarea") {
+  <head>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/formularioNuevaTarea.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/formulario.css")">
+  </head>
+
+  <body>
+    <div class="divCabecera">
+      <h1>To-do List</h1>
+    </div>
+
+    <div class="divContenido">
+      <div class="divTituloContenido">
+        <h2 class="tituloContenido">Modificar tarea</h2>
+      </div>
+
+        @helper.form(action = routes.Tareas.grabaTareaModificada(usuarioId)) {
+         <fieldset class="marco_principal">
+           <!--Muestra los mensajes en la página html-->
+           @if(mensaje != "") {
+            <div class="alert alert-danger" id="mensaje-noencontrado"> @mensaje </div>
+           }
+
+           <input type="hidden" name="id" value='@tareaForm("id").value'>
+           <p class="etiqueta">Descripción</p>
+           <textarea name="descripcion" class="datos"> @tareaForm("descripcion").value </textarea>
+           <p class="datos_avisos" id="descripcion"> Required </p>
+
+           <div class="botones_inferiores">
+             <input type="submit" value="Guardar" class="btn btn-primary">
+             <a class="btn btn-primary" style="float:right" href="@routes.Tareas.listaTareas(usuarioId)">Cancelar</a>
+           </div>
+         </fieldset>
+       }
+
+       @if(mensaje != "") {
+         <!--Mostramos las restricciones con un color rojo-->
+         <script type="text/javascript">
+             var campologin = document.getElementById('descripcion');
+             campologin.style.color = "#FD0505";
+          </script>
+        }
+
+     </div>
+  </body>
+}
