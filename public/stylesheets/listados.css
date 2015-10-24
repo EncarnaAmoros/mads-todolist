@@ -36,3 +36,9 @@
 .iconos_accion {
   color: #2895F1;
 }
+
+/*Para las tareas realizadas*/
+#realizada {
+  text-decoration: line-through;
+  color: gray !important;
+}

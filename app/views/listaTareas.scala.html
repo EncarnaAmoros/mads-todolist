@@ -36,23 +36,45 @@
            <th>Descripcion</th>
            <th>Acción</th>
           </tr>
-          <!--Tareas en filas de la tabla-->
+          <!--Tareas en filas de la tabla las pendientes-->
           @for(tarea <- tareas) {
-            <tr>
-              <td>@tarea.id</td>
-              <td>@tarea.descripcion</td>
-              <!--Iconos para ver, editar o eliminar usuario-->
-              <td class="iconos_accion">
-                <a href="@routes.Tareas.editarTarea(usuarioId, tarea.id)" class="iconos_link">
-                  <span class="glyphicon glyphicon-pencil"></span>
-                </a>
-                <a class="iconos_link" onmouseover="" style="cursor: pointer;"
-                 onclick="del('@routes.Tareas.borraTarea(usuarioId, tarea.id)')">
-                  <span class="glyphicon glyphicon-trash"></span>
-                </a>
-              </td>
-            </tr>
+            @if(tarea.estado=="pendiente") {
+              <tr>
+                <td>@tarea.id</td>
+                <td>@tarea.descripcion</td>
+                <!--Iconos para ver, editar o eliminar tarea-->
+                <td class="iconos_accion">
+                  <a href="@routes.Tareas.editarTarea(usuarioId, tarea.id)" class="iconos_link">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                  </a>
+                  <a class="iconos_link" onmouseover="" style="cursor: pointer;"
+                   onclick="del('@routes.Tareas.borraTarea(usuarioId, tarea.id)')">
+                    <span class="glyphicon glyphicon-trash"></span>
+                  </a>
+                </td>
+              </tr>
+            }
           }
+          <!--Tareas en filas de la tabla las realizadas-->
+          @for(tarea <- tareas) {
+            @if(tarea.estado=="realizada") {
+              <tr>
+                <td id='realizada'>@tarea.id</td>
+                <td id='realizada'>@tarea.descripcion</td>
+                <!--Iconos para ver, editar o eliminar tarea-->
+                <td class="iconos_accion">
+                  <a href="@routes.Tareas.editarTarea(usuarioId, tarea.id)" class="iconos_link" id='realizada'>
+                    <span class="glyphicon glyphicon-pencil"></span>
+                  </a>
+                  <a class="iconos_link" id='realizada' onmouseover="" style="cursor: pointer;"
+                   onclick="del('@routes.Tareas.borraTarea(usuarioId, tarea.id)')">
+                    <span class="glyphicon glyphicon-trash"></span>
+                  </a>
+                </td>
+              </tr>
+            }
+          }
+
           <!--Para añadir tareas a la tabla-->
           <tr>
            <td class="iconos_accion">

@@ -262,4 +262,28 @@ public class ModificarTareaTests {
         });
     }
 
+    @Test
+    public void testWebPaginaModificarTareaEstado() {
+        running(testServer(3333, app), () -> {
+            JPA.withTransaction(() -> {
+                Usuario usuario = UsuarioDAO.find(1);
+                List<Tarea> tareas = usuario.tareas;
+                Integer pos_tarea = tareas.size()-2;
+                tareas.get(pos_tarea).estado = "realizada";
+                TareaService.modificarTarea(tareas.get(pos_tarea));
+                tareas = usuario.tareas;
+                JPA.em().refresh(usuario);
+            });
+
+            int timeout = 10000;
+            WSResponse response = WS
+                .url("http://localhost:3333/usuarios/1/tareas")
+                .get()
+                .get(timeout);
+            assertEquals(OK, response.getStatus());
+            String body = response.getBody();
+            assertTrue(body.contains("id='realizada'"));
+        });
+    }
+
 }
