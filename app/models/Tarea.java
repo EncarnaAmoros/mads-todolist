@@ -17,6 +17,8 @@ public class Tarea {
   public Usuario usuario;
   @Constraints.Required
   public String descripcion;
+  @Constraints.Required
+  public String estado;
 
   public Tarea() {}
 
@@ -25,6 +27,7 @@ public class Tarea {
         throw new IllegalArgumentException();
       this.descripcion = descripcion;
       this.usuario = usuario;
+      this.estado = "pendiente";
   }
 
   @Override public boolean equals(Object obj) {
@@ -41,7 +44,8 @@ public class Tarea {
 
       if (id != null && otraTarea.id != null) return (id == otraTarea.id);
       else return (descripcion.equals(otraTarea.descripcion)) &&
-                  (usuario.equals(otraTarea.usuario));
+                  (usuario.equals(otraTarea.usuario)) &&
+                  (estado.equals(otraTarea.estado));
   }
 
   @Override public int hashCode() {
@@ -57,11 +61,12 @@ public class Tarea {
   // una tarea en sus atributos
   public void nulificaAtributos() {
     if (descripcion != null && descripcion.isEmpty()) descripcion = null;
+    if (estado != null && estado.isEmpty()) estado = "pendiente";
   }
 
   public String toString() {
-    return String.format("Tarea id: %s descripcion: %s",
-                          id, descripcion);
+    return String.format("Tarea id: %s descripcion: %s estado: %s",
+                          id, descripcion, estado);
   }
 
 }
