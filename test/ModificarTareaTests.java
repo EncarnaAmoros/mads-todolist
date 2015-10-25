@@ -286,4 +286,19 @@ public class ModificarTareaTests {
         });
     }
 
+    @Test
+    public void testWebPaginaModificarTareaUrlUpdate() {
+        running(testServer(3333, app), () -> {
+            int timeout = 10000;
+            WSResponse response = WS
+                .url("http://localhost:3333/usuarios/1/tareas")
+                .get()
+                .get(timeout);
+            assertEquals(OK, response.getStatus());
+            String body = response.getBody();
+            assertTrue(body.contains("up('/usuarios/1/tareas/modifica',"));
+            assertTrue(body.contains("'1', 'Preparar el trabajo del tema 1 de biología', 'pendiente');"));
+        });
+    }
+
 }

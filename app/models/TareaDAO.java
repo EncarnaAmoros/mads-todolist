@@ -28,8 +28,9 @@ public class TareaDAO {
     }
 
     //Modifica la tarea y la devuelve
-    public static void update (Tarea tarea) {
+    public static Tarea update (Tarea tarea) {
       JPA.em().merge(tarea);
+      return tarea;
     }
 
     //Elimina la tarea que tenga como id el pasado por parámetro

@@ -12,6 +12,20 @@
        });
      }
   </script>
+  <script type="text/javascript">
+     function up(urlModificar, id, descripcion, estado) {
+       if(estado == 'pendiente') nuevo_estado = 'realizada';
+       else nuevo_estado = 'pendiente';
+       $.ajax({
+         url: urlModificar,
+         data : { id : id, descripcion : descripcion, estado : nuevo_estado },
+         type: 'POST',
+         success: function(results) {
+           location.reload();
+         }
+       });
+     }
+  </script>
 }
 @main("Listado de tareas", scripts) {
   <head>
@@ -48,8 +62,13 @@
                     <span class="glyphicon glyphicon-pencil"></span>
                   </a>
                   <a class="iconos_link" onmouseover="" style="cursor: pointer;"
-                   onclick="del('@routes.Tareas.borraTarea(usuarioId, tarea.id)')">
+                    onclick="del('@routes.Tareas.borraTarea(usuarioId, tarea.id)')">
                     <span class="glyphicon glyphicon-trash"></span>
+                  </a>
+                  <a href="" class="iconos_link" style="cursor: pointer;"
+                    onclick="up('@routes.Tareas.grabaTareaModificada(usuarioId)',
+                              '@tarea.id', '@tarea.descripcion', '@tarea.estado'); return false;">
+                    <span class="glyphicon glyphicon-unchecked"></span>
                   </a>
                 </td>
               </tr>
@@ -67,8 +86,13 @@
                     <span class="glyphicon glyphicon-pencil"></span>
                   </a>
                   <a class="iconos_link" id='realizada' onmouseover="" style="cursor: pointer;"
-                   onclick="del('@routes.Tareas.borraTarea(usuarioId, tarea.id)')">
+                    onclick="del('@routes.Tareas.borraTarea(usuarioId, tarea.id)')">
                     <span class="glyphicon glyphicon-trash"></span>
+                  </a>
+                  <a href="" class="iconos_link" id='realizada' style="cursor: pointer;"
+                    onclick="up('@routes.Tareas.grabaTareaModificada(usuarioId)',
+                               '@tarea.id', '@tarea.descripcion', '@tarea.estado'); return false;">
+                    <span class="glyphicon glyphicon-check"></span>
                   </a>
                 </td>
               </tr>
