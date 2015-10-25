@@ -13,9 +13,9 @@ import static org.junit.Assert.*;
 public class WebServiceTest {
     @Test
     public void testSaludo() {
-        running(testServer(9000, fakeApplication(inMemoryDatabase())), () -> {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())), () -> {
             int timeout = 10000;
-            WSResponse response = WS.url("http://localhost:9000/saludo?nombre=Encarna").get().get(timeout);
+            WSResponse response = WS.url("http://localhost:3333/saludo?nombre=Encarna").get().get(timeout);
             assertEquals(OK, response.getStatus());
             assertTrue(response.getBody().contains("Hola Encarna, bienvenido a"));
         });
@@ -23,9 +23,9 @@ public class WebServiceTest {
 
     @Test
     public void testFormularioLogin() {
-        running(testServer(9000, fakeApplication(inMemoryDatabase())), () -> {
+        running(testServer(3333, fakeApplication(inMemoryDatabase())), () -> {
             int timeout = 10000;
-            WSResponse response = WS.url("http://localhost:9000/login").get().get(timeout);
+            WSResponse response = WS.url("http://localhost:3333/login").get().get(timeout);
             assertEquals(OK, response.getStatus());
             assertTrue(response.getBody().contains("Iniciar sesión"));
         });
