@@ -8,6 +8,7 @@ import views.html.*;
 import static play.libs.Json.*;
 import play.data.Form;
 import play.db.jpa.*;
+import javax.persistence.*;
 
 import models.*;
 
@@ -90,9 +91,12 @@ public class Tareas extends Controller {
 
        Tarea tarea = tareaForm.get();
        tarea.usuario = usuario;
-       TareaService.modificarTarea(tarea);
-       List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
-       flash("mensajesTarea", "La tarea se ha grabado correctamente.");
+       Tarea tarea_modificada = TareaService.modificarTarea(tarea);
+
+       //Si no es un cambio de estado, mostramos mensaje confirmación
+       if(TareaService.findTarea(tarea.id).estado == tarea.estado)
+        flash("mensajesTarea", "La tarea se ha grabado correctamente.");
+
        return redirect(controllers.routes.Tareas.listaTareas(usuarioId));
      }
 
@@ -106,7 +110,7 @@ public class Tareas extends Controller {
        Tarea tarea = TareaService.findTarea(idTarea);
        if(tarea==null)
           return notFound(error.render("404", "recurso no encontrado."));
-          
+
        TareaService.deleteTarea(idTarea);
        List<Tarea> tareas = TareaService.findAllTareasUsuario(idUsuario);
        flash("mensajesTarea", "La tarea se ha borrado correctamente.");

@@ -118,7 +118,7 @@ public class ModificarTareaTests {
             WSResponse response = WS.url("http://localhost:3333/usuarios/1/tareas/modifica")
                 .setFollowRedirects(true)
                 .setContentType("application/x-www-form-urlencoded")
-                .post("id=2&descripcion=Entregar práctica 3 de MADS")
+                .post("id=2&descripcion=Entregar práctica 3 de MADS&estado=pendiente")
                 .get(timeout);
             assertEquals(OK, response.getStatus());
             String body = response.getBody();
@@ -138,7 +138,7 @@ public class ModificarTareaTests {
             WSResponse response = WS.url("http://localhost:3333/usuarios/1/tareas/modifica")
                 .setFollowRedirects(true)
                 .setContentType("application/x-www-form-urlencoded")
-                .post("id=2&descripcion=")
+                .post("id=2&descripcion=&estado=pendiente")
                 .get(timeout);
             assertEquals(BAD_REQUEST, response.getStatus());
             String body = response.getBody();
@@ -169,7 +169,7 @@ public class ModificarTareaTests {
             WSResponse response = WS.url("http://localhost:3333/usuarios/9999/tareas/modifica")
                 .setFollowRedirects(true)
                 .setContentType("application/x-www-form-urlencoded")
-                .post("id=2&descripcion=Practicar canción Dias de Elias con la guitarra")
+                .post("id=2&descripcion=Practicar canción Dias de Elias con la guitarra&estado=pendiente")
                 .get(timeout);
             assertEquals(NOT_FOUND, response.getStatus());
             String body = response.getBody();
@@ -199,7 +199,7 @@ public class ModificarTareaTests {
             WSResponse response = WS.url("http://localhost:3333/usuarios/1/tareas/modifica")
                 .setFollowRedirects(true)
                 .setContentType("application/x-www-form-urlencoded")
-                .post("id=2&descripcion=Entregar práctica 3 de MADS")
+                .post("id=2&descripcion=Entregar práctica 3 de MADS&estado=pendiente")
                 .get(timeout);
             assertEquals(OK, response.getStatus());
             String body = response.getBody();
@@ -236,12 +236,70 @@ public class ModificarTareaTests {
             WSResponse response = WS.url("http://localhost:3333/usuarios/1/tareas/modifica")
                 .setFollowRedirects(true)
                 .setContentType("application/x-www-form-urlencoded")
-                .post("id=9999999&descripcion=Practicar canción Dias de Elias con la guitarra")
+                .post("id=9999999&descripcion=Practicar canción Dias de Elias con la guitarra&estado=pendiente")
                 .get(timeout);
             assertEquals(NOT_FOUND, response.getStatus());
             String body = response.getBody();
             assertTrue(body.contains("404"));
             assertTrue(body.contains("recurso no encontrado."));
+        });
+    }
+
+    /* Test para nueva caracteristica, el estado de una tarea pendiente o realizada */
+
+    @Test
+    public void testModificarTareaEstado() {
+        running (app, () -> {
+            JPA.withTransaction(() -> {
+                Usuario usuario = UsuarioDAO.find(1);
+                List<Tarea> tareas = usuario.tareas;
+                Integer pos_tarea = tareas.size()-2;
+                tareas.get(pos_tarea).estado = "realizada";
+                TareaService.modificarTarea(tareas.get(pos_tarea));
+                tareas = usuario.tareas;
+                JPA.em().refresh(usuario);
+                assertEquals(tareas.size(), 3);
+                assertTrue(tareas.get(pos_tarea).estado=="realizada");
+            });
+        });
+    }
+
+    @Test
+    public void testWebPaginaModificarTareaEstado() {
+        running(testServer(3333, app), () -> {
+            JPA.withTransaction(() -> {
+                Usuario usuario = UsuarioDAO.find(1);
+                List<Tarea> tareas = usuario.tareas;
+                Integer pos_tarea = tareas.size()-2;
+                tareas.get(pos_tarea).estado = "realizada";
+                TareaService.modificarTarea(tareas.get(pos_tarea));
+                tareas = usuario.tareas;
+                JPA.em().refresh(usuario);
+            });
+
+            int timeout = 10000;
+            WSResponse response = WS
+                .url("http://localhost:3333/usuarios/1/tareas")
+                .get()
+                .get(timeout);
+            assertEquals(OK, response.getStatus());
+            String body = response.getBody();
+            assertTrue(body.contains("id='realizada'"));
+        });
+    }
+
+    @Test
+    public void testWebPaginaModificarTareaUrlUpdate() {
+        running(testServer(3333, app), () -> {
+            int timeout = 10000;
+            WSResponse response = WS
+                .url("http://localhost:3333/usuarios/1/tareas")
+                .get()
+                .get(timeout);
+            assertEquals(OK, response.getStatus());
+            String body = response.getBody();
+            assertTrue(body.contains("up('/usuarios/1/tareas/modifica',"));
+            assertTrue(body.contains("'1', 'Preparar el trabajo del tema 1 de biología', 'pendiente');"));
         });
     }
 

@@ -28,8 +28,8 @@ public class TareaService {
   }
 
   //Modifica los datos de la tarea llamando al DAO y la devuelve
-  public static void modificarTarea(Tarea tarea) {
-    TareaDAO.update(tarea);
+  public static Tarea modificarTarea(Tarea tarea) {
+    return TareaDAO.update(tarea);
   }
 
   //Elimina una tarea llamando al DAO true si va bien

@@ -111,7 +111,7 @@ public class CrearTareaTests {
             int timeout = 10000;
             WSResponse response = WS.url("http://localhost:3333/usuarios/1/tareas/nueva")
                 .setContentType("application/x-www-form-urlencoded")
-                .post("descripcion=Entregar práctica 3 de MADS")
+                .post("descripcion=Entregar práctica 3 de MADS&estado=pendiente")
                 .get(timeout);
             assertEquals(OK, response.getStatus());
             String body = response.getBody();
@@ -132,7 +132,7 @@ public class CrearTareaTests {
             int timeout = 10000;
             WSResponse response = WS.url("http://localhost:3333/usuarios/999/tareas/nueva")
                 .setContentType("application/x-www-form-urlencoded")
-                .post("descripcion=Entregar práctica 3 de MADS")
+                .post("descripcion=Entregar práctica 3 de MADS&estado=pendiente")
                 .get(timeout);
             assertEquals(NOT_FOUND, response.getStatus());
             String body = response.getBody();
@@ -149,7 +149,7 @@ public class CrearTareaTests {
             int timeout = 10000;
             WSResponse response = WS.url("http://localhost:3333/usuarios/1/tareas/nueva")
                 .setContentType("application/x-www-form-urlencoded")
-                .post("descripcion=")
+                .post("descripcion=&estado=pendiente")
                 .get(timeout);
             assertEquals(BAD_REQUEST, response.getStatus());
             String body = response.getBody();
@@ -164,7 +164,7 @@ public class CrearTareaTests {
             int timeout = 10000;
             WSResponse response = WS.url("http://localhost:3333/usuarios/1/tareas/nueva")
                 .setContentType("application/x-www-form-urlencoded")
-                .post("descripcion=Entregar práctica 3 de MADS")
+                .post("descripcion=Entregar práctica 3 de MADS&estado=pendiente")
                 .get(timeout);
             assertEquals(OK, response.getStatus());
             String body = response.getBody();
