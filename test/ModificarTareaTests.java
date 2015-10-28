@@ -245,6 +245,8 @@ public class ModificarTareaTests {
         });
     }
 
+    /* Test para nueva caracteristica, el estado de una tarea pendiente o realizada */
+
     @Test
     public void testModificarTareaEstado() {
         running (app, () -> {
