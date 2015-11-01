@@ -66,9 +66,10 @@ public class BorrarTareaTests {
         running (app, () -> {
             JPA.withTransaction(() -> {
                 Usuario usuario = UsuarioDAO.find(1);
+                TareaDAO.delete(TareaDAO.find(2).id);
                 List<Tarea> tareas = usuario.tareas;
-                TareaDAO.delete(tareas.get(1).id);
-                tareas = usuario.tareas;
+                JPA.em().refresh(usuario);
+                tareas.size();
                 assertEquals(tareas.size(), 2);
                 assertTrue(tareas.contains(
                     new Tarea(usuario, "Preparar el trabajo del tema 1 de biología")));
@@ -83,9 +84,8 @@ public class BorrarTareaTests {
         running (app, () -> {
             JPA.withTransaction(() -> {
                 Usuario usuario = UsuarioDAO.find(1);
-                List<Tarea> tareas = usuario.tareas;
-                TareaService.deleteTarea(tareas.get(1).id);
-                tareas = usuario.tareas;
+                TareaService.deleteTarea(TareaDAO.find(2).id);
+                List<Tarea>  tareas = usuario.tareas;
                 assertEquals(tareas.size(), 2);
                 assertTrue(tareas.contains(
                     new Tarea(usuario, "Preparar el trabajo del tema 1 de biología")));

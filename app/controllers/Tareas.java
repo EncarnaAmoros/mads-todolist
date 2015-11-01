@@ -91,12 +91,13 @@ public class Tareas extends Controller {
 
        Tarea tarea = tareaForm.get();
        tarea.usuario = usuario;
-       Tarea tarea_modificada = TareaService.modificarTarea(tarea);
 
        //Si no es un cambio de estado, mostramos mensaje confirmación
-       if(TareaService.findTarea(tarea.id).estado == tarea.estado)
+       if(TareaService.findTarea(tarea.id).estado.equals(tarea.estado)) {
         flash("mensajesTarea", "La tarea se ha grabado correctamente.");
+      }
 
+       TareaService.modificarTarea(tarea);
        return redirect(controllers.routes.Tareas.listaTareas(usuarioId));
      }
 
