@@ -120,8 +120,15 @@ public class Tareas extends Controller {
        if(tarea==null)
           return notFound(error.render("404", "recurso no encontrado."));
 
-       TareaService.deleteTarea(idTarea);
+       boolean tarea_encontrada = false;
        List<Tarea> tareas = TareaService.findAllTareasUsuario(idUsuario);
+       for(int i=0;i<tareas.size();i++)
+         if(tareas.get(i).id == tarea.id)
+          tarea_encontrada = true;
+       if(tarea_encontrada==false)
+        return unauthorized(error.render("401", "acceso no autorizado."));
+
+       TareaService.deleteTarea(idTarea);
        flash("mensajesTarea", "La tarea se ha borrado correctamente.");
        return redirect(controllers.routes.Tareas.listaTareas(idUsuario));
      }

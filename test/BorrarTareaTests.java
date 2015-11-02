@@ -164,4 +164,24 @@ public class BorrarTareaTests {
         });
     }
 
+    /* Un usuario no puede eliminar tareas que no son suyas */
+
+    @Test
+    public void testWebApiBorrarTareaAjena() {
+        running(testServer(3333, app), () -> {
+            int timeout = 10000;
+            WSResponse response = WS.url("http://localhost:3333/usuarios/2/tareas/1")
+                .setFollowRedirects(true)
+                .setContentType("application/x-www-form-urlencoded")
+                .delete()
+                .get(timeout);
+            assertEquals(UNAUTHORIZED, response.getStatus());
+            String body = response.getBody();
+            assertTrue(body.contains(
+                "401"));
+            assertTrue(body.contains(
+                "acceso no autorizado."));
+        });
+    }
+
 }
