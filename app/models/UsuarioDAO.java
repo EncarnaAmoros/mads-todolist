@@ -38,6 +38,9 @@ public class UsuarioDAO {
  //Elimina el usuario que tenga como id el pasado por parámetro
  public static void delete(Integer idUsuario) {
    Usuario usuario = JPA.em().getReference(Usuario.class, idUsuario);
+   List<Tarea> tareas = usuario.tareas;
+   for(int i=0;i<tareas.size();i++)
+    TareaDAO.delete(tareas.get(i).id);
    JPA.em().remove(usuario);
  }
 

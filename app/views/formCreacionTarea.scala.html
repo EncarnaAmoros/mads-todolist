@@ -26,6 +26,9 @@
            <p class="etiqueta">Descripción</p>
            <textarea name="descripcion" class="datos"></textarea>
            <p class="datos_avisos" id="descripcion"> Required </p>
+           <p class="etiqueta">Fecha</p>
+           <input type="text" name="fecha" id="fecha" value='' class="dato_fecha">
+           <p class="datos_avisos" id="fechaa"> Formato (dd-mm-yyyy)</p>
 
            <div class="botones_inferiores">
              <input type="submit" value="Guardar" class="btn btn-primary">
@@ -39,6 +42,8 @@
          <script type="text/javascript">
              var campologin = document.getElementById('descripcion');
              campologin.style.color = "#FD0505";
+             var campofecha = document.getElementById('fechaa');
+             campofecha.style.color = "#FD0505";
           </script>
         }
      </div>

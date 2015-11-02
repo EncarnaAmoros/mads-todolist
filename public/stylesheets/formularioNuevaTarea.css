@@ -34,6 +34,14 @@
   font-size: 16px;
 }
 
+.dato_fecha {
+  width: 485px;
+  height: 29px;
+  padding: 0 8px;
+  padding-left: 5px;
+  direction: ltr;
+}
+
 /*Botones*/
 
 /*Mensajes de error, validaciones*/

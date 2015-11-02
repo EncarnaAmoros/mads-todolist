@@ -13,6 +13,12 @@ import org.dbunit.dataset.xml.*;
 import java.util.HashMap;
 import java.io.FileInputStream;
 
+import play.data.format.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import play.data.format.*;
+
 import play.libs.ws.*;
 
 public class ModificarTareaTests {
@@ -70,7 +76,6 @@ public class ModificarTareaTests {
                 tarea.descripcion = "Preparar el parcial de MADS";
                 TareaDAO.update(tarea);
                 List<Tarea> tareas = usuario.tareas;
-                JPA.em().refresh(usuario);
                 assertEquals(tareas.size(), 3);
                 assertTrue(tareas.contains(
                     new Tarea(usuario, "Preparar el parcial de MADS")));
@@ -87,7 +92,6 @@ public class ModificarTareaTests {
                 tarea.descripcion = "Preparar el super parcial de MADS";
                 TareaService.modificarTarea(tarea);
                 List<Tarea> tareas = usuario.tareas;
-                JPA.em().refresh(usuario);
                 assertEquals(tareas.size(), 3);
                 assertTrue(tareas.contains(
                     new Tarea(usuario, "Preparar el super parcial de MADS")));
@@ -254,7 +258,6 @@ public class ModificarTareaTests {
                 tarea.estado = "realizada";
                 TareaService.modificarTarea(tarea);
                 List<Tarea> tareas = usuario.tareas;
-                JPA.em().refresh(usuario);
                 assertEquals(tareas.size(), 3);
                 assertTrue(tareas.get(1).estado.equals("realizada"));
             });
@@ -295,11 +298,28 @@ public class ModificarTareaTests {
             assertEquals(OK, response.getStatus());
             String body = response.getBody();
             assertTrue(body.contains("up('/usuarios/1/tareas/modifica',"));
-            assertTrue(body.contains("'1', 'Preparar el trabajo del tema 1 de biología', 'pendiente');"));
+            assertTrue(body.contains("'1', 'Preparar el trabajo del tema 1 de biología', 'pendiente', '2015-11-11 00:00:00.0');"));
         });
     }
 
     /* Un usuario no puede modificar tareas que no son suyas */
+
+    @Test
+    public void testWebApiFormModificarTareaAjena() {
+        running(testServer(3333, app), () -> {
+            int timeout = 10000;
+            WSResponse response = WS.url("http://localhost:3333/usuarios/2/tareas/1/editar")
+                .setFollowRedirects(true)
+                .get()
+                .get(timeout);
+            assertEquals(UNAUTHORIZED, response.getStatus());
+            String body = response.getBody();
+            assertTrue(body.contains(
+                "401"));
+            assertTrue(body.contains(
+                "acceso no autorizado."));
+        });
+    }
 
     @Test
     public void testWebApiModificarTareaAjena() {
@@ -319,4 +339,106 @@ public class ModificarTareaTests {
         });
     }
 
+    /* Añadiendo atributo fecha a las tareas */
+
+    @Test
+    public void testUpdateTareaFecha() {
+        running (app, () -> {
+            JPA.withTransaction(() -> {
+                Usuario usuario = UsuarioDAO.find(1);
+                Tarea tarea = TareaDAO.find(2);
+                //Creamos la fecha a modificar
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                String dateInString = "15-11-2015";
+                Date f = sdf.parse(dateInString);
+                tarea.fecha = f;
+                TareaDAO.update(tarea);
+                List<Tarea> tareas = usuario.tareas;
+                assertEquals(tareas.size(), 3);
+                assertTrue(tareas.get(1).fecha.getDay()==f.getDay());
+                assertTrue(tareas.get(1).fecha.getMonth()==f.getMonth());
+                assertTrue(tareas.get(1).fecha.getYear()==f.getYear());
+            });
+        });
+    }
+
+    @Test
+    public void testModificarTareaFecha() {
+        running (app, () -> {
+            JPA.withTransaction(() -> {
+                Usuario usuario = UsuarioDAO.find(1);
+                Tarea tarea = TareaDAO.find(2);
+                //Creamos la fecha a modificar
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                String dateInString = "30-01-2016";
+                Date f = sdf.parse(dateInString);
+                tarea.fecha = f;
+                TareaService.modificarTarea(tarea);
+                List<Tarea> tareas = usuario.tareas;
+                assertEquals(tareas.size(), 3);
+                assertTrue(tareas.get(1).fecha.getDay()==f.getDay());
+                assertTrue(tareas.get(1).fecha.getMonth()==f.getMonth());
+                assertTrue(tareas.get(1).fecha.getYear()==f.getYear());
+            });
+        });
+    }
+
+    @Test
+    public void testWebPaginaFormModificarTareaFecha() {
+        running(testServer(3333, app), () -> {
+            int timeout = 10000;
+            WSResponse response = WS
+                .url("http://localhost:3333/usuarios/1/tareas/3/editar")
+                .get()
+                .get(timeout);
+            assertEquals(OK, response.getStatus());
+            String body = response.getBody();
+            assertTrue(body.contains("Modificar tarea"));
+            assertTrue(body.contains("Fecha"));
+            assertTrue(body.contains("11-01-2016"));
+            assertTrue(body.contains("Formato (dd-mm-yyyy)"));
+        });
+    }
+
+    @Test
+    public void testWebApiModificarTareaFecha() {
+        running(testServer(3333, app), () -> {
+            int timeout = 10000;
+            WSResponse response = WS.url("http://localhost:3333/usuarios/1/tareas/modifica")
+                .setFollowRedirects(true)
+                .setContentType("application/x-www-form-urlencoded")
+                .post("id=2&descripcion=Entregar práctica 3 de MADS&estado=pendiente&fecha=04-05-2016")
+                .get(timeout);
+            assertEquals(OK, response.getStatus());
+            String body = response.getBody();
+            assertTrue(body.contains(
+                "Preparar el trabajo del tema 1 de biología"));
+            assertTrue(body.contains(
+                "Entregar práctica 3 de MADS"));
+            assertTrue(body.contains(
+                "Leer el libro de inglés"));
+            assertTrue(body.contains(
+                "11-11-2015"));
+            assertTrue(body.contains(
+                "04-05-2016"));
+            assertTrue(body.contains(
+                "11-01-2016"));
+        });
+    }
+
+    @Test
+    public void testWebApiModificarTareaFechaMalFormato() {
+        running(testServer(3333, app), () -> {
+            int timeout = 10000;
+            WSResponse response = WS.url("http://localhost:3333/usuarios/1/tareas/modifica")
+                .setFollowRedirects(true)
+                .setContentType("application/x-www-form-urlencoded")
+                .post("id=2&descripcion=Entregar práctica 3 de MADS&estado=pendiente&fecha=0405-2016")
+                .get(timeout);
+            assertEquals(BAD_REQUEST, response.getStatus());
+            String body = response.getBody();
+            assertTrue(body.contains(
+                "La fecha debe tener el formato dd-MM-yyyy."));
+        });
+    }
 }

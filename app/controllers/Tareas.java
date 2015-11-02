@@ -46,10 +46,20 @@ public class Tareas extends Controller {
           return notFound(error.render("404", "recurso no encontrado."));
 
         Form<Tarea> tareaForm = Form.form(Tarea.class).bindFromRequest();
-        if (tareaForm.hasErrors())
-          return badRequest(formCreacionTarea.render(tareaForm, usuarioId, "La descripción no puede estar vacía."));
+        if (tareaForm.hasErrors()) {
+          try {
+            tareaForm.get();
+          } catch (Exception er) {
+            String error = "Invalid date value";
+            if(er.getMessage().contains(error))
+               return badRequest(formCreacionTarea.render(tareaForm, usuarioId, "La fecha debe tener el formato dd-MM-yyyy."));
+            else
+               return badRequest(formCreacionTarea.render(tareaForm, usuarioId, "La descripción no puede estar vacía."));
+          }
+        }
 
         Tarea tarea = new Tarea(usuario, tareaForm.get().descripcion);
+        tarea.fecha = tareaForm.get().fecha;
         TareaService.grabaTarea(tarea);
 
         List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
@@ -69,6 +79,14 @@ public class Tareas extends Controller {
         if(tarea==null)
           return notFound(error.render("404", "recurso no encontrado."));
 
+        boolean tarea_encontrada = false;
+        List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
+        for(int i=0;i<tareas.size();i++)
+          if(tareas.get(i).id == tarea.id)
+            tarea_encontrada = true;
+        if(tarea_encontrada==false)
+         return unauthorized(error.render("401", "acceso no autorizado."));
+
         Form<Tarea> formularioT = Form.form(Tarea.class);
         Form<Tarea> tareaForm = formularioT.fill(tarea);
         return ok(formModificarTarea.render(tareaForm, usuarioId, ""));
@@ -83,8 +101,17 @@ public class Tareas extends Controller {
          return notFound(error.render("404", "recurso no encontrado."));
 
        Form<Tarea> tareaForm = Form.form(Tarea.class).bindFromRequest();
-       if (tareaForm.hasErrors())
-         return badRequest(formModificarTarea.render(tareaForm, usuarioId, "La descripción no puede estar vacía."));
+       if (tareaForm.hasErrors()) {
+         try {
+           tareaForm.get();
+         } catch (Exception er) {
+           String error = "Invalid date value";
+           if(er.getMessage().contains(error))
+              return badRequest(formModificarTarea.render(tareaForm, usuarioId, "La fecha debe tener el formato dd-MM-yyyy."));
+           else
+              return badRequest(formModificarTarea.render(tareaForm, usuarioId, "La descripción no puede estar vacía."));
+         }
+       }
 
        if(TareaService.findTarea(tareaForm.get().id)==null)
          return notFound(error.render("404", "recurso no encontrado."));

@@ -140,5 +140,28 @@ public class ListadoTareasTests {
                 "Leer el libro de inglés"));
         });
     }
-    
+
+    /* Añadiendo atributo fecha a las tareas */
+
+    @Test
+    public void testWebApiListadoTareasVerFecha() {
+        running(testServer(3333, app), () -> {
+            int timeout = 4000;
+            WSResponse response = WS
+                .url("http://localhost:3333/usuarios/1/tareas")
+                .get()
+                .get(timeout);
+            assertEquals(OK, response.getStatus());
+            String body = response.getBody();
+            assertTrue(body.contains(
+                "Preparar el trabajo del tema 1 de biología"));
+            assertTrue(body.contains(
+                "Estudiar el parcial de matemáticas"));
+            assertTrue(body.contains(
+                "Leer el libro de inglés"));
+            assertTrue(body.contains(
+                "11-11-2015"));
+        });
+    }
+
 }
