@@ -22,7 +22,7 @@ public class Usuario {
     public Date fechaNacimiento;
     @Constraints.Required
     public String password;
-    @OneToMany(mappedBy="usuario", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="usuario")//, cascade=CascadeType.ALL)
     public List<Tarea> tareas;
 
     public Usuario() {}
