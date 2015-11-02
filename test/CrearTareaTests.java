@@ -234,5 +234,21 @@ public class CrearTareaTests {
             });
         });
     }
+    
+    @Test
+    public void testWebPaginaFormCrearTareaFecha() {
+        running(testServer(3333, app), () -> {
+            int timeout = 10000;
+            WSResponse response = WS
+                .url("http://localhost:3333/usuarios/1/tareas/nueva")
+                .get()
+                .get(timeout);
+            assertEquals(OK, response.getStatus());
+            String body = response.getBody();
+            assertTrue(body.contains("Nueva tarea"));
+            assertTrue(body.contains("Fecha"));
+            assertTrue(body.contains("Formato (dd-mm-yyyy)"));
+        });
+    }
 
 }
