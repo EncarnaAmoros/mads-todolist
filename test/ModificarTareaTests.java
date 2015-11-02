@@ -348,4 +348,27 @@ public class ModificarTareaTests {
             });
         });
     }
+
+    @Test
+    public void testModificarTareaFecha() {
+        running (app, () -> {
+            JPA.withTransaction(() -> {
+                Usuario usuario = UsuarioDAO.find(1);
+                Tarea tarea = TareaDAO.find(2);
+                //Creamos la fecha a modificar
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                String dateInString = "30-01-2016";
+                Date f = sdf.parse(dateInString);
+                tarea.fecha = f;
+                TareaService.modificarTarea(tarea);
+                List<Tarea> tareas = usuario.tareas;
+                JPA.em().refresh(usuario);
+                assertEquals(tareas.size(), 3);
+                assertTrue(tareas.get(1).fecha.getDay()==f.getDay());
+                assertTrue(tareas.get(1).fecha.getMonth()==f.getMonth());
+                assertTrue(tareas.get(1).fecha.getYear()==f.getYear());
+            });
+        });
+    }
+
 }
