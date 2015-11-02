@@ -301,7 +301,7 @@ public class ModificarTareaTests {
             assertEquals(OK, response.getStatus());
             String body = response.getBody();
             assertTrue(body.contains("up('/usuarios/1/tareas/modifica',"));
-            assertTrue(body.contains("'1', 'Preparar el trabajo del tema 1 de biología', 'pendiente');"));
+            assertTrue(body.contains("'1', 'Preparar el trabajo del tema 1 de biología', 'pendiente', '2015-11-11 00:00:00.0');"));
         });
     }
 
