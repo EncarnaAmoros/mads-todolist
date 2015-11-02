@@ -68,8 +68,6 @@ public class BorrarTareaTests {
                 Usuario usuario = UsuarioDAO.find(1);
                 TareaDAO.delete(TareaDAO.find(2).id);
                 List<Tarea> tareas = usuario.tareas;
-                JPA.em().refresh(usuario);
-                tareas.size();
                 assertEquals(tareas.size(), 2);
                 assertTrue(tareas.contains(
                     new Tarea(usuario, "Preparar el trabajo del tema 1 de biología")));

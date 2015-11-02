@@ -76,7 +76,6 @@ public class ModificarTareaTests {
                 tarea.descripcion = "Preparar el parcial de MADS";
                 TareaDAO.update(tarea);
                 List<Tarea> tareas = usuario.tareas;
-                JPA.em().refresh(usuario);
                 assertEquals(tareas.size(), 3);
                 assertTrue(tareas.contains(
                     new Tarea(usuario, "Preparar el parcial de MADS")));
@@ -93,7 +92,6 @@ public class ModificarTareaTests {
                 tarea.descripcion = "Preparar el super parcial de MADS";
                 TareaService.modificarTarea(tarea);
                 List<Tarea> tareas = usuario.tareas;
-                JPA.em().refresh(usuario);
                 assertEquals(tareas.size(), 3);
                 assertTrue(tareas.contains(
                     new Tarea(usuario, "Preparar el super parcial de MADS")));
@@ -260,7 +258,6 @@ public class ModificarTareaTests {
                 tarea.estado = "realizada";
                 TareaService.modificarTarea(tarea);
                 List<Tarea> tareas = usuario.tareas;
-                JPA.em().refresh(usuario);
                 assertEquals(tareas.size(), 3);
                 assertTrue(tareas.get(1).estado.equals("realizada"));
             });
@@ -340,7 +337,6 @@ public class ModificarTareaTests {
                 tarea.fecha = f;
                 TareaDAO.update(tarea);
                 List<Tarea> tareas = usuario.tareas;
-                JPA.em().refresh(usuario);
                 assertEquals(tareas.size(), 3);
                 assertTrue(tareas.get(1).fecha.getDay()==f.getDay());
                 assertTrue(tareas.get(1).fecha.getMonth()==f.getMonth());
@@ -362,7 +358,6 @@ public class ModificarTareaTests {
                 tarea.fecha = f;
                 TareaService.modificarTarea(tarea);
                 List<Tarea> tareas = usuario.tareas;
-                JPA.em().refresh(usuario);
                 assertEquals(tareas.size(), 3);
                 assertTrue(tareas.get(1).fecha.getDay()==f.getDay());
                 assertTrue(tareas.get(1).fecha.getMonth()==f.getMonth());
