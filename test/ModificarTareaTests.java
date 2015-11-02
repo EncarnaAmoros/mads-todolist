@@ -13,6 +13,12 @@ import org.dbunit.dataset.xml.*;
 import java.util.HashMap;
 import java.io.FileInputStream;
 
+import play.data.format.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import play.data.format.*;
+
 import play.libs.ws.*;
 
 public class ModificarTareaTests {
@@ -319,4 +325,27 @@ public class ModificarTareaTests {
         });
     }
 
+    /* Añadiendo atributo fecha a las tareas */
+
+    @Test
+    public void testUpdateTareaFecha() {
+        running (app, () -> {
+            JPA.withTransaction(() -> {
+                Usuario usuario = UsuarioDAO.find(1);
+                Tarea tarea = TareaDAO.find(2);
+                //Creamos la fecha a modificar
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                String dateInString = "15-11-2015";
+                Date f = sdf.parse(dateInString);
+                tarea.fecha = f;
+                TareaDAO.update(tarea);
+                List<Tarea> tareas = usuario.tareas;
+                JPA.em().refresh(usuario);
+                assertEquals(tareas.size(), 3);
+                assertTrue(tareas.get(1).fecha.getDay()==f.getDay());
+                assertTrue(tareas.get(1).fecha.getMonth()==f.getMonth());
+                assertTrue(tareas.get(1).fecha.getYear()==f.getYear());
+            });
+        });
+    }
 }
