@@ -66,9 +66,10 @@ public class BorrarTareaTests {
         running (app, () -> {
             JPA.withTransaction(() -> {
                 Usuario usuario = UsuarioDAO.find(1);
+                TareaDAO.delete(TareaDAO.find(2).id);
                 List<Tarea> tareas = usuario.tareas;
-                TareaDAO.delete(tareas.get(1).id);
-                tareas = usuario.tareas;
+                JPA.em().refresh(usuario);
+                tareas.size();
                 assertEquals(tareas.size(), 2);
                 assertTrue(tareas.contains(
                     new Tarea(usuario, "Preparar el trabajo del tema 1 de biología")));
@@ -83,9 +84,8 @@ public class BorrarTareaTests {
         running (app, () -> {
             JPA.withTransaction(() -> {
                 Usuario usuario = UsuarioDAO.find(1);
-                List<Tarea> tareas = usuario.tareas;
-                TareaService.deleteTarea(tareas.get(1).id);
-                tareas = usuario.tareas;
+                TareaService.deleteTarea(TareaDAO.find(2).id);
+                List<Tarea>  tareas = usuario.tareas;
                 assertEquals(tareas.size(), 2);
                 assertTrue(tareas.contains(
                     new Tarea(usuario, "Preparar el trabajo del tema 1 de biología")));
@@ -161,6 +161,26 @@ public class BorrarTareaTests {
             assertTrue(body.contains("del('/usuarios/1/tareas/1')"));
             assertTrue(body.contains("del('/usuarios/1/tareas/2')"));
             assertTrue(body.contains("del('/usuarios/1/tareas/3')"));
+        });
+    }
+
+    /* Un usuario no puede eliminar tareas que no son suyas */
+
+    @Test
+    public void testWebApiBorrarTareaAjena() {
+        running(testServer(3333, app), () -> {
+            int timeout = 10000;
+            WSResponse response = WS.url("http://localhost:3333/usuarios/2/tareas/1")
+                .setFollowRedirects(true)
+                .setContentType("application/x-www-form-urlencoded")
+                .delete()
+                .get(timeout);
+            assertEquals(UNAUTHORIZED, response.getStatus());
+            String body = response.getBody();
+            assertTrue(body.contains(
+                "401"));
+            assertTrue(body.contains(
+                "acceso no autorizado."));
         });
     }
 

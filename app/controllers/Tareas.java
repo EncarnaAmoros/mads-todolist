@@ -91,12 +91,21 @@ public class Tareas extends Controller {
 
        Tarea tarea = tareaForm.get();
        tarea.usuario = usuario;
-       Tarea tarea_modificada = TareaService.modificarTarea(tarea);
+
+       boolean tarea_encontrada = false;
+       List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
+       for(int i=0;i<tareas.size();i++)
+         if(tareas.get(i).id == tarea.id)
+           tarea_encontrada = true;
+       if(tarea_encontrada==false)
+        return unauthorized(error.render("401", "acceso no autorizado."));
 
        //Si no es un cambio de estado, mostramos mensaje confirmación
-       if(TareaService.findTarea(tarea.id).estado == tarea.estado)
+       if(TareaService.findTarea(tarea.id).estado.equals(tarea.estado)) {
         flash("mensajesTarea", "La tarea se ha grabado correctamente.");
+      }
 
+       TareaService.modificarTarea(tarea);
        return redirect(controllers.routes.Tareas.listaTareas(usuarioId));
      }
 
@@ -111,8 +120,15 @@ public class Tareas extends Controller {
        if(tarea==null)
           return notFound(error.render("404", "recurso no encontrado."));
 
-       TareaService.deleteTarea(idTarea);
+       boolean tarea_encontrada = false;
        List<Tarea> tareas = TareaService.findAllTareasUsuario(idUsuario);
+       for(int i=0;i<tareas.size();i++)
+         if(tareas.get(i).id == tarea.id)
+          tarea_encontrada = true;
+       if(tarea_encontrada==false)
+        return unauthorized(error.render("401", "acceso no autorizado."));
+
+       TareaService.deleteTarea(idTarea);
        flash("mensajesTarea", "La tarea se ha borrado correctamente.");
        return redirect(controllers.routes.Tareas.listaTareas(idUsuario));
      }

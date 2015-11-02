@@ -30,6 +30,8 @@ public class TareaDAO {
     //Modifica la tarea y la devuelve
     public static Tarea update (Tarea tarea) {
       JPA.em().merge(tarea);
+      JPA.em().flush();
+      JPA.em().refresh(tarea.usuario);
       return tarea;
     }
 

@@ -66,11 +66,10 @@ public class ModificarTareaTests {
         running (app, () -> {
             JPA.withTransaction(() -> {
                 Usuario usuario = UsuarioDAO.find(1);
+                Tarea tarea = TareaDAO.find(2);
+                tarea.descripcion = "Preparar el parcial de MADS";
+                TareaDAO.update(tarea);
                 List<Tarea> tareas = usuario.tareas;
-                Integer pos_tarea = tareas.size()-2;
-                tareas.get(pos_tarea).descripcion = "Preparar el parcial de MADS";
-                TareaDAO.update(tareas.get(pos_tarea));
-                tareas = usuario.tareas;
                 JPA.em().refresh(usuario);
                 assertEquals(tareas.size(), 3);
                 assertTrue(tareas.contains(
@@ -84,11 +83,10 @@ public class ModificarTareaTests {
         running (app, () -> {
             JPA.withTransaction(() -> {
                 Usuario usuario = UsuarioDAO.find(1);
+                Tarea tarea = TareaDAO.find(2);
+                tarea.descripcion = "Preparar el super parcial de MADS";
+                TareaService.modificarTarea(tarea);
                 List<Tarea> tareas = usuario.tareas;
-                Integer pos_tarea = tareas.size()-2;
-                tareas.get(pos_tarea).descripcion = "Preparar el super parcial de MADS";
-                TareaService.modificarTarea(tareas.get(pos_tarea));
-                tareas = usuario.tareas;
                 JPA.em().refresh(usuario);
                 assertEquals(tareas.size(), 3);
                 assertTrue(tareas.contains(
@@ -252,14 +250,13 @@ public class ModificarTareaTests {
         running (app, () -> {
             JPA.withTransaction(() -> {
                 Usuario usuario = UsuarioDAO.find(1);
+                Tarea tarea = TareaDAO.find(2);
+                tarea.estado = "realizada";
+                TareaService.modificarTarea(tarea);
                 List<Tarea> tareas = usuario.tareas;
-                Integer pos_tarea = tareas.size()-2;
-                tareas.get(pos_tarea).estado = "realizada";
-                TareaService.modificarTarea(tareas.get(pos_tarea));
-                tareas = usuario.tareas;
                 JPA.em().refresh(usuario);
                 assertEquals(tareas.size(), 3);
-                assertTrue(tareas.get(pos_tarea).estado=="realizada");
+                assertTrue(tareas.get(1).estado.equals("realizada"));
             });
         });
     }
@@ -269,11 +266,10 @@ public class ModificarTareaTests {
         running(testServer(3333, app), () -> {
             JPA.withTransaction(() -> {
                 Usuario usuario = UsuarioDAO.find(1);
+                Tarea tarea = TareaDAO.find(2);
+                tarea.estado = "realizada";
+                TareaService.modificarTarea(tarea);
                 List<Tarea> tareas = usuario.tareas;
-                Integer pos_tarea = tareas.size()-2;
-                tareas.get(pos_tarea).estado = "realizada";
-                TareaService.modificarTarea(tareas.get(pos_tarea));
-                tareas = usuario.tareas;
                 JPA.em().refresh(usuario);
             });
 
@@ -300,6 +296,26 @@ public class ModificarTareaTests {
             String body = response.getBody();
             assertTrue(body.contains("up('/usuarios/1/tareas/modifica',"));
             assertTrue(body.contains("'1', 'Preparar el trabajo del tema 1 de biología', 'pendiente');"));
+        });
+    }
+
+    /* Un usuario no puede modificar tareas que no son suyas */
+
+    @Test
+    public void testWebApiModificarTareaAjena() {
+        running(testServer(3333, app), () -> {
+            int timeout = 10000;
+            WSResponse response = WS.url("http://localhost:3333/usuarios/2/tareas/modifica")
+                .setFollowRedirects(true)
+                .setContentType("application/x-www-form-urlencoded")
+                .post("id=1&descripcion=Entregar práctica 3 de MADS&estado=pendiente")
+                .get(timeout);
+            assertEquals(UNAUTHORIZED, response.getStatus());
+            String body = response.getBody();
+            assertTrue(body.contains(
+                "401"));
+            assertTrue(body.contains(
+                "acceso no autorizado."));
         });
     }
 
