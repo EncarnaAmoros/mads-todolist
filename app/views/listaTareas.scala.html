@@ -48,6 +48,7 @@
           <tr>
            <th>Id</th>
            <th>Descripcion</th>
+           <th>Fecha</th>
            <th>Acción</th>
           </tr>
           <!--Tareas en filas de la tabla las pendientes-->
@@ -56,6 +57,11 @@
               <tr>
                 <td>@tarea.id</td>
                 <td>@tarea.descripcion</td>
+                @if(tarea.fecha != null) {
+                  <td>@tarea.fecha.format("dd-MM-yyyy")</td>
+                } else {
+                  <td></td>
+                }
                 <!--Iconos para ver, editar o eliminar tarea-->
                 <td class="iconos_accion">
                   <a href="@routes.Tareas.editarTarea(usuarioId, tarea.id)" class="iconos_link">
@@ -80,6 +86,11 @@
               <tr>
                 <td id='realizada'>@tarea.id</td>
                 <td id='realizada'>@tarea.descripcion</td>
+                @if(tarea.fecha != null) {
+                  <td>@tarea.fecha.format("dd-MM-yyyy")</td>
+                } else {
+                  <td></td>
+                }
                 <!--Iconos para ver, editar o eliminar tarea-->
                 <td class="iconos_accion">
                   <a href="@routes.Tareas.editarTarea(usuarioId, tarea.id)" class="iconos_link" id='realizada'>

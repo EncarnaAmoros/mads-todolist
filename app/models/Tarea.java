@@ -6,6 +6,8 @@ import play.data.format.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import play.data.format.*;
 
 @Entity
 public class Tarea {
@@ -19,6 +21,8 @@ public class Tarea {
   public String descripcion;
   @Constraints.Required
   public String estado;
+  @Formats.DateTime(pattern="dd-MM-yyyy")
+  public Date fecha;
 
   public Tarea() {}
 
@@ -65,8 +69,14 @@ public class Tarea {
   }
 
   public String toString() {
-    return String.format("Tarea id: %s descripcion: %s estado: %s",
-                          id, descripcion, estado);
+    String fechaStr = null;
+    if (fecha != null) {
+      SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
+      fechaStr = formateador.format(fecha);
+    }
+
+    return String.format("Tarea id: %s descripcion: %s estado: %s fecha: %s",
+                          id, descripcion, estado, fechaStr);
   }
 
 }
