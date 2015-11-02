@@ -13,12 +13,24 @@
      }
   </script>
   <script type="text/javascript">
-     function up(urlModificar, id, descripcion, estado) {
+     function convertirFormatoFecha(fecha) {
+       var f = fecha.toString().replace(" 00:00:00.0","");
+       var f_split = f.split("-");
+       var fecha_final = f_split[2]+"-"+f_split[1]+"-"+f_split[0];
+       return fecha_final;
+     }
+  </script>
+  <script type="text/javascript">
+     function up(urlModificar, id, descripcion, estado, fecha) {
        if(estado == 'pendiente') nuevo_estado = 'realizada';
        else nuevo_estado = 'pendiente';
+       if(fecha!='')
+        fecha = convertirFormatoFecha(fecha);
+       else
+        fecha = null;
        $.ajax({
          url: urlModificar,
-         data : { id : id, descripcion : descripcion, estado : nuevo_estado },
+         data : { id : id, descripcion : descripcion, estado : nuevo_estado, fecha : fecha },
          type: 'POST',
          success: function(results) {
            location.reload();
@@ -72,8 +84,7 @@
                     <span class="glyphicon glyphicon-trash"></span>
                   </a>
                   <a href="" class="iconos_link" style="cursor: pointer;"
-                    onclick="up('@routes.Tareas.grabaTareaModificada(usuarioId)',
-                              '@tarea.id', '@tarea.descripcion', '@tarea.estado'); return false;">
+                  onclick="up('@routes.Tareas.grabaTareaModificada(usuarioId)', '@tarea.id', '@tarea.descripcion', '@tarea.estado', '@tarea.fecha'); return false;">
                     <span class="glyphicon glyphicon-unchecked"></span>
                   </a>
                 </td>
@@ -101,8 +112,7 @@
                     <span class="glyphicon glyphicon-trash"></span>
                   </a>
                   <a href="" class="iconos_link" id='realizada' style="cursor: pointer;"
-                    onclick="up('@routes.Tareas.grabaTareaModificada(usuarioId)',
-                               '@tarea.id', '@tarea.descripcion', '@tarea.estado'); return false;">
+                  onclick="up('@routes.Tareas.grabaTareaModificada(usuarioId)', '@tarea.id', '@tarea.descripcion', '@tarea.estado', '@tarea.fecha'); return false;">
                     <span class="glyphicon glyphicon-check"></span>
                   </a>
                 </td>
