@@ -92,6 +92,14 @@ public class Tareas extends Controller {
        Tarea tarea = tareaForm.get();
        tarea.usuario = usuario;
 
+       boolean tarea_encontrada = false;
+       List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
+       for(int i=0;i<tareas.size();i++)
+         if(tareas.get(i).id == tarea.id)
+           tarea_encontrada = true;
+       if(tarea_encontrada==false)
+        return unauthorized(error.render("401", "acceso no autorizado."));
+
        //Si no es un cambio de estado, mostramos mensaje confirmación
        if(TareaService.findTarea(tarea.id).estado.equals(tarea.estado)) {
         flash("mensajesTarea", "La tarea se ha grabado correctamente.");

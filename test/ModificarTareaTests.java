@@ -299,4 +299,24 @@ public class ModificarTareaTests {
         });
     }
 
+    /* Un usuario no puede modificar tareas que no son suyas */
+
+    @Test
+    public void testWebApiModificarTareaAjena() {
+        running(testServer(3333, app), () -> {
+            int timeout = 10000;
+            WSResponse response = WS.url("http://localhost:3333/usuarios/2/tareas/modifica")
+                .setFollowRedirects(true)
+                .setContentType("application/x-www-form-urlencoded")
+                .post("id=1&descripcion=Entregar práctica 3 de MADS&estado=pendiente")
+                .get(timeout);
+            assertEquals(UNAUTHORIZED, response.getStatus());
+            String body = response.getBody();
+            assertTrue(body.contains(
+                "401"));
+            assertTrue(body.contains(
+                "acceso no autorizado."));
+        });
+    }
+
 }
