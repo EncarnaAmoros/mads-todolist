@@ -212,4 +212,27 @@ public class CrearTareaTests {
         });
     }
 
+    @Test
+    public void testGrabaTareaFecha() {
+        running (app, () -> {
+            JPA.withTransaction(() -> {
+                Usuario usuario = UsuarioDAO.find(1);
+                Tarea tarea = new Tarea(usuario, "Entregar práctica 5 de MADS");
+                //Creamos la fecha a modificar
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                String dateInString = "15-01-2016";
+                Date f = sdf.parse(dateInString);
+                tarea.fecha = f;
+                Tarea tarea_nueva = TareaService.grabaTarea(tarea);
+                List<Tarea> tareas = usuario.tareas;
+                assertEquals(tareas.size(), 4);
+                assertTrue(tareas.contains(
+                    new Tarea(usuario, "Entregar práctica 5 de MADS")));
+                assertTrue(tarea_nueva.fecha.getDay()==f.getDay());
+                assertTrue(tarea_nueva.fecha.getMonth()==f.getMonth());
+                assertTrue(tarea_nueva.fecha.getYear()==f.getYear());
+            });
+        });
+    }
+
 }
