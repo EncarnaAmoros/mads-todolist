@@ -234,7 +234,7 @@ public class CrearTareaTests {
             });
         });
     }
-    
+
     @Test
     public void testWebPaginaFormCrearTareaFecha() {
         running(testServer(3333, app), () -> {
@@ -248,6 +248,30 @@ public class CrearTareaTests {
             assertTrue(body.contains("Nueva tarea"));
             assertTrue(body.contains("Fecha"));
             assertTrue(body.contains("Formato (dd-mm-yyyy)"));
+        });
+    }
+
+    @Test
+    public void testWebApiModificarTareaFecha() {
+        running(testServer(3333, app), () -> {
+            int timeout = 10000;
+            WSResponse response = WS.url("http://localhost:3333/usuarios/1/tareas/nueva")
+                .setFollowRedirects(true)
+                .setContentType("application/x-www-form-urlencoded")
+                .post("descripcion=Entregar práctica 4 de MADS&estado=pendiente&fecha=04-05-2016")
+                .get(timeout);
+            assertEquals(OK, response.getStatus());
+            String body = response.getBody();
+            assertTrue(body.contains(
+                "Preparar el trabajo del tema 1 de biología"));
+            assertTrue(body.contains(
+                "Entregar práctica 4 de MADS"));
+            assertTrue(body.contains(
+                "Leer el libro de inglés"));
+            assertTrue(body.contains(
+                "11-11-2015"));
+            assertTrue(body.contains(
+                "04-05-2016"));
         });
     }
 

@@ -59,6 +59,7 @@ public class Tareas extends Controller {
         }
 
         Tarea tarea = new Tarea(usuario, tareaForm.get().descripcion);
+        tarea.fecha = tareaForm.get().fecha;
         TareaService.grabaTarea(tarea);
 
         List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
