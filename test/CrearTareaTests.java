@@ -13,6 +13,12 @@ import org.dbunit.dataset.xml.*;
 import java.util.HashMap;
 import java.io.FileInputStream;
 
+import play.data.format.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import play.data.format.*;
+
 import play.libs.ws.*;
 
 public class CrearTareaTests {
@@ -178,6 +184,31 @@ public class CrearTareaTests {
                 "Entregar práctica 3 de MADS"));
                 assertTrue(body.contains(
                     "La tarea se ha grabado correctamente."));
+        });
+    }
+
+    /* Añadiendo atributo fecha a las tareas */
+
+    @Test
+    public void testCrearTareaFecha() {
+        running (app, () -> {
+            JPA.withTransaction(() -> {
+                Usuario usuario = UsuarioDAO.find(1);
+                Tarea tarea = new Tarea(usuario, "Entregar práctica 5 de MADS");
+                //Creamos la fecha a modificar
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                String dateInString = "15-11-2015";
+                Date f = sdf.parse(dateInString);
+                tarea.fecha = f;
+                Tarea tarea_nueva = TareaDAO.create(tarea);
+                List<Tarea> tareas = usuario.tareas;
+                assertEquals(tareas.size(), 4);
+                assertTrue(tareas.contains(
+                    new Tarea(usuario, "Entregar práctica 5 de MADS")));
+                assertTrue(tarea_nueva.fecha.getDay()==f.getDay());
+                assertTrue(tarea_nueva.fecha.getMonth()==f.getMonth());
+                assertTrue(tarea_nueva.fecha.getYear()==f.getYear());
+            });
         });
     }
 
