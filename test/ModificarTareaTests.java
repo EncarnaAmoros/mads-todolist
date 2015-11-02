@@ -371,4 +371,20 @@ public class ModificarTareaTests {
         });
     }
 
+    @Test
+    public void testWebPaginaFormModificarTareaFecha() {
+        running(testServer(3333, app), () -> {
+            int timeout = 10000;
+            WSResponse response = WS
+                .url("http://localhost:3333/usuarios/1/tareas/3/editar")
+                .get()
+                .get(timeout);
+            assertEquals(OK, response.getStatus());
+            String body = response.getBody();
+            assertTrue(body.contains("Modificar tarea"));
+            assertTrue(body.contains("Fecha"));
+            assertTrue(body.contains("11-01-2016"));
+            assertTrue(body.contains("Formato (dd-mm-yyyy)"));
+        });
+    }
 }
