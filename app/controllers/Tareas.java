@@ -79,6 +79,14 @@ public class Tareas extends Controller {
         if(tarea==null)
           return notFound(error.render("404", "recurso no encontrado."));
 
+        boolean tarea_encontrada = false;
+        List<Tarea> tareas = TareaService.findAllTareasUsuario(usuarioId);
+        for(int i=0;i<tareas.size();i++)
+          if(tareas.get(i).id == tarea.id)
+            tarea_encontrada = true;
+        if(tarea_encontrada==false)
+         return unauthorized(error.render("401", "acceso no autorizado."));
+
         Form<Tarea> formularioT = Form.form(Tarea.class);
         Form<Tarea> tareaForm = formularioT.fill(tarea);
         return ok(formModificarTarea.render(tareaForm, usuarioId, ""));
